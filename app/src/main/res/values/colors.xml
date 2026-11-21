@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Backgrounds and surfaces, darkest to lightest -->
+    <color name="bg">#FF0F1117</color>
+    <color name="bg_deep">#FF13151C</color>
+    <color name="surface">#FF191C25</color>
+    <color name="surface_player">#FF1C1F2A</color>
+    <color name="surface_2">#FF232735</color>
+    <color name="surface_3">#FF2A2F40</color>
+
+    <!-- Strokes -->
+    <color name="border">#FF2A2E3B</color>
+    <color name="border_strong">#FF2E3343</color>
+    <color name="divider">#FF22263A</color>
+    <color name="dash">#FF3A3F52</color>
+    <color name="tick_major">#FF5A6075</color>
+
+    <!-- Text -->
+    <color name="text">#FFF2EEE6</color>
+    <color name="text_2">#FFB4B9C8</color>
+    <color name="text_muted">#FF9AA0B2</color>
+    <color name="text_faint">#FF7C8296</color>
+
+    <!-- Accent: accent_soft is accent at 16 % alpha -->
+    <color name="accent">#FFFF7A3D</color>
+    <color name="accent_soft">#29FF7A3D</color>
+    <color name="on_accent">#FF0F1117</color>
+
+    <!-- Round outcomes -->
+    <color name="correct">#FF5CE1A8</color>
+    <color name="correct_soft">#245CE1A8</color>
+    <color name="hint">#FFFFC857</color>
+    <color name="wrong">#FFFF6B81</color>
+    <color name="wrong_text">#FFFF8FA0</color>
+
+    <!-- Passport stamp inks, cycled -->
+    <color name="stamp_1">#FFFF7A3D</color>
+    <color name="stamp_2">#FF5CE1A8</color>
+    <color name="stamp_3">#FFFFC857</color>
+    <color name="stamp_4">#FF8FA8FF</color>
+</resources>

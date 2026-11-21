@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Screen padding -->
+    <dimen name="screen_padding_h">20dp</dimen>
+    <dimen name="screen_padding_top_game">24dp</dimen>
+    <dimen name="screen_padding_top_tab">28dp</dimen>
+    <dimen name="screen_padding_bottom_game">28dp</dimen>
+
+    <!-- Corner radii -->
+    <dimen name="radius_card">24dp</dimen>
+    <dimen name="radius_tile">20dp</dimen>
+    <dimen name="radius_button">16dp</dimen>
+    <dimen name="radius_hint">14dp</dimen>
+    <dimen name="radius_slot">14dp</dimen>
+    <dimen name="radius_station_logo">18dp</dimen>
+    <dimen name="radius_share_preview">18dp</dimen>
+    <dimen name="radius_icon_tile">14dp</dimen>
+    <dimen name="radius_logo_tile">12dp</dimen>
+    <dimen name="radius_square">10dp</dimen>
+    <dimen name="radius_badge">8dp</dimen>
+
+    <!-- Heights -->
+    <dimen name="button_primary_height">56dp</dimen>
+    <dimen name="button_secondary_height">52dp</dimen>
+    <dimen name="button_answer_height">60dp</dimen>
+    <dimen name="chip_height">40dp</dimen>
+    <dimen name="hint_tile_min_height">56dp</dimen>
+    <dimen name="bottom_nav_height">80dp</dimen>
+    <dimen name="nav_pill_width">64dp</dimen>
+    <dimen name="nav_pill_height">32dp</dimen>
+
+    <!-- Icons and touch targets -->
+    <dimen name="icon_button_size">44dp</dimen>
+    <dimen name="touch_target">48dp</dimen>
+    <dimen name="icon_size">22dp</dimen>
+    <dimen name="icon_size_small">16dp</dimen>
+    <dimen name="logo_tile_size">40dp</dimen>
+    <dimen name="station_logo_size">64dp</dimen>
+    <dimen name="icon_tile_size">44dp</dimen>
+    <dimen name="answer_badge_size">26dp</dimen>
+    <dimen name="code_badge_size">40dp</dimen>
+
+    <!-- Game -->
+    <dimen name="timer_ring_size">248dp</dimen>
+    <dimen name="timer_ring_stroke">10dp</dimen>
+    <dimen name="progress_segment_height">4dp</dimen>
+    <dimen name="progress_segment_gap">6dp</dimen>
+    <dimen name="daily_slot_height">56dp</dimen>
+    <dimen name="result_circle_size">88dp</dimen>
+    <dimen name="outcome_square_size">32dp</dimen>
+
+    <!-- Passport -->
+    <dimen name="stamp_size">64dp</dimen>
+    <dimen name="stamp_inner_size">52dp</dimen>
+    <dimen name="stamp_stroke">2dp</dimen>
+    <dimen name="passport_progress_height">8dp</dimen>
+
+    <!-- Strokes and dashes -->
+    <dimen name="stroke_thin">1dp</dimen>
+    <dimen name="stroke_dashed">1.5dp</dimen>
+    <dimen name="dash_width">4dp</dimen>
+    <dimen name="dash_gap">4dp</dimen>
+
+    <!-- Spacing -->
+    <dimen name="gap_section_home">24dp</dimen>
+    <dimen name="gap_section_tab">18dp</dimen>
+    <dimen name="gap_card_inner">16dp</dimen>
+    <dimen name="gap_chip">8dp</dimen>
+    <dimen name="gap_answer">10dp</dimen>
+    <dimen name="card_padding">20dp</dimen>
+    <dimen name="tile_padding">16dp</dimen>
+</resources>
