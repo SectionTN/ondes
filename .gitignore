@@ -1,0 +1,24 @@
+# Android Studio and Gradle
+*.iml
+.gradle/
+/local.properties
+/.idea/
+.DS_Store
+/build
+/captures
+.externalNativeBuild
+.cxx
+.kotlin/
+
+# Signing: the release keystore lives outside the repo
+*.jks
+*.keystore
+keystore.properties
+
+# Exam brief (not ours to publish)
+docs/examen_pratique.pdf
+
+# Release outputs
+/app/release/
+*.apk
+*.aab
