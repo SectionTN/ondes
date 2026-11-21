@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Each style points at one font file: API 24-27 can't pick a 500 or 600 weight from a family -->
+
+    <!-- Root of every style below. No fixed line height, so large text never clips -->
+    <style name="TextAppearance.Ondes" parent="TextAppearance.AppCompat" />
+
+    <!-- Space Grotesk: display and headlines -->
+    <style name="TextAppearance.Ondes.Display">
+        <item name="fontFamily">@font/space_grotesk_bold</item>
+        <item name="android:fontFamily">@font/space_grotesk_bold</item>
+        <item name="android:textSize">76sp</item>
+        <item name="android:letterSpacing">-0.03</item>
+        <item name="android:textColor">@color/text</item>
+    </style>
+
+    <style name="TextAppearance.Ondes.Headline">
+        <item name="fontFamily">@font/space_grotesk_bold</item>
+        <item name="android:fontFamily">@font/space_grotesk_bold</item>
+        <item name="android:textSize">34sp</item>
+        <item name="android:letterSpacing">-0.02</item>
+        <item name="android:textColor">@color/text</item>
+    </style>
+
+    <style name="TextAppearance.Ondes.Headline.Tab">
+        <item name="android:textSize">30sp</item>
+    </style>
+
+    <style name="TextAppearance.Ondes.Headline.Country">
+        <item name="android:textSize">38sp</item>
+    </style>
+
+    <style name="TextAppearance.Ondes.Headline.Count">
+        <item name="android:textSize">44sp</item>
+    </style>
+
+    <style name="TextAppearance.Ondes.Wordmark" parent="TextAppearance.Ondes.Headline">
+        <item name="android:textSize">26sp</item>
+    </style>
+
+    <style name="TextAppearance.Ondes.Title">
+        <item name="fontFamily">@font/space_grotesk_bold</item>
+        <item name="android:fontFamily">@font/space_grotesk_bold</item>
+        <item name="android:textSize">22sp</item>
+        <item name="android:textColor">@color/text</item>
+    </style>
+
+    <!-- Inter: station names, buttons, body and captions -->
+    <style name="TextAppearance.Ondes.Station">
+        <item name="fontFamily">@font/inter_bold</item>
+        <item name="android:fontFamily">@font/inter_bold</item>
+        <item name="android:textSize">20sp</item>
+        <item name="android:textColor">@color/text</item>
+    </style>
+
+    <style name="TextAppearance.Ondes.Button">
+        <item name="fontFamily">@font/inter_bold</item>
+        <item name="android:fontFamily">@font/inter_bold</item>
+        <item name="android:textSize">17sp</item>
+        <item name="android:letterSpacing">0</item>
+        <item name="android:textAllCaps">false</item>
+    </style>
+
+    <style name="TextAppearance.Ondes.Button.Secondary">
+        <item name="fontFamily">@font/inter_semibold</item>
+        <item name="android:fontFamily">@font/inter_semibold</item>
+        <item name="android:textSize">16sp</item>
+    </style>
+
+    <style name="TextAppearance.Ondes.Body">
+        <item name="fontFamily">@font/inter_regular</item>
+        <item name="android:fontFamily">@font/inter_regular</item>
+        <item name="android:textSize">15sp</item>
+        <item name="android:letterSpacing">0</item>
+        <item name="android:textColor">@color/text</item>
+    </style>
+
+    <!-- Row titles: "Round 5 of 5", "Hints", country and station names in lists -->
+    <style name="TextAppearance.Ondes.Body.Medium">
+        <item name="fontFamily">@font/inter_semibold</item>
+        <item name="android:fontFamily">@font/inter_semibold</item>
+    </style>
+
+    <style name="TextAppearance.Ondes.Body.Strong">
+        <item name="fontFamily">@font/inter_semibold</item>
+        <item name="android:fontFamily">@font/inter_semibold</item>
+        <item name="android:textSize">16sp</item>
+    </style>
+
+    <style name="TextAppearance.Ondes.Caption">
+        <item name="fontFamily">@font/inter_regular</item>
+        <item name="android:fontFamily">@font/inter_regular</item>
+        <item name="android:textSize">13sp</item>
+        <item name="android:letterSpacing">0</item>
+        <item name="android:textColor">@color/text_muted</item>
+    </style>
+
+    <style name="TextAppearance.Ondes.Caption.Nav">
+        <item name="fontFamily">@font/inter_medium</item>
+        <item name="android:fontFamily">@font/inter_medium</item>
+        <item name="android:textSize">12sp</item>
+    </style>
+
+    <style name="TextAppearance.Ondes.Caption.Nav.Active">
+        <item name="fontFamily">@font/inter_semibold</item>
+        <item name="android:fontFamily">@font/inter_semibold</item>
+    </style>
+
+    <style name="TextAppearance.Ondes.Chip">
+        <item name="fontFamily">@font/inter_semibold</item>
+        <item name="android:fontFamily">@font/inter_semibold</item>
+        <item name="android:textSize">14sp</item>
+    </style>
+
+    <!-- JetBrains Mono: numbers, timer and eyebrows -->
+    <style name="TextAppearance.Ondes.Mono">
+        <item name="fontFamily">@font/jetbrains_mono_bold</item>
+        <item name="android:fontFamily">@font/jetbrains_mono_bold</item>
+        <item name="android:textSize">15sp</item>
+        <item name="android:letterSpacing">0</item>
+        <item name="android:textColor">@color/text</item>
+    </style>
+
+    <style name="TextAppearance.Ondes.Mono.Timer">
+        <item name="android:textSize">44sp</item>
+    </style>
+
+    <style name="TextAppearance.Ondes.Mono.Points">
+        <item name="android:textSize">22sp</item>
+    </style>
+
+    <style name="TextAppearance.Ondes.Mono.Eyebrow">
+        <item name="fontFamily">@font/jetbrains_mono_medium</item>
+        <item name="android:fontFamily">@font/jetbrains_mono_medium</item>
+        <item name="android:textSize">12sp</item>
+        <item name="android:letterSpacing">0.08</item>
+        <item name="android:textAllCaps">true</item>
+        <item name="android:textColor">@color/text_muted</item>
+    </style>
+
+    <style name="TextAppearance.Ondes.Mono.Small">
+        <item name="fontFamily">@font/jetbrains_mono_medium</item>
+        <item name="android:fontFamily">@font/jetbrains_mono_medium</item>
+        <item name="android:textSize">11sp</item>
+        <item name="android:textColor">@color/text_muted</item>
+    </style>
+</resources>
