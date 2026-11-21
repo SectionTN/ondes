@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Daily slots and closed hint tiles -->
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="rectangle">
+    <corners android:radius="@dimen/radius_slot" />
+    <stroke
+        android:width="@dimen/stroke_dashed"
+        android:color="@color/dash"
+        android:dashWidth="@dimen/dash_width"
+        android:dashGap="@dimen/dash_gap" />
+</shape>

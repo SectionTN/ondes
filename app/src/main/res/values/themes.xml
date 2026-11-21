@@ -1,6 +1,152 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <style name="Base.Theme.Ondes" parent="Theme.Material3.Dark.NoActionBar" />
+    <!-- Always dark: the app has no light theme -->
+    <style name="Base.Theme.Ondes" parent="Theme.Material3.Dark.NoActionBar">
+        <item name="colorPrimary">@color/accent</item>
+        <item name="colorOnPrimary">@color/on_accent</item>
+        <item name="colorPrimaryContainer">@color/accent_soft</item>
+        <item name="colorOnPrimaryContainer">@color/accent</item>
+        <item name="colorSecondary">@color/accent</item>
+        <item name="colorOnSecondary">@color/on_accent</item>
+        <item name="colorSecondaryContainer">@color/accent_soft</item>
+        <item name="colorOnSecondaryContainer">@color/accent</item>
+        <item name="colorTertiary">@color/correct</item>
+        <item name="colorOnTertiary">@color/on_accent</item>
+        <item name="colorError">@color/wrong</item>
+        <item name="colorOnError">@color/on_accent</item>
+
+        <item name="android:colorBackground">@color/bg</item>
+        <item name="colorOnBackground">@color/text</item>
+        <item name="colorSurface">@color/bg</item>
+        <item name="colorOnSurface">@color/text</item>
+        <item name="colorSurfaceVariant">@color/surface_2</item>
+        <item name="colorOnSurfaceVariant">@color/text_muted</item>
+        <item name="colorSurfaceContainerLowest">@color/bg_deep</item>
+        <item name="colorSurfaceContainerLow">@color/surface</item>
+        <item name="colorSurfaceContainer">@color/bg_deep</item>
+        <item name="colorSurfaceContainerHigh">@color/surface_2</item>
+        <item name="colorSurfaceContainerHighest">@color/surface_3</item>
+        <item name="colorOutline">@color/dash</item>
+        <item name="colorOutlineVariant">@color/border</item>
+
+        <item name="android:windowBackground">@color/bg</item>
+        <item name="android:textColorPrimary">@color/text</item>
+        <item name="android:textColorSecondary">@color/text_muted</item>
+        <!-- Default text goes through textViewStyle: a theme fontFamily would override every textAppearance -->
+        <item name="android:textViewStyle">@style/Widget.Ondes.TextView</item>
+
+        <item name="shapeAppearanceCornerSmall">@style/ShapeAppearance.Ondes.Badge</item>
+        <item name="shapeAppearanceCornerMedium">@style/ShapeAppearance.Ondes.Button</item>
+        <item name="shapeAppearanceCornerLarge">@style/ShapeAppearance.Ondes.Card</item>
+
+        <item name="materialButtonStyle">@style/Widget.Ondes.Button</item>
+        <item name="materialButtonOutlinedStyle">@style/Widget.Ondes.Button.Outlined</item>
+        <item name="materialCardViewStyle">@style/Widget.Ondes.Card</item>
+        <item name="chipStyle">@style/Widget.Ondes.Chip</item>
+        <item name="bottomNavigationStyle">@style/Widget.Ondes.BottomNav</item>
+        <item name="circularProgressIndicatorStyle">@style/Widget.Ondes.CircularProgress</item>
+        <item name="linearProgressIndicatorStyle">@style/Widget.Ondes.LinearProgress</item>
+    </style>
 
     <style name="Theme.Ondes" parent="Base.Theme.Ondes" />
+
+    <style name="Widget.Ondes.TextView" parent="Widget.MaterialComponents.TextView">
+        <item name="android:textAppearance">@style/TextAppearance.Ondes.Body</item>
+    </style>
+
+    <!-- Primary button: filled accent, 56dp -->
+    <style name="Widget.Ondes.Button" parent="Widget.Material3.Button">
+        <item name="backgroundTint">@color/button_primary_background</item>
+        <item name="android:textColor">@color/button_primary_content</item>
+        <item name="iconTint">@color/button_primary_content</item>
+        <item name="android:textAppearance">@style/TextAppearance.Ondes.Button</item>
+        <item name="android:minHeight">@dimen/button_primary_height</item>
+        <item name="android:insetTop">0dp</item>
+        <item name="android:insetBottom">0dp</item>
+        <item name="iconGravity">textStart</item>
+        <item name="iconPadding">10dp</item>
+        <item name="iconSize">18dp</item>
+        <item name="shapeAppearance">@style/ShapeAppearance.Ondes.Button</item>
+    </style>
+
+    <!-- Secondary button: outlined in the dash colour, 52dp -->
+    <style name="Widget.Ondes.Button.Outlined" parent="Widget.Material3.Button.OutlinedButton">
+        <item name="strokeColor">@color/button_outlined_stroke</item>
+        <item name="strokeWidth">@dimen/stroke_thin</item>
+        <item name="android:textColor">@color/button_outlined_content</item>
+        <item name="iconTint">@color/button_outlined_content</item>
+        <item name="android:textAppearance">@style/TextAppearance.Ondes.Button.Secondary</item>
+        <item name="android:minHeight">@dimen/button_secondary_height</item>
+        <item name="android:insetTop">0dp</item>
+        <item name="android:insetBottom">0dp</item>
+        <item name="iconGravity">textStart</item>
+        <item name="iconPadding">8dp</item>
+        <item name="iconSize">18dp</item>
+        <item name="shapeAppearance">@style/ShapeAppearance.Ondes.Button</item>
+    </style>
+
+    <!-- Cards: surface fill, 1dp border, 24dp corners -->
+    <style name="Widget.Ondes.Card" parent="Widget.Material3.CardView.Outlined">
+        <item name="cardBackgroundColor">@color/surface</item>
+        <item name="strokeColor">@color/border</item>
+        <item name="strokeWidth">@dimen/stroke_thin</item>
+        <item name="cardElevation">0dp</item>
+        <item name="shapeAppearance">@style/ShapeAppearance.Ondes.Card</item>
+    </style>
+
+    <style name="Widget.Ondes.Card.Tile">
+        <item name="shapeAppearance">@style/ShapeAppearance.Ondes.Tile</item>
+    </style>
+
+    <!-- Genre and continent chips: accent when selected -->
+    <style name="Widget.Ondes.Chip" parent="Widget.Material3.Chip.Filter">
+        <item name="chipBackgroundColor">@color/chip_background</item>
+        <item name="chipStrokeColor">@color/chip_stroke</item>
+        <item name="chipStrokeWidth">@dimen/stroke_thin</item>
+        <item name="android:textColor">@color/chip_text</item>
+        <item name="android:textAppearance">@style/TextAppearance.Ondes.Chip</item>
+        <item name="chipMinHeight">@dimen/chip_height</item>
+        <item name="chipStartPadding">8dp</item>
+        <item name="chipEndPadding">8dp</item>
+        <item name="textStartPadding">8dp</item>
+        <item name="textEndPadding">8dp</item>
+        <item name="checkedIconVisible">false</item>
+        <item name="shapeAppearance">@style/ShapeAppearance.Ondes.Pill</item>
+    </style>
+
+    <!-- Bottom nav: deep background, accent-soft pill behind the active icon -->
+    <style name="Widget.Ondes.BottomNav" parent="Widget.Material3.BottomNavigationView">
+        <item name="backgroundTint">@color/bg_deep</item>
+        <item name="itemIconTint">@color/nav_icon</item>
+        <item name="itemTextColor">@color/nav_text</item>
+        <item name="itemIconSize">@dimen/icon_size</item>
+        <item name="itemTextAppearanceInactive">@style/TextAppearance.Ondes.Caption.Nav</item>
+        <item name="itemTextAppearanceActive">@style/TextAppearance.Ondes.Caption.Nav.Active</item>
+        <item name="itemActiveIndicatorStyle">@style/Widget.Ondes.BottomNav.ActiveIndicator</item>
+        <item name="labelVisibilityMode">labeled</item>
+    </style>
+
+    <style name="Widget.Ondes.BottomNav.ActiveIndicator" parent="Widget.Material3.BottomNavigationView.ActiveIndicator">
+        <item name="android:color">@color/accent_soft</item>
+        <item name="android:width">@dimen/nav_pill_width</item>
+        <item name="android:height">@dimen/nav_pill_height</item>
+        <item name="shapeAppearance">@style/ShapeAppearance.Ondes.Pill</item>
+    </style>
+
+
+    <!-- Progress: accent on a surface_2 track, without the M3 gap and stop dot -->
+    <style name="Widget.Ondes.CircularProgress" parent="Widget.Material3.CircularProgressIndicator">
+        <item name="indicatorColor">@color/accent</item>
+        <item name="trackColor">@color/surface_2</item>
+        <item name="indicatorTrackGapSize">0dp</item>
+    </style>
+
+    <style name="Widget.Ondes.LinearProgress" parent="Widget.Material3.LinearProgressIndicator">
+        <item name="indicatorColor">@color/accent</item>
+        <item name="trackColor">@color/surface_2</item>
+        <item name="trackThickness">@dimen/passport_progress_height</item>
+        <item name="trackCornerRadius">50%</item>
+        <item name="indicatorTrackGapSize">0dp</item>
+        <item name="trackStopIndicatorSize">0dp</item>
+    </style>
 </resources>

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Locked passport stamps -->
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="oval">
+    <stroke
+        android:width="@dimen/stroke_dashed"
+        android:color="@color/dash"
+        android:dashWidth="@dimen/dash_width"
+        android:dashGap="@dimen/dash_gap" />
+</shape>

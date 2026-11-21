@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="ShapeAppearance.Ondes.Card" parent="">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">@dimen/radius_card</item>
+    </style>
+
+    <style name="ShapeAppearance.Ondes.Tile" parent="">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">@dimen/radius_tile</item>
+    </style>
+
+    <style name="ShapeAppearance.Ondes.Button" parent="">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">@dimen/radius_button</item>
+    </style>
+
+    <style name="ShapeAppearance.Ondes.Hint" parent="">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">@dimen/radius_hint</item>
+    </style>
+
+    <!-- 64dp station logo on the Result screen -->
+    <style name="ShapeAppearance.Ondes.StationLogo" parent="">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">@dimen/radius_station_logo</item>
+    </style>
+
+    <!-- 40dp app logo tile on Home -->
+    <style name="ShapeAppearance.Ondes.LogoTile" parent="">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">@dimen/radius_logo_tile</item>
+    </style>
+
+    <!-- Outcome squares on Summary -->
+    <style name="ShapeAppearance.Ondes.Square" parent="">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">@dimen/radius_square</item>
+    </style>
+
+    <style name="ShapeAppearance.Ondes.Badge" parent="">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">@dimen/radius_badge</item>
+    </style>
+
+    <!-- Chips, pills and round buttons -->
+    <style name="ShapeAppearance.Ondes.Pill" parent="">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">50%</item>
+    </style>
+</resources>
