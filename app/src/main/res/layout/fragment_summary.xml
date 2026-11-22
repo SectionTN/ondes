@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingHorizontal="@dimen/screen_padding_h"
+        android:paddingTop="@dimen/screen_padding_top_game"
+        android:paddingBottom="@dimen/screen_padding_bottom_game">
+
+        <!-- Back home and "DAILY #142", centered on the screen -->
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/close_button"
+                style="@style/Widget.Ondes.IconButton"
+                android:layout_width="@dimen/touch_target"
+                android:layout_height="@dimen/touch_target"
+                android:layout_gravity="start|center_vertical"
+                android:layout_marginStart="@dimen/icon_button_outset"
+                android:layout_marginTop="@dimen/icon_button_outset"
+                android:layout_marginBottom="@dimen/icon_button_outset"
+                android:contentDescription="@string/back_home"
+                app:icon="@drawable/ic_close" />
+
+            <TextView
+                android:id="@+id/summary_eyebrow"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:textAppearance="@style/TextAppearance.Ondes.Mono.Eyebrow" />
+        </FrameLayout>
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:minHeight="@dimen/game_section_min_gap" />
+
+        <!-- Score -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/summary_score"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="@style/TextAppearance.Ondes.Display" />
+
+            <TextView
+                android:id="@+id/summary_max"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/gap_text_lines"
+                android:textAppearance="@style/TextAppearance.Ondes.Mono.Muted" />
+
+            <LinearLayout
+                android:id="@+id/summary_streak"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/summary_pill_height"
+                android:layout_marginTop="@dimen/gap_summary_pill"
+                android:background="@drawable/bg_pill_accent"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingHorizontal="@dimen/summary_pill_padding_h">
+
+                <ImageView
+                    android:layout_width="@dimen/icon_size_tiny"
+                    android:layout_height="@dimen/icon_size_tiny"
+                    android:importantForAccessibility="no"
+                    android:src="@drawable/ic_flame"
+                    app:tint="@color/accent" />
+
+                <TextView
+                    android:id="@+id/summary_streak_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/gap_icon_text"
+                    android:textAppearance="@style/TextAppearance.Ondes.Caption.Accent" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:minHeight="@dimen/game_section_min_gap" />
+
+        <!-- The five rounds -->
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rounds_list"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:nestedScrollingEnabled="false"
+                android:paddingHorizontal="@dimen/rounds_card_padding_h"
+                android:paddingVertical="@dimen/rounds_card_padding_v" />
+        </com.google.android.material.card.MaterialCardView>
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:minHeight="@dimen/game_section_min_gap" />
+
+        <!-- Share preview, shown for the daily only -->
+        <LinearLayout
+            android:id="@+id/share_preview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/gap_answer"
+            android:background="@drawable/bg_dashed_preview"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingHorizontal="@dimen/share_preview_padding_h"
+            android:paddingVertical="@dimen/share_preview_padding_v">
+
+            <TextView
+                android:id="@+id/share_line"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textAppearance="@style/TextAppearance.Ondes.Mono.Score" />
+
+            <LinearLayout
+                android:id="@+id/share_squares"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/gap_row"
+                android:divider="@drawable/spacer_4"
+                android:orientation="horizontal"
+                android:showDividers="middle">
+
+                <View style="@style/Widget.Ondes.ShareSquare" />
+
+                <View style="@style/Widget.Ondes.ShareSquare" />
+
+                <View style="@style/Widget.Ondes.ShareSquare" />
+
+                <View style="@style/Widget.Ondes.ShareSquare" />
+
+                <View style="@style/Widget.Ondes.ShareSquare" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <!-- Share for the daily, Play again for free play -->
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/summary_action"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/next_daily"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/gap_answer"
+            android:gravity="center"
+            android:textAppearance="@style/TextAppearance.Ondes.Caption" />
+    </LinearLayout>
+</androidx.core.widget.NestedScrollView>

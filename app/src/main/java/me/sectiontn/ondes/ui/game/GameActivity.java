@@ -66,7 +66,8 @@ public class GameActivity extends AppCompatActivity {
             roundNumber++;
             show(RoundFragment.newInstance(roundNumber));
         } else {
-            finish();
+            boolean daily = MODE_DAILY.equals(getIntent().getStringExtra(EXTRA_MODE));
+            show(SummaryFragment.newInstance(daily));
         }
     }
 
