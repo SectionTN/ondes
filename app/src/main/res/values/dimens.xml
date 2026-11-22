@@ -18,12 +18,18 @@
     <dimen name="radius_logo_tile">12dp</dimen>
     <dimen name="radius_square">10dp</dimen>
     <dimen name="radius_badge">8dp</dimen>
+    <!-- Larger than any pill height, so the ends are fully round -->
+    <dimen name="radius_full">999dp</dimen>
 
     <!-- Heights -->
     <dimen name="button_primary_height">56dp</dimen>
     <dimen name="button_secondary_height">52dp</dimen>
     <dimen name="button_answer_height">60dp</dimen>
     <dimen name="chip_height">40dp</dimen>
+    <dimen name="pill_height">36dp</dimen>
+    <dimen name="pill_padding_h">14dp</dimen>
+    <dimen name="small_pill_padding_h">10dp</dimen>
+    <dimen name="small_pill_padding_v">6dp</dimen>
     <dimen name="hint_tile_min_height">56dp</dimen>
     <dimen name="bottom_nav_height">80dp</dimen>
     <dimen name="bottom_nav_padding_h">12dp</dimen>
@@ -39,9 +45,14 @@
     <dimen name="touch_target">48dp</dimen>
     <dimen name="icon_size">22dp</dimen>
     <dimen name="icon_size_small">16dp</dimen>
+    <dimen name="icon_size_tiny">14dp</dimen>
     <dimen name="logo_tile_size">40dp</dimen>
+    <!-- (logo_tile_size - icon_size) / 2 -->
+    <dimen name="logo_tile_padding">9dp</dimen>
     <dimen name="station_logo_size">64dp</dimen>
     <dimen name="icon_tile_size">44dp</dimen>
+    <!-- (icon_tile_size - icon_size) / 2 -->
+    <dimen name="icon_tile_padding">11dp</dimen>
     <dimen name="answer_badge_size">26dp</dimen>
     <dimen name="code_badge_size">40dp</dimen>
 
@@ -71,6 +82,11 @@
     <dimen name="gap_section_tab">18dp</dimen>
     <dimen name="gap_card_inner">16dp</dimen>
     <dimen name="gap_chip">8dp</dimen>
+    <dimen name="gap_eyebrow">8dp</dimen>
+    <dimen name="gap_logo">10dp</dimen>
+    <dimen name="gap_icon_text">6dp</dimen>
+    <dimen name="gap_tiles">12dp</dimen>
+    <dimen name="gap_tile_inner">14dp</dimen>
     <dimen name="gap_answer">10dp</dimen>
     <dimen name="card_padding">20dp</dimen>
     <dimen name="tile_padding">16dp</dimen>

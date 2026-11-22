@@ -138,6 +138,23 @@
         <item name="android:textColor">@color/text_muted</item>
     </style>
 
+    <!-- "5 STATIONS" pill on Home -->
+    <style name="TextAppearance.Ondes.Mono.Pill">
+        <item name="fontFamily">@font/jetbrains_mono_medium</item>
+        <item name="android:fontFamily">@font/jetbrains_mono_medium</item>
+        <item name="android:textSize">12sp</item>
+        <item name="android:letterSpacing">0.04</item>
+        <item name="android:textAllCaps">true</item>
+        <item name="android:textColor">@color/accent</item>
+    </style>
+
+    <!-- Numbers in the dashed daily slots -->
+    <style name="TextAppearance.Ondes.Mono.Slot">
+        <item name="fontFamily">@font/jetbrains_mono_medium</item>
+        <item name="android:fontFamily">@font/jetbrains_mono_medium</item>
+        <item name="android:textColor">@color/text_muted</item>
+    </style>
+
     <style name="TextAppearance.Ondes.Mono.Small">
         <item name="fontFamily">@font/jetbrains_mono_medium</item>
         <item name="android:fontFamily">@font/jetbrains_mono_medium</item>

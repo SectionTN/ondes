@@ -66,6 +66,11 @@ public class MainActivity extends AppCompatActivity {
         backToPlay.setEnabled(bottomNav.getSelectedItemId() != R.id.nav_play);
     }
 
+    /** Opens a tab as if the user tapped it, like the Explore tile on Home does. */
+    public void selectTab(@IdRes int itemId) {
+        bottomNav.setSelectedItemId(itemId);
+    }
+
     private void showTab(@IdRes int itemId) {
         backToPlay.setEnabled(itemId != R.id.nav_play);
         Fragment tab;

@@ -1,33 +1,232 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:paddingHorizontal="@dimen/screen_padding_h"
-    android:paddingTop="@dimen/screen_padding_top_tab">
+    android:fillViewport="true">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/app_name"
-        android:textAppearance="@style/TextAppearance.Ondes.Wordmark" />
-
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/play_button"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/gap_section_home"
-        android:text="@string/action_play"
-        app:icon="@drawable/ic_play" />
+        android:orientation="vertical"
+        android:paddingHorizontal="@dimen/screen_padding_h"
+        android:paddingTop="@dimen/screen_padding_top_tab"
+        android:paddingBottom="@dimen/screen_padding_h">
 
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/free_play_button"
-        style="?attr/materialButtonOutlinedStyle"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/gap_answer"
-        android:text="@string/free_play"
-        app:icon="@drawable/ic_shuffle" />
+        <!-- Logo, wordmark and streak -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
 
-</LinearLayout>
+            <ImageView
+                android:layout_width="@dimen/logo_tile_size"
+                android:layout_height="@dimen/logo_tile_size"
+                android:background="@drawable/bg_logo_tile"
+                android:importantForAccessibility="no"
+                android:padding="@dimen/logo_tile_padding"
+                android:src="@drawable/ic_radio"
+                app:tint="@color/on_accent" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/gap_logo"
+                android:layout_weight="1"
+                android:text="@string/app_name"
+                android:textAppearance="@style/TextAppearance.Ondes.Wordmark" />
+
+            <LinearLayout
+                android:id="@+id/streak_pill"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/pill_height"
+                android:background="@drawable/bg_pill"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingHorizontal="@dimen/pill_padding_h">
+
+                <ImageView
+                    android:layout_width="@dimen/icon_size_small"
+                    android:layout_height="@dimen/icon_size_small"
+                    android:importantForAccessibility="no"
+                    android:src="@drawable/ic_flame"
+                    app:tint="@color/accent" />
+
+                <TextView
+                    android:id="@+id/streak_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/gap_icon_text"
+                    android:textAppearance="@style/TextAppearance.Ondes.Chip" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/today_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/gap_section_home"
+            android:textAppearance="@style/TextAppearance.Ondes.Mono.Eyebrow" />
+
+        <TextView
+            android:id="@+id/daily_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/gap_eyebrow"
+            android:textAppearance="@style/TextAppearance.Ondes.Headline" />
+
+        <!-- Today's daily -->
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/gap_section_home">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="@dimen/card_padding">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/bg_pill_accent"
+                        android:paddingHorizontal="@dimen/small_pill_padding_h"
+                        android:paddingVertical="@dimen/small_pill_padding_v"
+                        android:text="@string/daily_station_count"
+                        android:textAppearance="@style/TextAppearance.Ondes.Mono.Pill" />
+
+                    <Space
+                        android:layout_width="0dp"
+                        android:layout_height="0dp"
+                        android:layout_weight="1" />
+
+                    <ImageView
+                        android:layout_width="@dimen/icon_size_tiny"
+                        android:layout_height="@dimen/icon_size_tiny"
+                        android:importantForAccessibility="no"
+                        android:src="@drawable/ic_clock"
+                        app:tint="@color/text_muted" />
+
+                    <TextView
+                        android:id="@+id/time_left"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/gap_icon_text"
+                        android:textAppearance="@style/TextAppearance.Ondes.Caption" />
+                </LinearLayout>
+
+                <!-- Five dashed slots, one per round. Decorative until the daily is played -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/daily_slot_height"
+                    android:layout_marginTop="@dimen/gap_card_inner"
+                    android:divider="@drawable/spacer_8"
+                    android:importantForAccessibility="noHideDescendants"
+                    android:orientation="horizontal"
+                    android:showDividers="middle">
+
+                    <TextView
+                        android:id="@+id/slot_1"
+                        style="@style/Widget.Ondes.DailySlot" />
+
+                    <TextView
+                        android:id="@+id/slot_2"
+                        style="@style/Widget.Ondes.DailySlot" />
+
+                    <TextView
+                        android:id="@+id/slot_3"
+                        style="@style/Widget.Ondes.DailySlot" />
+
+                    <TextView
+                        android:id="@+id/slot_4"
+                        style="@style/Widget.Ondes.DailySlot" />
+
+                    <TextView
+                        android:id="@+id/slot_5"
+                        style="@style/Widget.Ondes.DailySlot" />
+                </LinearLayout>
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/play_button"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/gap_card_inner"
+                    android:text="@string/action_play"
+                    app:icon="@drawable/ic_play" />
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+        <!-- Free play and Explore -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/gap_section_home"
+            android:orientation="horizontal">
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/free_play_tile"
+                style="@style/Widget.Ondes.Card.Tile"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:clickable="true"
+                android:focusable="true">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="@dimen/tile_padding">
+
+                    <ImageView
+                        style="@style/Widget.Ondes.IconTile"
+                        android:src="@drawable/ic_shuffle" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/gap_tile_inner"
+                        android:text="@string/free_play"
+                        android:textAppearance="@style/TextAppearance.Ondes.Body.Strong" />
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/explore_tile"
+                style="@style/Widget.Ondes.Card.Tile"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/gap_tiles"
+                android:layout_weight="1"
+                android:clickable="true"
+                android:focusable="true">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="@dimen/tile_padding">
+
+                    <ImageView
+                        style="@style/Widget.Ondes.IconTile"
+                        android:src="@drawable/ic_vibrate" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/gap_tile_inner"
+                        android:text="@string/tab_explore"
+                        android:textAppearance="@style/TextAppearance.Ondes.Body.Strong" />
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+        </LinearLayout>
+    </LinearLayout>
+</androidx.core.widget.NestedScrollView>

@@ -52,6 +52,8 @@
 
     <style name="Widget.Ondes.TextView" parent="Widget.MaterialComponents.TextView">
         <item name="android:textAppearance">@style/TextAppearance.Ondes.Body</item>
+        <!-- No extra space above and below the text, like the CSS of the design -->
+        <item name="android:includeFontPadding">false</item>
     </style>
 
     <!-- Primary button: filled accent, 56dp -->
@@ -101,6 +103,26 @@
         <item name="android:insetTop">@dimen/icon_button_inset</item>
         <item name="android:insetBottom">@dimen/icon_button_inset</item>
         <item name="shapeAppearance">@style/ShapeAppearance.Ondes.Pill</item>
+    </style>
+
+    <!-- One of the five dashed round slots on the Home daily card -->
+    <style name="Widget.Ondes.DailySlot" parent="">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:background">@drawable/bg_dashed_rounded</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textAppearance">@style/TextAppearance.Ondes.Mono.Slot</item>
+    </style>
+
+    <!-- 44dp rounded square with an accent icon, on the Home tiles -->
+    <style name="Widget.Ondes.IconTile" parent="">
+        <item name="android:layout_width">@dimen/icon_tile_size</item>
+        <item name="android:layout_height">@dimen/icon_tile_size</item>
+        <item name="android:background">@drawable/bg_icon_tile</item>
+        <item name="android:padding">@dimen/icon_tile_padding</item>
+        <item name="android:importantForAccessibility">no</item>
+        <item name="tint">@color/accent</item>
     </style>
 
     <!-- Cards: surface fill, 1dp border, 24dp corners -->
