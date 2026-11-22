@@ -2,7 +2,9 @@ package me.sectiontn.ondes;
 
 import android.os.Bundle;
 
+import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.IdRes;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
@@ -19,6 +21,16 @@ import me.sectiontn.ondes.ui.passport.PassportFragment;
 /** Hosts the three tabs (Play, Explore, Passport) above the bottom navigation bar. */
 public class MainActivity extends AppCompatActivity {
 
+    private BottomNavigationView bottomNav;
+
+    // Back on Explore or Passport returns to Play first, and Back on Play leaves the app
+    private final OnBackPressedCallback backToPlay = new OnBackPressedCallback(false) {
+        @Override
+        public void handleOnBackPressed() {
+            bottomNav.setSelectedItemId(R.id.nav_play);
+        }
+    };
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -32,13 +44,14 @@ public class MainActivity extends AppCompatActivity {
             return insets.inset(bars.left, bars.top, bars.right, 0);
         });
 
-        BottomNavigationView bottomNav = findViewById(R.id.bottom_nav);
+        bottomNav = findViewById(R.id.bottom_nav);
         bottomNav.setOnItemSelectedListener(item -> {
             showTab(item.getItemId());
             return true;
         });
         // Tapping the open tab again keeps it as it is
         bottomNav.setOnItemReselectedListener(item -> { });
+        getOnBackPressedDispatcher().addCallback(this, backToPlay);
 
         // After a rotation or process death, the FragmentManager restores the open tab itself
         if (savedInstanceState == null) {
@@ -46,7 +59,15 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    @Override
+    protected void onRestoreInstanceState(@NonNull Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+        // The bottom nav gets its selected tab back here, after onCreate
+        backToPlay.setEnabled(bottomNav.getSelectedItemId() != R.id.nav_play);
+    }
+
     private void showTab(@IdRes int itemId) {
+        backToPlay.setEnabled(itemId != R.id.nav_play);
         Fragment tab;
         if (itemId == R.id.nav_explore) {
             tab = new ExploreFragment();
