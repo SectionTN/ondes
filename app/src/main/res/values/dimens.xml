@@ -86,6 +86,15 @@
     <dimen name="stamp_inner_size">52dp</dimen>
     <dimen name="stamp_stroke">2dp</dimen>
     <dimen name="passport_progress_height">8dp</dimen>
+    <dimen name="progress_card_padding">18dp</dimen>
+    <dimen name="gap_progress_card">14dp</dimen>
+    <dimen name="gap_continent_counts">4dp</dimen>
+    <dimen name="gap_stamp_inner">6dp</dimen>
+    <dimen name="stamp_row_gap">14dp</dimen>
+    <!-- Half the 8dp column gap: each cell pads 4dp on both sides and the grid pulls out 4dp -->
+    <dimen name="stamp_cell_padding_h">4dp</dimen>
+    <dimen name="stamp_grid_outset">-4dp</dimen>
+    <dimen name="stamp_lock_icon_size">20dp</dimen>
 
     <!-- Strokes and dashes -->
     <dimen name="stroke_thin">1dp</dimen>

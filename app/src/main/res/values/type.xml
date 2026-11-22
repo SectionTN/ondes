@@ -38,6 +38,13 @@
         <item name="android:textSize">26sp</item>
     </style>
 
+    <!-- Country code inside a passport stamp. The ink color is set per stamp -->
+    <style name="TextAppearance.Ondes.Stamp">
+        <item name="fontFamily">@font/space_grotesk_bold</item>
+        <item name="android:fontFamily">@font/space_grotesk_bold</item>
+        <item name="android:textSize">18sp</item>
+    </style>
+
     <style name="TextAppearance.Ondes.Title">
         <item name="fontFamily">@font/space_grotesk_bold</item>
         <item name="android:fontFamily">@font/space_grotesk_bold</item>
@@ -77,6 +84,19 @@
         <item name="android:fontFamily">@font/inter_regular</item>
         <item name="android:textSize">15sp</item>
         <item name="android:letterSpacing">0</item>
+        <item name="android:textColor">@color/text</item>
+    </style>
+
+    <!-- "/ 195 countries" -->
+    <style name="TextAppearance.Ondes.Body.Muted">
+        <item name="android:textColor">@color/text_muted</item>
+    </style>
+
+    <!-- Country name under a passport stamp -->
+    <style name="TextAppearance.Ondes.StampName">
+        <item name="fontFamily">@font/inter_semibold</item>
+        <item name="android:fontFamily">@font/inter_semibold</item>
+        <item name="android:textSize">12sp</item>
         <item name="android:textColor">@color/text</item>
     </style>
 
@@ -161,6 +181,11 @@
         <item name="android:textColor">@color/text_muted</item>
     </style>
 
+    <!-- Continent counts on the Passport progress card -->
+    <style name="TextAppearance.Ondes.Mono.Count">
+        <item name="android:textSize">16sp</item>
+    </style>
+
     <!-- Country code in the round badge of a station row -->
     <style name="TextAppearance.Ondes.Mono.Code">
         <item name="android:textSize">13sp</item>
@@ -187,6 +212,7 @@
         <item name="fontFamily">@font/jetbrains_mono_medium</item>
         <item name="android:fontFamily">@font/jetbrains_mono_medium</item>
         <item name="android:textSize">11sp</item>
+        <item name="android:textAllCaps">true</item>
         <item name="android:textColor">@color/text_muted</item>
     </style>
 </resources>

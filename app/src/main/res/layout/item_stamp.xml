@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center_horizontal"
+    android:orientation="vertical"
+    android:paddingHorizontal="@dimen/stamp_cell_padding_h"
+    android:paddingBottom="@dimen/stamp_row_gap">
+
+    <!-- The ring and its dashed inner ring are drawn in code, in the stamp's ink -->
+    <FrameLayout
+        android:id="@+id/stamp_ring"
+        android:layout_width="@dimen/stamp_size"
+        android:layout_height="@dimen/stamp_size"
+        android:importantForAccessibility="noHideDescendants">
+
+        <TextView
+            android:id="@+id/stamp_code"
+            android:layout_width="@dimen/stamp_inner_size"
+            android:layout_height="@dimen/stamp_inner_size"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:textAppearance="@style/TextAppearance.Ondes.Stamp" />
+
+        <ImageView
+            android:id="@+id/stamp_lock"
+            android:layout_width="@dimen/stamp_lock_icon_size"
+            android:layout_height="@dimen/stamp_lock_icon_size"
+            android:layout_gravity="center"
+            android:src="@drawable/ic_lock"
+            app:tint="@color/text_faint" />
+    </FrameLayout>
+
+    <TextView
+        android:id="@+id/stamp_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/gap_stamp_inner"
+        android:gravity="center"
+        android:textAppearance="@style/TextAppearance.Ondes.StampName" />
+
+    <TextView
+        android:id="@+id/stamp_date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/gap_stamp_inner"
+        android:textAppearance="@style/TextAppearance.Ondes.Mono.Small" />
+</LinearLayout>
