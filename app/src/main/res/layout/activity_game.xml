@@ -19,6 +19,8 @@
             android:layout_height="@dimen/touch_target"
             android:layout_gravity="start|center_vertical"
             android:layout_marginStart="@dimen/icon_button_outset"
+            android:layout_marginTop="@dimen/icon_button_outset"
+            android:layout_marginBottom="@dimen/icon_button_outset"
             android:contentDescription="@string/quit_round"
             app:icon="@drawable/ic_close" />
 
