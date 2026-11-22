@@ -115,8 +115,15 @@
     </style>
 
     <!-- Bottom nav: deep background, accent-soft pill behind the active icon -->
+    <!-- Flat bar: the 1dp divider above it in activity_main replaces the M3 elevation -->
     <style name="Widget.Ondes.BottomNav" parent="Widget.Material3.BottomNavigationView">
-        <item name="backgroundTint">@color/bg_deep</item>
+        <item name="android:background">@color/bg_deep</item>
+        <item name="backgroundTint">@null</item>
+        <item name="elevation">0dp</item>
+        <item name="android:paddingStart">@dimen/bottom_nav_padding_h</item>
+        <item name="android:paddingEnd">@dimen/bottom_nav_padding_h</item>
+        <!-- The active label already uses the semibold file, so no fake bold on top -->
+        <item name="itemTextAppearanceActiveBoldEnabled">false</item>
         <item name="itemIconTint">@color/nav_icon</item>
         <item name="itemTextColor">@color/nav_text</item>
         <item name="itemIconSize">@dimen/icon_size</item>

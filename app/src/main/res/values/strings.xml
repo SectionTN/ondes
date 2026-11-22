@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">Ondes</string>
+
+    <!-- Tabs -->
+    <string name="tab_play">Play</string>
+    <string name="tab_explore">Explore</string>
+    <string name="tab_passport">Passport</string>
 </resources>
