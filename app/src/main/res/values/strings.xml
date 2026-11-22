@@ -1,4 +1,4 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <string name="app_name">Ondes</string>
 
     <!-- Tabs -->
@@ -32,7 +32,7 @@
     <string name="pause_station">Pause %1$s</string>
 
     <!-- Passport -->
-    <string name="passport_total">/ %1$d countries</string>
+    <string name="passport_total" tools:ignore="PluralsCandidate">/ %1$d countries</string>
     <string name="continent_all">All</string>
     <string name="continent_africa">Africa</string>
     <string name="continent_americas">Americas</string>
@@ -47,4 +47,49 @@
     <string name="mode_daily">Daily</string>
     <string name="mode_free_play">Free play</string>
     <string name="quit_round">Quit round</string>
+    <string name="back_home">Back home</string>
+    <string name="round_label">Round %1$d of %2$d</string>
+    <string name="live">Live</string>
+    <string name="timer">%1$d:%2$02d</string>
+    <string name="hints_title">Hints</string>
+    <string name="hints_up_to">Up to</string>
+    <string name="points_signed">+%1$d pts</string>
+    <string name="hint_language">Language</string>
+    <string name="hint_continent">Continent</string>
+    <string name="hint_region">Region</string>
+    <string name="hint_cost">-%1$d pts</string>
+    <string name="hint_reveal" tools:ignore="PluralsCandidate">Reveal the %1$s hint, costs %2$d points</string>
+    <string name="answer_a">A</string>
+    <string name="answer_b">B</string>
+    <string name="answer_c">C</string>
+    <string name="answer_d">D</string>
+
+    <!-- Result -->
+    <string name="points_zero">0 pts</string>
+    <string name="breakdown_base" tools:ignore="PluralsCandidate">%1$d base</string>
+    <string name="breakdown_hint" tools:ignore="PluralsCandidate">-%1$d hint</string>
+    <string name="breakdown_time" tools:ignore="PluralsCandidate">-%1$d time</string>
+    <string name="breakdown_separator">" · "</string>
+    <string name="you_said">You said %1$s</string>
+    <string name="times_up">Time\'s up</string>
+    <string name="station_place">%1$s, %2$s</string>
+    <string name="status_live">Live</string>
+    <string name="status_paused">Paused</string>
+    <string name="action_next_round">Next round</string>
+    <string name="action_see_results">See results</string>
+    <string name="action_save">Save</string>
+    <string name="action_saved">Saved</string>
+    <string name="outcome_correct">Correct</string>
+    <string name="outcome_wrong">Wrong</string>
+
+    <!-- Summary -->
+    <string name="summary_max">/ %1$s pts</string>
+    <string name="outcome_perfect">Correct</string>
+    <string name="outcome_hint">Correct with a hint</string>
+    <string name="round_detail">%1$s · %2$s</string>
+    <string name="points_plain">+%1$d</string>
+    <string name="share_title">Ondes #%1$d · %2$s</string>
+    <string name="action_share">Share</string>
+    <string name="action_play_again">Play again</string>
+    <string name="next_daily">Next daily in %1$dh %2$dm</string>
 </resources>

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- One station tag on the Result card -->
+<TextView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="@dimen/tag_height"
+    android:background="@drawable/bg_tag"
+    android:gravity="center"
+    android:paddingHorizontal="@dimen/tag_padding_h"
+    android:textAppearance="@style/TextAppearance.Ondes.Tag" />

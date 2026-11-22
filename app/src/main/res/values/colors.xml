@@ -31,6 +31,7 @@
     <color name="correct_soft">#245CE1A8</color>
     <color name="hint">#FFFFC857</color>
     <color name="wrong">#FFFF6B81</color>
+    <color name="wrong_soft">#24FF6B81</color>
     <color name="wrong_text">#FFFF8FA0</color>
 
     <!-- Passport stamp inks, cycled -->

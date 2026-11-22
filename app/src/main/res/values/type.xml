@@ -100,6 +100,29 @@
         <item name="android:textColor">@color/text</item>
     </style>
 
+    <!-- Station tags on the Result card -->
+    <style name="TextAppearance.Ondes.Tag">
+        <item name="fontFamily">@font/inter_regular</item>
+        <item name="android:fontFamily">@font/inter_regular</item>
+        <item name="android:textSize">13sp</item>
+        <item name="android:textColor">@color/text</item>
+    </style>
+
+    <!-- "Live" or "Paused" next to the bars on the Result card -->
+    <style name="TextAppearance.Ondes.Status">
+        <item name="fontFamily">@font/inter_regular</item>
+        <item name="android:fontFamily">@font/inter_regular</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">@color/text_2</item>
+    </style>
+
+    <!-- Streak pill on Summary -->
+    <style name="TextAppearance.Ondes.Caption.Accent">
+        <item name="fontFamily">@font/inter_semibold</item>
+        <item name="android:fontFamily">@font/inter_semibold</item>
+        <item name="android:textColor">@color/accent</item>
+    </style>
+
     <!-- Short emphasized text: mini player station name, revealed hint values -->
     <style name="TextAppearance.Ondes.Label">
         <item name="fontFamily">@font/inter_semibold</item>
@@ -206,6 +229,50 @@
         <item name="fontFamily">@font/jetbrains_mono_medium</item>
         <item name="android:fontFamily">@font/jetbrains_mono_medium</item>
         <item name="android:textColor">@color/text_muted</item>
+    </style>
+
+    <!-- Score chip on the game screens and the share line on Summary -->
+    <style name="TextAppearance.Ondes.Mono.Score">
+        <item name="android:textSize">14sp</item>
+    </style>
+
+    <!-- "LIVE" pill on the Round screen -->
+    <style name="TextAppearance.Ondes.Mono.Live">
+        <item name="android:textSize">12sp</item>
+        <item name="android:letterSpacing">0.08</item>
+        <item name="android:textAllCaps">true</item>
+        <item name="android:textColor">@color/accent</item>
+    </style>
+
+    <!-- Cost on a closed hint tile: "-100 pts" -->
+    <style name="TextAppearance.Ondes.Mono.HintCost">
+        <item name="android:textSize">13sp</item>
+        <item name="android:textColor">@color/accent</item>
+    </style>
+
+    <!-- A-D letters on the answer buttons -->
+    <style name="TextAppearance.Ondes.Mono.Badge">
+        <item name="android:textSize">12sp</item>
+        <item name="android:textColor">@color/text_muted</item>
+    </style>
+
+    <!-- "+450 pts" after "Up to" on the Round screen -->
+    <style name="TextAppearance.Ondes.Mono.Value">
+        <item name="fontFamily">@font/jetbrains_mono_medium</item>
+        <item name="android:fontFamily">@font/jetbrains_mono_medium</item>
+        <item name="android:textSize">13sp</item>
+    </style>
+
+    <!-- "/ 2,500 pts" under the Summary score -->
+    <style name="TextAppearance.Ondes.Mono.Muted">
+        <item name="fontFamily">@font/jetbrains_mono_medium</item>
+        <item name="android:fontFamily">@font/jetbrains_mono_medium</item>
+        <item name="android:textColor">@color/text_muted</item>
+    </style>
+
+    <!-- Score breakdown on Result: "500 base · -50 hint · -30 time" -->
+    <style name="TextAppearance.Ondes.Mono.Muted.Small">
+        <item name="android:textSize">12sp</item>
     </style>
 
     <style name="TextAppearance.Ondes.Mono.Small">

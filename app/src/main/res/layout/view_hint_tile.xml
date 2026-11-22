@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- A hint tile. Closed: dashed, with its cost. Open: filled, with the answer -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/bg_dashed_rounded"
+    android:clickable="true"
+    android:focusable="true"
+    android:foreground="?attr/selectableItemBackground"
+    android:gravity="center_vertical"
+    android:minHeight="@dimen/hint_tile_min_height"
+    android:orientation="vertical"
+    android:paddingHorizontal="@dimen/hint_tile_padding_h"
+    android:paddingVertical="@dimen/hint_tile_padding_v">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        tools:ignore="UseCompoundDrawables">
+
+        <ImageView
+            android:id="@+id/hint_icon"
+            android:layout_width="@dimen/hint_icon_size"
+            android:layout_height="@dimen/hint_icon_size"
+            android:layout_marginEnd="@dimen/gap_hint_label"
+            android:importantForAccessibility="no"
+            android:src="@drawable/ic_lightbulb"
+            app:tint="@color/text_muted" />
+
+        <TextView
+            android:id="@+id/hint_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="@style/TextAppearance.Ondes.Caption.Small" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/hint_detail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/gap_text_lines" />
+</LinearLayout>

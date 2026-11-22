@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Tall screens get the timer ring at the design size -->
+    <dimen name="timer_ring_size">248dp</dimen>
+    <dimen name="timer_ring_indicator_size">238dp</dimen>
+</resources>

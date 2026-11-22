@@ -30,8 +30,8 @@ public class EqualizerView extends View {
         TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.EqualizerView);
         barCount = Math.min(a.getInt(R.styleable.EqualizerView_barCount, 3), LEVELS.length);
         barGap = a.getDimension(R.styleable.EqualizerView_barGap, getResources().getDimension(R.dimen.equalizer_bar_gap));
+        barWidth = a.getDimension(R.styleable.EqualizerView_barWidth, getResources().getDimension(R.dimen.equalizer_bar_width));
         a.recycle();
-        barWidth = getResources().getDimension(R.dimen.equalizer_bar_width);
         paint.setColor(ContextCompat.getColor(context, R.color.accent));
         setImportantForAccessibility(IMPORTANT_FOR_ACCESSIBILITY_NO);
     }

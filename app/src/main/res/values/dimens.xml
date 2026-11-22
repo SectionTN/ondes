@@ -71,7 +71,8 @@
     <dimen name="code_badge_size">40dp</dimen>
 
     <!-- Game -->
-    <dimen name="timer_ring_size">248dp</dimen>
+    <!-- Smaller ring under 840dp of screen height, so the answers fit without scrolling. values-h840dp has the design size -->
+    <dimen name="timer_ring_size">200dp</dimen>
     <dimen name="timer_ring_stroke">10dp</dimen>
     <dimen name="progress_segment_height">4dp</dimen>
     <dimen name="progress_segment_gap">6dp</dimen>
@@ -80,6 +81,48 @@
     <dimen name="equalizer_bar_width">4dp</dimen>
     <dimen name="equalizer_bar_gap">3dp</dimen>
     <dimen name="outcome_square_size">32dp</dimen>
+    <dimen name="outcome_icon_size">16dp</dimen>
+    <dimen name="outcome_icon_padding">8dp</dimen>
+    <dimen name="radius_segment">2dp</dimen>
+    <dimen name="radius_share_square">5dp</dimen>
+    <dimen name="share_square_size">18dp</dimen>
+    <dimen name="gap_share_squares">4dp</dimen>
+    <dimen name="share_preview_padding_h">16dp</dimen>
+    <dimen name="share_preview_padding_v">14dp</dimen>
+    <dimen name="summary_row_min_height">60dp</dimen>
+    <dimen name="rounds_card_padding_h">16dp</dimen>
+    <dimen name="rounds_card_padding_v">6dp</dimen>
+    <dimen name="summary_pill_height">32dp</dimen>
+    <dimen name="summary_pill_padding_h">12dp</dimen>
+    <dimen name="gap_summary_pill">10dp</dimen>
+    <!-- The ring is drawn 10dp smaller than its box, like the design (238dp inside 248dp) -->
+    <dimen name="timer_ring_indicator_size">190dp</dimen>
+    <dimen name="timer_ring_inset">5dp</dimen>
+    <dimen name="timer_equalizer_height">48dp</dimen>
+    <dimen name="timer_equalizer_gap">5dp</dimen>
+    <dimen name="timer_equalizer_bar_width">6dp</dimen>
+    <dimen name="gap_timer">10dp</dimen>
+    <dimen name="gap_now_playing">18dp</dimen>
+    <dimen name="gap_header">14dp</dimen>
+    <dimen name="gap_hints">10dp</dimen>
+    <dimen name="gap_hint_label">4dp</dimen>
+    <dimen name="hint_icon_size">12dp</dimen>
+    <dimen name="hint_tile_padding_h">10dp</dimen>
+    <dimen name="hint_tile_padding_v">8dp</dimen>
+    <dimen name="answer_padding_h">14dp</dimen>
+    <dimen name="live_pill_height">28dp</dimen>
+    <dimen name="live_dot_size">8dp</dimen>
+    <dimen name="score_chip_padding_h">12dp</dimen>
+    <!-- Smallest gap between the Round and Result sections on a short screen -->
+    <dimen name="game_section_min_gap">16dp</dimen>
+    <dimen name="result_icon_size">40dp</dimen>
+    <dimen name="result_icon_padding">24dp</dimen>
+    <dimen name="result_equalizer_height">22dp</dimen>
+    <dimen name="gap_result">10dp</dimen>
+    <dimen name="gap_station_logo">14dp</dimen>
+    <dimen name="gap_station_lines">4dp</dimen>
+    <dimen name="tag_height">30dp</dimen>
+    <dimen name="tag_padding_h">12dp</dimen>
 
     <!-- Passport -->
     <dimen name="stamp_size">64dp</dimen>

@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Close button, "Round 5 of 5", the score and the five progress segments -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/close_button"
+            style="@style/Widget.Ondes.IconButton"
+            android:layout_width="@dimen/touch_target"
+            android:layout_height="@dimen/touch_target"
+            android:layout_marginStart="@dimen/icon_button_outset"
+            android:layout_marginTop="@dimen/icon_button_outset"
+            android:layout_marginBottom="@dimen/icon_button_outset"
+            android:contentDescription="@string/quit_round"
+            app:icon="@drawable/ic_close" />
+
+        <Space
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
+
+        <TextView
+            android:id="@+id/round_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="@style/TextAppearance.Ondes.Body.Medium" />
+
+        <Space
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
+
+        <TextView
+            android:id="@+id/score_chip"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/pill_height"
+            android:background="@drawable/bg_pill"
+            android:gravity="center"
+            android:paddingHorizontal="@dimen/score_chip_padding_h"
+            android:textAppearance="@style/TextAppearance.Ondes.Mono.Score" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/segments"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/gap_header"
+        android:divider="@drawable/spacer_6"
+        android:importantForAccessibility="noHideDescendants"
+        android:orientation="horizontal"
+        android:showDividers="middle">
+
+        <View style="@style/Widget.Ondes.Segment" />
+
+        <View style="@style/Widget.Ondes.Segment" />
+
+        <View style="@style/Widget.Ondes.Segment" />
+
+        <View style="@style/Widget.Ondes.Segment" />
+
+        <View style="@style/Widget.Ondes.Segment" />
+    </LinearLayout>
+</LinearLayout>

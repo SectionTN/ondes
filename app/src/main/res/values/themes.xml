@@ -126,6 +126,34 @@
         <item name="android:textAppearance">@style/TextAppearance.Ondes.Button.Medium</item>
     </style>
 
+    <!-- Answer button: a card holding a letter badge and a country name -->
+    <style name="Widget.Ondes.Card.Answer">
+        <item name="strokeColor">@color/border_strong</item>
+        <item name="shapeAppearance">@style/ShapeAppearance.Ondes.Button</item>
+    </style>
+
+    <!-- 20 second countdown ring around the equalizer on the Round screen -->
+    <style name="Widget.Ondes.TimerRing" parent="Widget.Ondes.CircularProgress">
+        <item name="indicatorSize">@dimen/timer_ring_indicator_size</item>
+        <item name="indicatorInset">@dimen/timer_ring_inset</item>
+        <item name="trackThickness">@dimen/timer_ring_stroke</item>
+    </style>
+
+    <!-- One of the five round progress segments under the game top bar -->
+    <style name="Widget.Ondes.Segment" parent="">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">@dimen/progress_segment_height</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:background">@drawable/bg_segment</item>
+    </style>
+
+    <!-- One of the five colored squares in the share preview -->
+    <style name="Widget.Ondes.ShareSquare" parent="">
+        <item name="android:layout_width">@dimen/share_square_size</item>
+        <item name="android:layout_height">@dimen/share_square_size</item>
+        <item name="android:background">@drawable/bg_share_square</item>
+    </style>
+
     <!-- One of the five dashed round slots on the Home daily card -->
     <style name="Widget.Ondes.DailySlot" parent="">
         <item name="android:layout_width">0dp</item>
@@ -142,7 +170,6 @@
         <item name="android:layout_height">@dimen/icon_tile_size</item>
         <item name="android:background">@drawable/bg_icon_tile</item>
         <item name="android:padding">@dimen/icon_tile_padding</item>
-        <item name="android:importantForAccessibility">no</item>
         <item name="tint">@color/accent</item>
     </style>
 

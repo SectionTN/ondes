@@ -5,5 +5,7 @@
         <attr name="barCount" format="integer" />
         <!-- Space between two bars -->
         <attr name="barGap" format="dimension" />
+        <!-- Width of one bar -->
+        <attr name="barWidth" format="dimension" />
     </declare-styleable>
 </resources>

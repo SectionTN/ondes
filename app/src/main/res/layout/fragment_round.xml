@@ -1,0 +1,220 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Sections spread over the screen like the design. On a short screen they stack and scroll -->
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingHorizontal="@dimen/screen_padding_h"
+        android:paddingTop="@dimen/screen_padding_top_game"
+        android:paddingBottom="@dimen/screen_padding_bottom_game">
+
+        <include
+            android:id="@+id/top_bar"
+            layout="@layout/view_game_top_bar" />
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:minHeight="@dimen/game_section_min_gap" />
+
+        <!-- Now playing: LIVE, the timer ring and the dial -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/live_pill_height"
+                android:background="@drawable/bg_pill_accent"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingHorizontal="@dimen/small_pill_padding_h">
+
+                <View
+                    android:layout_width="@dimen/live_dot_size"
+                    android:layout_height="@dimen/live_dot_size"
+                    android:background="@drawable/bg_dot" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/gap_icon_text"
+                    android:text="@string/live"
+                    android:textAppearance="@style/TextAppearance.Ondes.Mono.Live" />
+            </LinearLayout>
+
+            <FrameLayout
+                android:layout_width="@dimen/timer_ring_size"
+                android:layout_height="@dimen/timer_ring_size"
+                android:layout_marginTop="@dimen/gap_now_playing">
+
+                <View
+                    android:layout_width="@dimen/timer_ring_indicator_size"
+                    android:layout_height="@dimen/timer_ring_indicator_size"
+                    android:layout_gravity="center"
+                    android:background="@drawable/bg_circle_bg_deep" />
+
+                <com.google.android.material.progressindicator.CircularProgressIndicator
+                    android:id="@+id/timer_ring"
+                    style="@style/Widget.Ondes.TimerRing"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:importantForAccessibility="no" />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:gravity="center_horizontal"
+                    android:orientation="vertical">
+
+                    <me.sectiontn.ondes.ui.common.EqualizerView
+                        android:layout_width="wrap_content"
+                        android:layout_height="@dimen/timer_equalizer_height"
+                        app:barCount="8"
+                        app:barGap="@dimen/timer_equalizer_gap"
+                        app:barWidth="@dimen/timer_equalizer_bar_width" />
+
+                    <TextView
+                        android:id="@+id/timer_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/gap_timer"
+                        android:textAppearance="@style/TextAppearance.Ondes.Mono.Timer" />
+                </LinearLayout>
+            </FrameLayout>
+
+            <me.sectiontn.ondes.ui.common.DialStripView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/gap_now_playing" />
+        </LinearLayout>
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:minHeight="@dimen/game_section_min_gap" />
+
+        <!-- Hints -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/hints_title"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/hints_title"
+                android:textAppearance="@style/TextAppearance.Ondes.Body.Medium" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/hints_up_to"
+                android:textAppearance="@style/TextAppearance.Ondes.Caption" />
+
+            <TextView
+                android:id="@+id/hints_max"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/gap_hint_label"
+                android:textAppearance="@style/TextAppearance.Ondes.Mono.Value" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:baselineAligned="false"
+            android:layout_marginTop="@dimen/gap_hints"
+            android:divider="@drawable/spacer_8"
+            android:orientation="horizontal"
+            android:showDividers="middle">
+
+            <include
+                android:id="@+id/hint_language"
+                layout="@layout/view_hint_tile"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1" />
+
+            <include
+                android:id="@+id/hint_continent"
+                layout="@layout/view_hint_tile"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1" />
+
+            <include
+                android:id="@+id/hint_region"
+                layout="@layout/view_hint_tile"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1" />
+        </LinearLayout>
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:minHeight="@dimen/game_section_min_gap" />
+
+        <!-- Answers, two by two -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:baselineAligned="false"
+            android:orientation="horizontal">
+
+            <include
+                android:id="@+id/answer_a"
+                layout="@layout/view_answer"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1" />
+
+            <include
+                android:id="@+id/answer_b"
+                layout="@layout/view_answer"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_marginStart="@dimen/gap_answer"
+                android:layout_weight="1" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:baselineAligned="false"
+            android:layout_marginTop="@dimen/gap_answer"
+            android:orientation="horizontal">
+
+            <include
+                android:id="@+id/answer_c"
+                layout="@layout/view_answer"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1" />
+
+            <include
+                android:id="@+id/answer_d"
+                layout="@layout/view_answer"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_marginStart="@dimen/gap_answer"
+                android:layout_weight="1" />
+        </LinearLayout>
+    </LinearLayout>
+</androidx.core.widget.NestedScrollView>

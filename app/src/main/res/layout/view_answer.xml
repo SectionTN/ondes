@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- An answer button: letter badge and country name -->
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/Widget.Ondes.Card.Answer"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:clickable="true"
+    android:focusable="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:minHeight="@dimen/button_answer_height"
+        android:orientation="horizontal"
+        android:paddingHorizontal="@dimen/answer_padding_h">
+
+        <TextView
+            android:id="@+id/answer_letter"
+            android:layout_width="@dimen/answer_badge_size"
+            android:layout_height="@dimen/answer_badge_size"
+            android:background="@drawable/bg_badge"
+            android:gravity="center"
+            android:importantForAccessibility="no"
+            android:textAppearance="@style/TextAppearance.Ondes.Mono.Badge" />
+
+        <TextView
+            android:id="@+id/answer_name"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/gap_answer"
+            android:layout_weight="1"
+            android:ellipsize="end"
+            android:hyphenationFrequency="full"
+            android:maxLines="2"
+            android:textAppearance="@style/TextAppearance.Ondes.Body.Strong" />
+    </LinearLayout>
+</com.google.android.material.card.MaterialCardView>
