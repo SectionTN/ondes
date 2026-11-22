@@ -13,7 +13,7 @@
         android:layout_width="@dimen/outcome_square_size"
         android:layout_height="@dimen/outcome_square_size"
         android:background="@drawable/bg_outcome_square"
-        android:contentDescription="@string/outcome_perfect"
+        android:contentDescription="@string/outcome_correct"
         android:padding="@dimen/outcome_icon_padding"
         app:tint="@color/on_accent" />
 

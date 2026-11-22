@@ -44,7 +44,6 @@
     <string name="countries_collected">Countries collected</string>
 
     <!-- Game -->
-    <string name="mode_daily">Daily</string>
     <string name="mode_free_play">Free play</string>
     <string name="quit_round">Quit round</string>
     <string name="back_home">Back home</string>
@@ -84,10 +83,10 @@
 
     <!-- Summary -->
     <string name="summary_max">/ %1$s pts</string>
-    <string name="outcome_perfect">Correct</string>
     <string name="outcome_hint">Correct with a hint</string>
     <string name="round_detail">%1$s · %2$s</string>
     <string name="points_plain">+%1$d</string>
+    <string name="points_none">0</string>
     <string name="share_title">Ondes #%1$d · %2$s</string>
     <string name="action_share">Share</string>
     <string name="action_play_again">Play again</string>

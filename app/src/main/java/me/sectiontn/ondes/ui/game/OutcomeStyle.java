@@ -41,7 +41,7 @@ final class OutcomeStyle {
     static int description(Outcome outcome) {
         switch (outcome) {
             case PERFECT:
-                return R.string.outcome_perfect;
+                return R.string.outcome_correct;
             case HINT:
                 return R.string.outcome_hint;
             default:

@@ -53,7 +53,7 @@ public class RoundAdapter extends RecyclerView.Adapter<RoundAdapter.Holder> {
         } else {
             holder.detail.setText(context.getString(R.string.round_detail, round.stationName, round.city));
         }
-        holder.points.setText(wrong ? "0" : context.getString(R.string.points_plain, round.points));
+        holder.points.setText(wrong ? context.getString(R.string.points_none) : context.getString(R.string.points_plain, round.points));
         holder.points.setTextColor(ContextCompat.getColor(context, wrong ? R.color.wrong_text : R.color.text));
     }
 

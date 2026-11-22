@@ -4,7 +4,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
+import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -28,11 +28,12 @@ import me.sectiontn.ondes.sample.SampleData;
 public class ResultFragment extends Fragment {
 
     private static final String ARG_ROUND = "round";
-    private static final int BASE_POINTS = 500;
     private static final int MAX_TAGS = 3;
 
     private boolean playing = true;
     private boolean saved = false;
+    // Set by the first tap on Next, so a fast double tap cannot skip a round
+    private boolean leaving = false;
 
     public ResultFragment() {
         super(R.layout.fragment_result);
@@ -65,7 +66,13 @@ public class ResultFragment extends Fragment {
 
         MaterialButton next = view.findViewById(R.id.next_button);
         next.setText(roundNumber < SampleData.ROUND_COUNT ? R.string.action_next_round : R.string.action_see_results);
-        next.setOnClickListener(v -> ((GameActivity) requireActivity()).showNextRound());
+        next.setOnClickListener(v -> {
+            if (leaving) {
+                return;
+            }
+            leaving = true;
+            ((GameActivity) requireActivity()).showNextRound();
+        });
 
         MaterialButton save = view.findViewById(R.id.save_button);
         save.setOnClickListener(v -> {
@@ -106,7 +113,7 @@ public class ResultFragment extends Fragment {
 
     /** "500 base · -50 hint · -30 time", leaving out the parts that are zero. */
     private String breakdown(SampleData.Round round) {
-        StringBuilder text = new StringBuilder(getString(R.string.breakdown_base, BASE_POINTS));
+        StringBuilder text = new StringBuilder(getString(R.string.breakdown_base, SampleData.BASE_POINTS));
         String separator = getString(R.string.breakdown_separator);
         if (round.hintCost > 0) {
             text.append(separator).append(getString(R.string.breakdown_hint, round.hintCost));
@@ -122,7 +129,7 @@ public class ResultFragment extends Fragment {
         ((TextView) view.findViewById(R.id.station_name)).setText(round.stationName);
         ((TextView) view.findViewById(R.id.station_place)).setText(getString(R.string.station_place, round.city, round.country));
 
-        LinearLayout tags = view.findViewById(R.id.station_tags);
+        ViewGroup tags = view.findViewById(R.id.station_tags);
         tags.setVisibility(round.tags.isEmpty() ? View.GONE : View.VISIBLE);
         LayoutInflater inflater = LayoutInflater.from(requireContext());
         for (int i = 0; i < Math.min(MAX_TAGS, round.tags.size()); i++) {

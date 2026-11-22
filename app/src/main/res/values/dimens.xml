@@ -81,7 +81,6 @@
     <dimen name="equalizer_bar_width">4dp</dimen>
     <dimen name="equalizer_bar_gap">3dp</dimen>
     <dimen name="outcome_square_size">32dp</dimen>
-    <dimen name="outcome_icon_size">16dp</dimen>
     <dimen name="outcome_icon_padding">8dp</dimen>
     <dimen name="radius_segment">2dp</dimen>
     <dimen name="radius_share_square">5dp</dimen>
@@ -115,7 +114,6 @@
     <dimen name="score_chip_padding_h">12dp</dimen>
     <!-- Smallest gap between the Round and Result sections on a short screen -->
     <dimen name="game_section_min_gap">16dp</dimen>
-    <dimen name="result_icon_size">40dp</dimen>
     <dimen name="result_icon_padding">24dp</dimen>
     <dimen name="result_equalizer_height">22dp</dimen>
     <dimen name="gap_result">10dp</dimen>
@@ -158,6 +156,8 @@
     <dimen name="gap_row">12dp</dimen>
     <dimen name="gap_list">6dp</dimen>
     <dimen name="gap_text_lines">2dp</dimen>
+    <!-- Smallest size a one-line label shrinks to at a large font setting -->
+    <dimen name="autosize_min_text">8sp</dimen>
     <!-- gap_section_tab + chip_touch_outset: the chip row is 48dp tall for touch, 40dp drawn -->
     <dimen name="gap_section_tab_chips">14dp</dimen>
     <dimen name="gap_answer">10dp</dimen>

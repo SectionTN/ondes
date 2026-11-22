@@ -123,14 +123,14 @@
                     </LinearLayout>
                 </LinearLayout>
 
-                <LinearLayout
+                <!-- Wraps to a second row when the tags are long -->
+                <com.google.android.material.chip.ChipGroup
                     android:id="@+id/station_tags"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/gap_card_inner"
-                    android:divider="@drawable/spacer_8"
-                    android:orientation="horizontal"
-                    android:showDividers="middle" />
+                    app:chipSpacingHorizontal="@dimen/gap_chip"
+                    app:chipSpacingVertical="@dimen/gap_chip" />
 
                 <View
                     android:layout_width="match_parent"

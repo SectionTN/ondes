@@ -99,6 +99,7 @@ public final class SampleData {
 
     // Game
     public static final int ROUND_COUNT = 5;
+    public static final int BASE_POINTS = 500;
     public static final int MAX_POINTS = 2500;
     public static final int SECONDS_LEFT = 14;
     public static final int ROUND_SECONDS = 20;

@@ -1,6 +1,7 @@
 package me.sectiontn.ondes.ui.game;
 
 import android.os.Bundle;
+import android.util.TypedValue;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -30,10 +31,13 @@ public class RoundFragment extends Fragment {
     private static final int[] HINT_COSTS = {50, 100, 200};
     private static final int[] ANSWER_LETTERS = {R.string.answer_a, R.string.answer_b, R.string.answer_c, R.string.answer_d};
     private static final int[] ANSWER_IDS = {R.id.answer_a, R.id.answer_b, R.id.answer_c, R.id.answer_d};
-    private static final int BASE_POINTS = 500;
+    private static final int MIN_TEXT_SP = 8;
+    private static final int COST_TEXT_SP = 13;
 
     // The sample round starts with the Language hint open, as in the design
     private final boolean[] hintOpen = {true, false, false};
+    // Set by the first answer tap: the spec allows one answer per round
+    private boolean answered = false;
 
     public RoundFragment() {
         super(R.layout.fragment_round);
@@ -71,14 +75,20 @@ public class RoundFragment extends Fragment {
             View answer = view.findViewById(ANSWER_IDS[i]);
             ((TextView) answer.findViewById(R.id.answer_letter)).setText(ANSWER_LETTERS[i]);
             ((TextView) answer.findViewById(R.id.answer_name)).setText(SampleData.ANSWERS[i]);
-            answer.setOnClickListener(v -> ((GameActivity) requireActivity()).showResult());
+            answer.setOnClickListener(v -> {
+                if (answered) {
+                    return;
+                }
+                answered = true;
+                ((GameActivity) requireActivity()).showResult();
+            });
         }
     }
 
     private void bindHints(View view) {
         View[] tiles = {view.findViewById(R.id.hint_language), view.findViewById(R.id.hint_continent),
                 view.findViewById(R.id.hint_region)};
-        int maxPoints = BASE_POINTS;
+        int maxPoints = SampleData.BASE_POINTS;
         for (int i = 0; i < tiles.length; i++) {
             final int index = i;
             bindHint(tiles[i], HINT_LABELS[i], HINT_COSTS[i], SampleData.HINT_VALUES[i], hintOpen[i]);
@@ -105,13 +115,18 @@ public class RoundFragment extends Fragment {
             tile.setOnClickListener(null);
             tile.setClickable(false);
             icon.setVisibility(View.GONE);
+            // The answer may take two lines, the cost always fits on one. Autosize goes off first or it keeps its size
+            TextViewCompat.setAutoSizeTextTypeWithDefaults(detail, TextViewCompat.AUTO_SIZE_TEXT_TYPE_NONE);
             TextViewCompat.setTextAppearance(detail, R.style.TextAppearance_Ondes_Label);
+            detail.setMaxLines(2);
             detail.setText(value);
             tile.setContentDescription(null);
         } else {
             tile.setBackgroundResource(R.drawable.bg_dashed_rounded);
             icon.setVisibility(View.VISIBLE);
             TextViewCompat.setTextAppearance(detail, R.style.TextAppearance_Ondes_Mono_HintCost);
+            detail.setMaxLines(1);
+            TextViewCompat.setAutoSizeTextTypeUniformWithConfiguration(detail, MIN_TEXT_SP, COST_TEXT_SP, 1, TypedValue.COMPLEX_UNIT_SP);
             detail.setText(getString(R.string.hint_cost, cost));
             String name = getString(label).toLowerCase(Locale.getDefault());
             tile.setContentDescription(getString(R.string.hint_reveal, name, cost));
