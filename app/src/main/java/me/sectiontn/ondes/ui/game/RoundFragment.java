@@ -36,7 +36,7 @@ public class RoundFragment extends Fragment {
 
     // The sample round starts with the Language hint open, as in the design
     private final boolean[] hintOpen = {true, false, false};
-    // Set by the first answer tap: the spec allows one answer per round
+    // Set by the first answer tap, so each round takes one answer
     private boolean answered = false;
 
     public RoundFragment() {
