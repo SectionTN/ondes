@@ -5,4 +5,13 @@
     <string name="tab_play">Play</string>
     <string name="tab_explore">Explore</string>
     <string name="tab_passport">Passport</string>
+
+    <!-- Home -->
+    <string name="action_play">Play</string>
+    <string name="free_play">Free play</string>
+
+    <!-- Game -->
+    <string name="mode_daily">Daily</string>
+    <string name="mode_free_play">Free play</string>
+    <string name="quit_round">Quit round</string>
 </resources>

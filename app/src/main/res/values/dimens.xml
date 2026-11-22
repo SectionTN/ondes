@@ -32,6 +32,10 @@
 
     <!-- Icons and touch targets -->
     <dimen name="icon_button_size">44dp</dimen>
+    <!-- (touch_target - icon_button_size) / 2, and its negative to line the circle up with the screen padding -->
+    <dimen name="icon_button_inset">2dp</dimen>
+    <dimen name="icon_button_outset">-2dp</dimen>
+    <dimen name="icon_button_icon_size">20dp</dimen>
     <dimen name="touch_target">48dp</dimen>
     <dimen name="icon_size">22dp</dimen>
     <dimen name="icon_size_small">16dp</dimen>

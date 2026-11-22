@@ -1,10 +1,7 @@
 package me.sectiontn.ondes;
 
-import android.graphics.Color;
 import android.os.Bundle;
 
-import androidx.activity.EdgeToEdge;
-import androidx.activity.SystemBarStyle;
 import androidx.annotation.IdRes;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
@@ -14,6 +11,7 @@ import androidx.fragment.app.Fragment;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
+import me.sectiontn.ondes.ui.common.SystemBars;
 import me.sectiontn.ondes.ui.explore.ExploreFragment;
 import me.sectiontn.ondes.ui.home.HomeFragment;
 import me.sectiontn.ondes.ui.passport.PassportFragment;
@@ -24,8 +22,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        // Light status bar icons on every phone, since the app is always dark
-        EdgeToEdge.enable(this, SystemBarStyle.dark(Color.TRANSPARENT), SystemBarStyle.dark(Color.TRANSPARENT));
+        SystemBars.enableEdgeToEdge(this);
         setContentView(R.layout.activity_main);
 
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
