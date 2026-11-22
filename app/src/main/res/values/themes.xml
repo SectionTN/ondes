@@ -105,6 +105,27 @@
         <item name="shapeAppearance">@style/ShapeAppearance.Ondes.Pill</item>
     </style>
 
+    <!-- Play and pause: accent circle with a dark icon -->
+    <style name="Widget.Ondes.IconButton.Accent">
+        <item name="backgroundTint">@color/accent</item>
+        <item name="strokeWidth">0dp</item>
+        <item name="iconTint">@color/on_accent</item>
+        <item name="iconSize">@dimen/icon_size_button</item>
+    </style>
+
+    <!-- Heart in station rows: icon only, no circle -->
+    <style name="Widget.Ondes.IconButton.Plain">
+        <item name="backgroundTint">@android:color/transparent</item>
+        <item name="strokeWidth">0dp</item>
+        <item name="iconTint">@color/text_2</item>
+    </style>
+
+    <!-- 52dp primary button, for Teleport -->
+    <style name="Widget.Ondes.Button.Medium">
+        <item name="android:minHeight">@dimen/button_secondary_height</item>
+        <item name="android:textAppearance">@style/TextAppearance.Ondes.Button.Medium</item>
+    </style>
+
     <!-- One of the five dashed round slots on the Home daily card -->
     <style name="Widget.Ondes.DailySlot" parent="">
         <item name="android:layout_width">0dp</item>

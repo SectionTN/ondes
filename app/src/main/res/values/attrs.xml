@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="EqualizerView">
+        <!-- Number of bars, 1 to 8 -->
+        <attr name="barCount" format="integer" />
+        <!-- Space between two bars -->
+        <attr name="barGap" format="dimension" />
+    </declare-styleable>
+</resources>

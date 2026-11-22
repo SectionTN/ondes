@@ -5,6 +5,10 @@
     <dimen name="screen_padding_top_game">24dp</dimen>
     <dimen name="screen_padding_top_tab">28dp</dimen>
     <dimen name="screen_padding_bottom_game">28dp</dimen>
+    <!-- Pulls a horizontal chip row out to the screen edges -->
+    <dimen name="screen_padding_h_negative">-20dp</dimen>
+    <!-- (touch_target - chip_height) / 2, removed around chip rows so the gaps match the design -->
+    <dimen name="chip_touch_outset">-4dp</dimen>
 
     <!-- Corner radii -->
     <dimen name="radius_card">24dp</dimen>
@@ -14,6 +18,7 @@
     <dimen name="radius_slot">14dp</dimen>
     <dimen name="radius_station_logo">18dp</dimen>
     <dimen name="radius_share_preview">18dp</dimen>
+    <dimen name="radius_mini_player">18dp</dimen>
     <dimen name="radius_icon_tile">14dp</dimen>
     <dimen name="radius_logo_tile">12dp</dimen>
     <dimen name="radius_square">10dp</dimen>
@@ -42,6 +47,7 @@
     <dimen name="icon_button_inset">2dp</dimen>
     <dimen name="icon_button_outset">-2dp</dimen>
     <dimen name="icon_button_icon_size">20dp</dimen>
+    <dimen name="icon_size_button">18dp</dimen>
     <dimen name="touch_target">48dp</dimen>
     <dimen name="icon_size">22dp</dimen>
     <dimen name="icon_size_small">16dp</dimen>
@@ -51,6 +57,14 @@
     <dimen name="logo_tile_padding">9dp</dimen>
     <dimen name="station_logo_size">64dp</dimen>
     <dimen name="icon_tile_size">44dp</dimen>
+    <dimen name="teleport_ring_size">96dp</dimen>
+    <dimen name="teleport_circle_size">68dp</dimen>
+    <dimen name="teleport_icon_padding">18dp</dimen>
+    <dimen name="mini_player_margin">12dp</dimen>
+    <dimen name="mini_player_padding">10dp</dimen>
+    <dimen name="mini_player_padding_start">14dp</dimen>
+    <dimen name="mini_player_equalizer_height">20dp</dimen>
+    <dimen name="station_row_min_height">56dp</dimen>
     <!-- (icon_tile_size - icon_size) / 2 -->
     <dimen name="icon_tile_padding">11dp</dimen>
     <dimen name="answer_badge_size">26dp</dimen>
@@ -63,6 +77,8 @@
     <dimen name="progress_segment_gap">6dp</dimen>
     <dimen name="daily_slot_height">56dp</dimen>
     <dimen name="result_circle_size">88dp</dimen>
+    <dimen name="equalizer_bar_width">4dp</dimen>
+    <dimen name="equalizer_bar_gap">3dp</dimen>
     <dimen name="outcome_square_size">32dp</dimen>
 
     <!-- Passport -->
@@ -87,6 +103,11 @@
     <dimen name="gap_icon_text">6dp</dimen>
     <dimen name="gap_tiles">12dp</dimen>
     <dimen name="gap_tile_inner">14dp</dimen>
+    <dimen name="gap_row">12dp</dimen>
+    <dimen name="gap_list">6dp</dimen>
+    <dimen name="gap_text_lines">2dp</dimen>
+    <!-- gap_section_tab + chip_touch_outset: the chip row is 48dp tall for touch, 40dp drawn -->
+    <dimen name="gap_section_tab_chips">14dp</dimen>
     <dimen name="gap_answer">10dp</dimen>
     <dimen name="card_padding">20dp</dimen>
     <dimen name="tile_padding">16dp</dimen>

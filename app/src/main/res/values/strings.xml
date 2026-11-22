@@ -14,6 +14,23 @@
     <string name="daily_station_count">5 stations</string>
     <string name="time_left">%1$dh %2$dm left</string>
 
+    <!-- Explore -->
+    <string name="teleport_title">Shake to teleport</string>
+    <string name="action_teleport">Teleport</string>
+    <string name="genre_all">All</string>
+    <string name="genre_news">News</string>
+    <string name="genre_music">Music</string>
+    <string name="genre_jazz">Jazz</string>
+    <string name="genre_talk">Talk</string>
+    <string name="genre_sports">Sports</string>
+    <string name="section_saved">Saved</string>
+    <string name="section_recent">Recent</string>
+    <string name="recent_empty">No stations yet. Shake to start.</string>
+    <string name="save_to_favorites">Save %1$s to favorites</string>
+    <string name="remove_from_favorites">Remove %1$s from favorites</string>
+    <string name="play_station">Play %1$s</string>
+    <string name="pause_station">Pause %1$s</string>
+
     <!-- Game -->
     <string name="mode_daily">Daily</string>
     <string name="mode_free_play">Free play</string>

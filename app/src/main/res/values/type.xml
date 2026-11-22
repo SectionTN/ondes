@@ -67,11 +67,24 @@
         <item name="android:textSize">16sp</item>
     </style>
 
+    <!-- Teleport button -->
+    <style name="TextAppearance.Ondes.Button.Medium">
+        <item name="android:textSize">16sp</item>
+    </style>
+
     <style name="TextAppearance.Ondes.Body">
         <item name="fontFamily">@font/inter_regular</item>
         <item name="android:fontFamily">@font/inter_regular</item>
         <item name="android:textSize">15sp</item>
         <item name="android:letterSpacing">0</item>
+        <item name="android:textColor">@color/text</item>
+    </style>
+
+    <!-- Short emphasized text: mini player station name, revealed hint values -->
+    <style name="TextAppearance.Ondes.Label">
+        <item name="fontFamily">@font/inter_semibold</item>
+        <item name="android:fontFamily">@font/inter_semibold</item>
+        <item name="android:textSize">14sp</item>
         <item name="android:textColor">@color/text</item>
     </style>
 
@@ -93,6 +106,16 @@
         <item name="android:textSize">13sp</item>
         <item name="android:letterSpacing">0</item>
         <item name="android:textColor">@color/text_muted</item>
+    </style>
+
+    <!-- List headers: "Recent", "Saved" -->
+    <style name="TextAppearance.Ondes.Caption.Section">
+        <item name="fontFamily">@font/inter_medium</item>
+        <item name="android:fontFamily">@font/inter_medium</item>
+    </style>
+
+    <style name="TextAppearance.Ondes.Caption.Small">
+        <item name="android:textSize">12sp</item>
     </style>
 
     <style name="TextAppearance.Ondes.Caption.Nav">
@@ -136,6 +159,11 @@
         <item name="android:letterSpacing">0.08</item>
         <item name="android:textAllCaps">true</item>
         <item name="android:textColor">@color/text_muted</item>
+    </style>
+
+    <!-- Country code in the round badge of a station row -->
+    <style name="TextAppearance.Ondes.Mono.Code">
+        <item name="android:textSize">13sp</item>
     </style>
 
     <!-- "5 STATIONS" pill on Home -->
