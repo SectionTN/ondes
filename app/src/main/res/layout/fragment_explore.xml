@@ -49,6 +49,7 @@
                             android:layout_height="@dimen/teleport_circle_size"
                             android:layout_gravity="center"
                             android:background="@drawable/bg_circle_accent_soft"
+                            android:importantForAccessibility="no"
                             android:padding="@dimen/teleport_icon_padding"
                             android:src="@drawable/ic_vibrate"
                             app:tint="@color/accent" />

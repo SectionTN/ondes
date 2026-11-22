@@ -28,6 +28,7 @@
             android:layout_width="@dimen/stamp_lock_icon_size"
             android:layout_height="@dimen/stamp_lock_icon_size"
             android:layout_gravity="center"
+            android:importantForAccessibility="no"
             android:src="@drawable/ic_lock"
             app:tint="@color/text_faint" />
     </FrameLayout>
