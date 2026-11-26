@@ -32,7 +32,8 @@ public final class ApiClient {
     private static final String SERVER_LIST_URL = "https://all.api.radio-browser.info/json/servers";
     // Used when the server list itself cannot be fetched
     private static final String[] FALLBACK_SERVERS = {"de1.api.radio-browser.info", "de2.api.radio-browser.info"};
-    private static final int TIMEOUT_SECONDS = 10;
+    private static final int CONNECT_TIMEOUT_SECONDS = 5;
+    private static final int READ_TIMEOUT_SECONDS = 10;
 
     private static ApiClient instance;
 
@@ -48,8 +49,8 @@ public final class ApiClient {
 
     private ApiClient() {
         http = new OkHttpClient.Builder()
-                .connectTimeout(TIMEOUT_SECONDS, TimeUnit.SECONDS)
-                .readTimeout(TIMEOUT_SECONDS, TimeUnit.SECONDS)
+                .connectTimeout(CONNECT_TIMEOUT_SECONDS, TimeUnit.SECONDS)
+                .readTimeout(READ_TIMEOUT_SECONDS, TimeUnit.SECONDS)
                 .addInterceptor(chain -> chain.proceed(
                         chain.request().newBuilder().header("User-Agent", USER_AGENT).build()))
                 .build();
