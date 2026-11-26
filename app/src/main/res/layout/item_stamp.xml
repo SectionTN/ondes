@@ -40,7 +40,7 @@
         android:layout_marginTop="@dimen/gap_stamp_inner"
         android:ellipsize="end"
         android:gravity="center"
-        android:hyphenationFrequency="full"
+        android:hyphenationFrequency="normal"
         android:maxLines="2"
         android:textAppearance="@style/TextAppearance.Ondes.StampName" />
 
