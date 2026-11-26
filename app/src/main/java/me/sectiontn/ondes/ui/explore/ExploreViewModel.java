@@ -45,6 +45,8 @@ public class ExploreViewModel extends AndroidViewModel {
     @Nullable
     private Station pending;
     private int failures = 0;
+    // The player generation when the latest Teleport started, so an older search's answer leaves its spinner alone
+    private int teleportGeneration = -1;
 
     private final Observer<RadioPlayer.State> playerObserver = this::onPlayerState;
 
@@ -111,12 +113,16 @@ public class ExploreViewModel extends AndroidViewModel {
         }
         teleporting.setValue(true);
         int generation = player.generation();
+        teleportGeneration = generation;
         stations.stationsWithTag(genre, new StationRepository.Callback<List<Station>>() {
             @Override
             public void onResult(List<Station> found) {
-                // A game started while the list loaded: it owns the player now
+                // A game started or the user left the tab while the list loaded, so this answer is dropped
                 if (player.generation() != generation) {
-                    teleporting.setValue(false);
+                    // After a return to the tab, a newer Teleport may own the spinner
+                    if (generation == teleportGeneration) {
+                        teleporting.setValue(false);
+                    }
                     return;
                 }
                 queue.clear();
@@ -133,6 +139,9 @@ public class ExploreViewModel extends AndroidViewModel {
 
             @Override
             public void onError(IOException error) {
+                if (generation != teleportGeneration) {
+                    return;
+                }
                 teleporting.setValue(false);
                 if (player.generation() == generation) {
                     message.setValue(R.string.error_directory);
@@ -162,6 +171,18 @@ public class ExploreViewModel extends AndroidViewModel {
         } else {
             // A game used the player since, so this station starts again
             load(current);
+        }
+    }
+
+    /** Stops Explore's sound or Teleport when the user leaves the tab. The mini player keeps the station. */
+    public void leave() {
+        boolean busy = pending != null || Boolean.TRUE.equals(teleporting.getValue());
+        if (busy || player.isCurrent(station.getValue())) {
+            queue.clear();
+            pending = null;
+            teleporting.setValue(false);
+            // stop() also changes the player's generation, so a Teleport search still loading drops its result
+            player.stop();
         }
     }
 

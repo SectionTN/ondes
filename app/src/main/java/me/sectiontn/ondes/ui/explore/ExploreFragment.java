@@ -98,6 +98,15 @@ public class ExploreFragment extends Fragment implements StationAdapter.Listener
         }
     }
 
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        // Another tab replaces this one: the sound stops, since only Explore has a button to stop it
+        if (!requireActivity().isChangingConfigurations()) {
+            explore.leave();
+        }
+    }
+
     private void bindTeleporting(boolean busy) {
         teleportButton.setEnabled(!busy);
         if (busy) {
