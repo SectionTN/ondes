@@ -5,9 +5,11 @@
     android:layout_height="match_parent"
     android:fillViewport="true">
 
+    <!-- Clipping is off from here down to the stamps: a new stamp lands from bigger than its cell -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:clipChildren="false"
         android:orientation="vertical"
         android:paddingHorizontal="@dimen/screen_padding_h"
         android:paddingTop="@dimen/screen_padding_top_tab">
@@ -132,6 +134,7 @@
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/stamp_grid_outset"
             android:layout_marginTop="@dimen/gap_section_tab"
+            android:clipChildren="false"
             android:nestedScrollingEnabled="false" />
 
         <TextView

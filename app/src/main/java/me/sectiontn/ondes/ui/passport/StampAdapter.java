@@ -19,6 +19,7 @@ import java.util.List;
 import me.sectiontn.ondes.R;
 import me.sectiontn.ondes.data.countries.CountryCatalog;
 import me.sectiontn.ondes.data.db.StampEntity;
+import me.sectiontn.ondes.ui.common.Motion;
 import me.sectiontn.ondes.ui.common.UiFormat;
 
 /** Cells of the Passport grid: the stamps first, then any locked placeholders. */
@@ -28,14 +29,23 @@ public class StampAdapter extends RecyclerView.Adapter<StampAdapter.Holder> {
     private static final int[] INKS = {R.color.stamp_1, R.color.stamp_2, R.color.stamp_3, R.color.stamp_4};
     private static final float[] TILTS = {-6, 4, -3, 7, -5, 3, -7, 5, -2, 6, -4, 2};
 
+    // A new stamp starts this much bigger than its place and is pressed down onto the page
+    private static final float STAMP_FROM_SCALE = 1.5f;
+    private static final long STAMP_DELAY_MS = 150;
+    private static final long STAMP_GAP_MS = 90;
+    private static final int STAMP_GAP_LIMIT = 8;
+
     private final List<StampEntity> stamps;
     private final int lockedCount;
     private final CountryCatalog catalog;
+    private final long newSince;
 
-    public StampAdapter(List<StampEntity> stamps, int lockedCount, CountryCatalog catalog) {
+    /** @param newSince stamps earned after this time land with an animation, the others are simply there */
+    public StampAdapter(List<StampEntity> stamps, int lockedCount, CountryCatalog catalog, long newSince) {
         this.stamps = stamps;
         this.lockedCount = lockedCount;
         this.catalog = catalog;
+        this.newSince = newSince;
     }
 
     @NonNull
@@ -51,6 +61,10 @@ public class StampAdapter extends RecyclerView.Adapter<StampAdapter.Holder> {
             StampEntity stamp = stamps.get(position);
             bindStamp(holder, stamp.countryCode, catalog.nameOf(stamp.countryCode),
                     UiFormat.date(holder.itemView.getContext(), "dd MMM", new Date(stamp.firstDate)), position);
+            if (stamp.firstDate > newSince) {
+                // New stamps come first in the grid, so the position spaces them out. Past a few they land together
+                Motion.pop(holder.ring, STAMP_FROM_SCALE, STAMP_DELAY_MS + Math.min(position, STAMP_GAP_LIMIT) * STAMP_GAP_MS);
+            }
         } else {
             bindLocked(holder);
         }

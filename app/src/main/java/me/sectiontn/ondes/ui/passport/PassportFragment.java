@@ -1,5 +1,7 @@
 package me.sectiontn.ondes.ui.passport;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -26,13 +28,18 @@ import me.sectiontn.ondes.data.countries.Country;
 import me.sectiontn.ondes.data.countries.CountryCatalog;
 import me.sectiontn.ondes.data.db.StampEntity;
 import me.sectiontn.ondes.data.repo.ProgressRepository;
+import me.sectiontn.ondes.ui.common.Motion;
 import me.sectiontn.ondes.ui.common.UiFormat;
 
 /** The Passport tab: a stamp for every country guessed right at least once. Works offline. */
 public class PassportFragment extends Fragment {
 
     private static final int GRID_COLUMNS = 4;
+    private static final String PREFS = "passport";
+    private static final String KEY_SEEN_AT = "seen_at";
 
+    // Stamps with a later date than this are new on this visit. Read from the preferences, then set past every date
+    private long newSince;
     private CountryCatalog catalog;
     private RecyclerView grid;
     private TextView emptyText;
@@ -58,19 +65,42 @@ public class PassportFragment extends Fragment {
         emptyText = view.findViewById(R.id.stamps_empty);
 
         chips = view.findViewById(R.id.continent_chips);
-        chips.setOnCheckedStateChangeListener((group, checkedIds) -> showStamps());
+        chips.setOnCheckedStateChangeListener((group, checkedIds) -> {
+            showStamps();
+            Motion.fadeIn(grid);
+        });
 
+        // Stamps earned after the last visit are new: they land on the page, and the count climbs to include them
+        SharedPreferences prefs = requireContext().getSharedPreferences(PREFS, Context.MODE_PRIVATE);
+        newSince = prefs.getLong(KEY_SEEN_AT, 0);
         ProgressRepository.get(requireContext()).stamps().observe(getViewLifecycleOwner(), saved -> {
             stamps = saved;
-            bindCounts(view);
+            int newStamps = 0;
+            for (StampEntity stamp : stamps) {
+                if (stamp.firstDate > newSince) {
+                    newStamps++;
+                }
+            }
+            bindCounts(view, newStamps);
             showStamps();
+            // Shown once: from now on every stamp on the page counts as seen
+            newSince = Long.MAX_VALUE;
+            prefs.edit().putLong(KEY_SEEN_AT, System.currentTimeMillis()).apply();
         });
     }
 
-    private void bindCounts(View view) {
+    private void bindCounts(View view, int newStamps) {
         NumberFormat numbers = UiFormat.numbers(requireContext());
-        ((TextView) view.findViewById(R.id.stamp_count)).setText(numbers.format(stamps.size()));
-        ((LinearProgressIndicator) view.findViewById(R.id.stamp_progress)).setProgress(stamps.size());
+        TextView total = view.findViewById(R.id.stamp_count);
+        total.setText(numbers.format(stamps.size()));
+        LinearProgressIndicator progress = view.findViewById(R.id.stamp_progress);
+        if (newStamps > 0) {
+            Motion.count(total, stamps.size() - newStamps, stamps.size(), Motion.COUNT_MS, numbers::format);
+            progress.setProgress(stamps.size() - newStamps);
+            progress.setProgressCompat(stamps.size(), true);
+        } else {
+            progress.setProgress(stamps.size());
+        }
 
         LinearLayout counts = view.findViewById(R.id.continent_counts);
         counts.removeAllViews();
@@ -114,7 +144,7 @@ public class PassportFragment extends Fragment {
             locked = GRID_COLUMNS - shown.size() % GRID_COLUMNS;
         }
         emptyText.setVisibility(stamps.isEmpty() ? View.VISIBLE : View.GONE);
-        grid.setAdapter(new StampAdapter(shown, locked, catalog));
+        grid.setAdapter(new StampAdapter(shown, locked, catalog, newSince));
     }
 
     /** The continent a chip filters on, or null for All. */
