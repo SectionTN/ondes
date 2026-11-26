@@ -107,7 +107,7 @@ public class ResultFragment extends Fragment {
 
         // The country to find, whatever the player answered
         TextView country = view.findViewById(R.id.result_country);
-        country.setText(round.answer.name);
+        country.setText(game.catalog().nameOf(round.answer));
         ViewCompat.setAccessibilityHeading(country, true);
 
         TextView points = view.findViewById(R.id.result_points);
@@ -127,7 +127,7 @@ public class ResultFragment extends Fragment {
             detail.setTextColor(ContextCompat.getColor(requireContext(), R.color.text_muted));
         } else {
             // A wrong pick names the guess, a timeout has none
-            detail.setText(round.guess != null ? getString(R.string.you_said, round.guess.name) : getString(R.string.times_up));
+            detail.setText(round.guess != null ? getString(R.string.you_said, game.catalog().nameOf(round.guess)) : getString(R.string.times_up));
             detail.setTextColor(textColor);
         }
     }

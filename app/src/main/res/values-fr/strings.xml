@@ -1,0 +1,103 @@
+<resources>
+    <string name="language_code">fr</string>
+
+    <!-- Tabs -->
+    <string name="tab_play">Jouer</string>
+    <string name="tab_explore">Explorer</string>
+    <string name="tab_passport">Passeport</string>
+
+    <!-- Home -->
+    <string name="action_play">Jouer</string>
+    <string name="free_play">Partie libre</string>
+    <plurals name="streak">
+        <item quantity="one">%1$d jour de suite</item>
+        <item quantity="many">%1$d jours de suite</item>
+        <item quantity="other">%1$d jours de suite</item>
+    </plurals>
+    <string name="daily_title">Défi du jour #%1$d</string>
+    <string name="daily_station_count">5 stations</string>
+    <string name="time_left">Encore %1$d h %2$d min</string>
+    <string name="daily_done">Terminé · %1$s pts</string>
+
+    <!-- Explore -->
+    <string name="teleport_title">Secouez pour vous téléporter</string>
+    <string name="action_teleport">Se téléporter</string>
+    <string name="genre_all">Tout</string>
+    <string name="genre_news">Infos</string>
+    <string name="genre_music">Musique</string>
+    <string name="genre_jazz">Jazz</string>
+    <string name="genre_talk">Débats</string>
+    <string name="genre_sports">Sport</string>
+    <string name="section_saved">Favoris</string>
+    <string name="section_recent">Récentes</string>
+    <string name="recent_empty">Aucune station pour l\'instant. Secouez pour commencer.</string>
+    <string name="save_to_favorites">Ajouter %1$s aux favoris</string>
+    <string name="remove_from_favorites">Retirer %1$s des favoris</string>
+    <string name="play_station">Écouter %1$s</string>
+    <string name="pause_station">Mettre %1$s en pause</string>
+
+    <!-- Passport -->
+    <string name="passport_total">/ %1$d pays</string>
+    <string name="continent_all">Tous</string>
+    <string name="continent_africa">Afrique</string>
+    <string name="continent_americas">Amériques</string>
+    <string name="continent_asia">Asie</string>
+    <string name="continent_europe">Europe</string>
+    <string name="continent_oceania">Océanie</string>
+    <string name="continent_north_america">Amérique du Nord</string>
+    <string name="continent_central_america">Amérique centrale</string>
+    <string name="continent_south_america">Amérique du Sud</string>
+    <string name="continent_caribbean">Caraïbes</string>
+    <string name="stamp_locked">Pas encore</string>
+    <string name="countries_collected">Pays collectionnés</string>
+    <string name="stamps_empty">Trouvez un pays pour gagner votre premier tampon</string>
+
+    <!-- Game -->
+    <string name="mode_free_play">Partie libre</string>
+    <string name="quit_round">Quitter la partie</string>
+    <string name="back_home">Retour à l\'accueil</string>
+    <string name="round_label">Manche %1$d sur %2$d</string>
+    <string name="live">En direct</string>
+    <string name="hints_title">Indices</string>
+    <string name="hints_up_to">Jusqu\'à</string>
+    <string name="hint_language">Langue</string>
+    <string name="hint_continent">Continent</string>
+    <string name="hint_region">Région</string>
+    <string name="hint_reveal">Révéler l\'indice %1$s pour %2$d points</string>
+
+    <!-- Result -->
+    <string name="points_zero">0 pt</string>
+    <string name="breakdown_base">%1$d de base</string>
+    <string name="breakdown_hint">-%1$d indice</string>
+    <string name="breakdown_time">-%1$d temps</string>
+    <string name="you_said">Votre réponse : %1$s</string>
+    <string name="times_up">Temps écoulé</string>
+    <string name="status_live">En direct</string>
+    <string name="status_paused">En pause</string>
+    <string name="action_next_round">Manche suivante</string>
+    <string name="action_see_results">Voir les résultats</string>
+    <string name="action_save">Ajouter aux favoris</string>
+    <string name="action_saved">Dans les favoris</string>
+    <string name="outcome_correct">Bonne réponse</string>
+    <string name="outcome_wrong">Mauvaise réponse</string>
+
+    <!-- Summary -->
+    <string name="outcome_hint">Bonne réponse avec un indice</string>
+    <string name="action_share">Partager</string>
+    <string name="action_play_again">Rejouer</string>
+    <string name="next_daily">Prochain défi dans %1$d h %2$d min</string>
+    <string name="share_chooser">Partager votre défi du jour</string>
+
+    <!-- Loading and errors -->
+    <string name="round_loading">Connexion à la station</string>
+    <string name="round_tuning">Recherche du signal</string>
+    <string name="action_retry">Réessayer</string>
+    <string name="error_directory">Impossible de joindre l\'annuaire des radios</string>
+    <string name="error_streams">Aucune station ne répond pour le moment</string>
+
+    <!-- Quit dialog -->
+    <string name="quit_title">Quitter cette partie ?</string>
+    <string name="quit_message">Votre score dans cette partie sera perdu.</string>
+    <string name="quit_confirm">Quitter</string>
+    <string name="quit_cancel">Continuer</string>
+</resources>

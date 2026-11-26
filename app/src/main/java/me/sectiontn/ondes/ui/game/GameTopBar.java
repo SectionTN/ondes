@@ -9,11 +9,11 @@ import androidx.annotation.ColorRes;
 import androidx.core.content.ContextCompat;
 import androidx.core.view.ViewCompat;
 
-import java.text.NumberFormat;
 import java.util.List;
 
 import me.sectiontn.ondes.R;
 import me.sectiontn.ondes.game.Outcome;
+import me.sectiontn.ondes.ui.common.UiFormat;
 
 /** Fills the top bar shared by the Round and Result screens. */
 final class GameTopBar {
@@ -31,7 +31,7 @@ final class GameTopBar {
         TextView label = topBar.findViewById(R.id.round_label);
         label.setText(context.getString(R.string.round_label, roundNumber, roundCount));
         TextView chip = topBar.findViewById(R.id.score_chip);
-        chip.setText(NumberFormat.getIntegerInstance().format(score));
+        chip.setText(UiFormat.numbers(chip.getContext()).format(score));
 
         ViewGroup segments = topBar.findViewById(R.id.segments);
         for (int i = 0; i < segments.getChildCount(); i++) {

@@ -26,6 +26,7 @@ import me.sectiontn.ondes.data.countries.Country;
 import me.sectiontn.ondes.data.countries.CountryCatalog;
 import me.sectiontn.ondes.data.db.StampEntity;
 import me.sectiontn.ondes.data.repo.ProgressRepository;
+import me.sectiontn.ondes.ui.common.UiFormat;
 
 /** The Passport tab: a stamp for every country guessed right at least once. Works offline. */
 public class PassportFragment extends Fragment {
@@ -67,7 +68,7 @@ public class PassportFragment extends Fragment {
     }
 
     private void bindCounts(View view) {
-        NumberFormat numbers = NumberFormat.getIntegerInstance();
+        NumberFormat numbers = UiFormat.numbers(requireContext());
         ((TextView) view.findViewById(R.id.stamp_count)).setText(numbers.format(stamps.size()));
         ((LinearProgressIndicator) view.findViewById(R.id.stamp_progress)).setProgress(stamps.size());
 
@@ -86,7 +87,7 @@ public class PassportFragment extends Fragment {
             }
             View column = inflater.inflate(R.layout.item_continent_count, counts, false);
             ((TextView) column.findViewById(R.id.continent_count)).setText(numbers.format(count));
-            ((TextView) column.findViewById(R.id.continent_name)).setText(continent);
+            ((TextView) column.findViewById(R.id.continent_name)).setText(catalog.continentName(continent));
             if (i > 0) {
                 ((LinearLayout.LayoutParams) column.getLayoutParams()).setMarginStart(gap);
             }

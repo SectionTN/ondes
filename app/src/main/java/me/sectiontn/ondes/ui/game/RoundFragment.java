@@ -91,7 +91,7 @@ public class RoundFragment extends Fragment {
             View answer = view.findViewById(ANSWER_IDS[i]);
             TextView name = answer.findViewById(R.id.answer_name);
             boolean hasOption = i < round.options.size();
-            name.setText(hasOption ? round.options.get(i).name : "");
+            name.setText(hasOption ? game.catalog().nameOf(round.options.get(i)) : "");
             answer.setEnabled(canAnswer && hasOption);
             answer.setAlpha(hasOption ? 1f : DISABLED_ALPHA);
         }
@@ -141,7 +141,7 @@ public class RoundFragment extends Fragment {
             TextViewCompat.setAutoSizeTextTypeWithDefaults(detail, TextViewCompat.AUTO_SIZE_TEXT_TYPE_NONE);
             TextViewCompat.setTextAppearance(detail, R.style.TextAppearance_Ondes_Label);
             detail.setMaxLines(2);
-            detail.setText(value);
+            detail.setText(hintText(hint, value));
             tile.setContentDescription(null);
         } else {
             tile.setBackgroundResource(R.drawable.bg_dashed_rounded);
@@ -156,5 +156,20 @@ public class RoundFragment extends Fragment {
             String name = getString(label).toLowerCase(Locale.getDefault());
             tile.setContentDescription(getString(R.string.hint_reveal, name, cost));
         }
+    }
+
+    /** The hint in the language of the screen. A region is a place name and stays as the station wrote it. */
+    @Nullable
+    private String hintText(int hint, @Nullable String value) {
+        if (value == null) {
+            return null;
+        }
+        if (hint == GameRound.HINT_LANGUAGE) {
+            return game.catalog().languageName(value);
+        }
+        if (hint == GameRound.HINT_CONTINENT) {
+            return game.catalog().continentName(value);
+        }
+        return value;
     }
 }

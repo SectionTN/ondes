@@ -8,6 +8,8 @@ public class Country {
 
     public String code;
     public String name;
+    /** The French name, shown when the app runs in French. */
+    public String nameFr;
     /** Africa, Americas, Asia, Europe or Oceania. */
     public String continent;
     /** Finer area such as "South America" or "Western Europe". */

@@ -18,10 +18,8 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.LiveData;
 
 import java.text.NumberFormat;
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.Locale;
 import java.util.concurrent.TimeUnit;
 
 import me.sectiontn.ondes.MainActivity;
@@ -30,6 +28,7 @@ import me.sectiontn.ondes.data.db.DailyResultEntity;
 import me.sectiontn.ondes.data.repo.ProgressRepository;
 import me.sectiontn.ondes.game.DailySeed;
 import me.sectiontn.ondes.game.Outcome;
+import me.sectiontn.ondes.ui.common.UiFormat;
 import me.sectiontn.ondes.ui.game.GameActivity;
 import me.sectiontn.ondes.ui.game.OutcomeStyle;
 
@@ -68,7 +67,7 @@ public class HomeFragment extends Fragment {
         progress.streak().observe(getViewLifecycleOwner(), days -> {
             // No streak, no pill
             streakPill.setVisibility(days > 0 ? View.VISIBLE : View.GONE);
-            streak.setText(getString(R.string.streak, days));
+            streak.setText(getResources().getQuantityString(R.plurals.streak, days, days));
         });
 
         ViewCompat.setAccessibilityHeading(view.findViewById(R.id.daily_title), true);
@@ -98,7 +97,7 @@ public class HomeFragment extends Fragment {
     private void bindToday(View view) {
         today = DailySeed.today();
         TextView todayLabel = view.findViewById(R.id.today_label);
-        todayLabel.setText(new SimpleDateFormat("EEE d MMM", Locale.ENGLISH).format(new Date()));
+        todayLabel.setText(UiFormat.date(requireContext(), "EEE d MMM", new Date()));
         TextView title = view.findViewById(R.id.daily_title);
         title.setText(getString(R.string.daily_title, today));
 
@@ -121,7 +120,7 @@ public class HomeFragment extends Fragment {
     /** Empty numbered slots and Play, or the day's colored squares and See results once it is done. */
     private void bindDaily(View view, @Nullable DailyResultEntity result) {
         boolean done = result != null;
-        NumberFormat numbers = NumberFormat.getIntegerInstance();
+        NumberFormat numbers = UiFormat.numbers(requireContext());
         for (int i = 0; i < SLOT_IDS.length; i++) {
             TextView slot = view.findViewById(SLOT_IDS[i]);
             if (done && i < result.squares.length()) {
@@ -142,7 +141,7 @@ public class HomeFragment extends Fragment {
             return;
         }
         if (todayResult != null) {
-            timeLeft.setText(getString(R.string.daily_done, NumberFormat.getIntegerInstance().format(todayResult.score)));
+            timeLeft.setText(getString(R.string.daily_done, UiFormat.numbers(requireContext()).format(todayResult.score)));
             return;
         }
         long left = DailySeed.millisUntilMidnight(Calendar.getInstance());

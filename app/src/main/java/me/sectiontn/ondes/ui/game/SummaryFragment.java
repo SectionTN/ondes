@@ -29,11 +29,12 @@ import me.sectiontn.ondes.game.DailySeed;
 import me.sectiontn.ondes.game.Outcome;
 import me.sectiontn.ondes.game.RoundRecord;
 import me.sectiontn.ondes.game.ScoreCalculator;
+import me.sectiontn.ondes.ui.common.UiFormat;
 
 /** End of a game: the total score, the five rounds, and Share (daily) or Play again (free play). */
 public class SummaryFragment extends Fragment {
 
-    // The share squares, written as escapes: green, yellow and red
+    // The share squares: green, yellow and red
     private static final String SQUARE_GREEN = "🟩";
     private static final String SQUARE_YELLOW = "🟨";
     private static final String SQUARE_RED = "🟥";
@@ -58,7 +59,7 @@ public class SummaryFragment extends Fragment {
 
         TextView streak = view.findViewById(R.id.summary_streak_text);
         ProgressRepository.get(requireContext()).streak().observe(getViewLifecycleOwner(), days ->
-                streak.setText(getString(R.string.streak, days)));
+                streak.setText(getResources().getQuantityString(R.plurals.streak, days, days)));
 
         game.summary().observe(getViewLifecycleOwner(), summary -> {
             if (summary != null) {
@@ -69,7 +70,7 @@ public class SummaryFragment extends Fragment {
 
     private void bind(View view, GameViewModel.Summary summary, RecyclerView list) {
         boolean daily = summary.daily;
-        NumberFormat numbers = NumberFormat.getIntegerInstance();
+        NumberFormat numbers = UiFormat.numbers(requireContext());
         String scoreText = numbers.format(summary.score);
 
         TextView eyebrow = view.findViewById(R.id.summary_eyebrow);

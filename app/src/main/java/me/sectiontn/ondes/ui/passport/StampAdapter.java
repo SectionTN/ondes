@@ -13,14 +13,13 @@ import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
-import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
-import java.util.Locale;
 
 import me.sectiontn.ondes.R;
 import me.sectiontn.ondes.data.countries.CountryCatalog;
 import me.sectiontn.ondes.data.db.StampEntity;
+import me.sectiontn.ondes.ui.common.UiFormat;
 
 /** Cells of the Passport grid: the stamps first, then any locked placeholders. */
 public class StampAdapter extends RecyclerView.Adapter<StampAdapter.Holder> {
@@ -32,7 +31,6 @@ public class StampAdapter extends RecyclerView.Adapter<StampAdapter.Holder> {
     private final List<StampEntity> stamps;
     private final int lockedCount;
     private final CountryCatalog catalog;
-    private final SimpleDateFormat dateFormat = new SimpleDateFormat("d MMM", Locale.ENGLISH);
 
     public StampAdapter(List<StampEntity> stamps, int lockedCount, CountryCatalog catalog) {
         this.stamps = stamps;
@@ -52,7 +50,7 @@ public class StampAdapter extends RecyclerView.Adapter<StampAdapter.Holder> {
         if (position < stamps.size()) {
             StampEntity stamp = stamps.get(position);
             bindStamp(holder, stamp.countryCode, catalog.nameOf(stamp.countryCode),
-                    dateFormat.format(new Date(stamp.firstDate)), position);
+                    UiFormat.date(holder.itemView.getContext(), "dd MMM", new Date(stamp.firstDate)), position);
         } else {
             bindLocked(holder);
         }
