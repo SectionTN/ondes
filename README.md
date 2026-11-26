@@ -18,6 +18,7 @@ A geography game played by ear, for Android. It plays a radio station that is li
 - Explore: shake the phone to jump to a random live station
 - Passport: a stamp for every country you guess right
 - Share your daily score as a line of colored squares
+- English and French, following the phone's language or the app's own language setting on Android 13+
 
 ## Download
 
@@ -55,6 +56,8 @@ Java and XML layouts, one activity per flow, and a ViewModel per screen group:
 | `data/countries` | Reads the 195 countries from `assets/countries.json`. |
 
 The daily works without a server. The day number picks the five countries, and a SHA-256 hash of the day and each station ID puts the stations in order. Every phone then plays the same stations.
+
+The app allows plain `http` traffic in `network_security_config.xml`. Many stations in Radio Browser only stream over `http`.
 
 ## Build
 
