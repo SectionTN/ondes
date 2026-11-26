@@ -15,6 +15,7 @@ import androidx.core.content.ContextCompat;
 import androidx.core.graphics.drawable.DrawableCompat;
 import androidx.core.view.ViewCompat;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.LiveData;
 
 import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
@@ -50,6 +51,9 @@ public class HomeFragment extends Fragment {
     private TextView timeLeft;
     @Nullable
     private DailyResultEntity todayResult;
+    private int today;
+    @Nullable
+    private LiveData<DailyResultEntity> todayLive;
 
     public HomeFragment() {
         super(R.layout.fragment_home);
@@ -57,7 +61,6 @@ public class HomeFragment extends Fragment {
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        int today = DailySeed.today();
         ProgressRepository progress = ProgressRepository.get(requireContext());
 
         View streakPill = view.findViewById(R.id.streak_pill);
@@ -68,18 +71,9 @@ public class HomeFragment extends Fragment {
             streak.setText(getString(R.string.streak, days));
         });
 
-        TextView todayLabel = view.findViewById(R.id.today_label);
-        todayLabel.setText(new SimpleDateFormat("EEE d MMM", Locale.ENGLISH).format(new Date()));
-
-        TextView title = view.findViewById(R.id.daily_title);
-        title.setText(getString(R.string.daily_title, today));
-        ViewCompat.setAccessibilityHeading(title, true);
-
+        ViewCompat.setAccessibilityHeading(view.findViewById(R.id.daily_title), true);
         timeLeft = view.findViewById(R.id.time_left);
-        progress.dailyResult(today).observe(getViewLifecycleOwner(), result -> {
-            todayResult = result;
-            bindDaily(view, result);
-        });
+        bindToday(view);
 
         view.findViewById(R.id.play_button).setOnClickListener(v -> startGame(GameActivity.MODE_DAILY));
         view.findViewById(R.id.results_button).setOnClickListener(v ->
@@ -92,7 +86,30 @@ public class HomeFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
+        // Past midnight the tab shows the new day's daily
+        View view = getView();
+        if (view != null && DailySeed.today() != today) {
+            bindToday(view);
+        }
         handler.post(refreshClock);
+    }
+
+    /** The date, the daily number and its saved result, for the current day. */
+    private void bindToday(View view) {
+        today = DailySeed.today();
+        TextView todayLabel = view.findViewById(R.id.today_label);
+        todayLabel.setText(new SimpleDateFormat("EEE d MMM", Locale.ENGLISH).format(new Date()));
+        TextView title = view.findViewById(R.id.daily_title);
+        title.setText(getString(R.string.daily_title, today));
+
+        if (todayLive != null) {
+            todayLive.removeObservers(getViewLifecycleOwner());
+        }
+        todayLive = ProgressRepository.get(requireContext()).dailyResult(today);
+        todayLive.observe(getViewLifecycleOwner(), result -> {
+            todayResult = result;
+            bindDaily(view, result);
+        });
     }
 
     @Override
