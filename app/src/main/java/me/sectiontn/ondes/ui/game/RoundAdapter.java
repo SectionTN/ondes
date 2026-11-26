@@ -15,16 +15,19 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.List;
 
 import me.sectiontn.ondes.R;
+import me.sectiontn.ondes.data.countries.CountryCatalog;
 import me.sectiontn.ondes.game.Outcome;
-import me.sectiontn.ondes.sample.SampleData;
+import me.sectiontn.ondes.game.RoundRecord;
 
 /** The five rounds on the Summary card. */
 public class RoundAdapter extends RecyclerView.Adapter<RoundAdapter.Holder> {
 
-    private final List<SampleData.Round> rounds;
+    private final List<RoundRecord> rounds;
+    private final CountryCatalog catalog;
 
-    public RoundAdapter(List<SampleData.Round> rounds) {
+    public RoundAdapter(List<RoundRecord> rounds, CountryCatalog catalog) {
         this.rounds = rounds;
+        this.catalog = catalog;
     }
 
     @NonNull
@@ -36,7 +39,7 @@ public class RoundAdapter extends RecyclerView.Adapter<RoundAdapter.Holder> {
 
     @Override
     public void onBindViewHolder(@NonNull Holder holder, int position) {
-        SampleData.Round round = rounds.get(position);
+        RoundRecord round = rounds.get(position);
         Context context = holder.itemView.getContext();
 
         ViewCompat.setBackgroundTintList(holder.square,
@@ -44,14 +47,16 @@ public class RoundAdapter extends RecyclerView.Adapter<RoundAdapter.Holder> {
         holder.square.setImageResource(OutcomeStyle.icon(round.outcome));
         holder.square.setContentDescription(context.getString(OutcomeStyle.description(round.outcome)));
 
-        holder.country.setText(round.country);
+        holder.country.setText(catalog.nameOf(round.countryCode));
         boolean wrong = round.outcome == Outcome.WRONG;
         if (wrong) {
-            holder.detail.setText(round.guess != null
-                    ? context.getString(R.string.you_said, round.guess)
+            holder.detail.setText(round.guessCode != null
+                    ? context.getString(R.string.you_said, catalog.nameOf(round.guessCode))
                     : context.getString(R.string.times_up));
+        } else if (round.state == null || round.state.isEmpty()) {
+            holder.detail.setText(round.stationName);
         } else {
-            holder.detail.setText(context.getString(R.string.round_detail, round.stationName, round.city));
+            holder.detail.setText(context.getString(R.string.round_detail, round.stationName, round.state));
         }
         holder.points.setText(wrong ? context.getString(R.string.points_none) : context.getString(R.string.points_plain, round.points));
         holder.points.setTextColor(ContextCompat.getColor(context, wrong ? R.color.wrong_text : R.color.text));

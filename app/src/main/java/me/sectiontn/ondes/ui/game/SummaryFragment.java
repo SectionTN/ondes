@@ -1,5 +1,6 @@
 package me.sectiontn.ondes.ui.game;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +11,7 @@ import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
 import androidx.core.view.ViewCompat;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -17,79 +19,132 @@ import com.google.android.material.button.MaterialButton;
 import com.google.android.material.divider.MaterialDividerItemDecoration;
 
 import java.text.NumberFormat;
+import java.util.Calendar;
+import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import me.sectiontn.ondes.R;
-import me.sectiontn.ondes.sample.SampleData;
+import me.sectiontn.ondes.data.repo.ProgressRepository;
+import me.sectiontn.ondes.game.DailySeed;
+import me.sectiontn.ondes.game.Outcome;
+import me.sectiontn.ondes.game.RoundRecord;
+import me.sectiontn.ondes.game.ScoreCalculator;
 
 /** End of a game: the total score, the five rounds, and Share (daily) or Play again (free play). */
 public class SummaryFragment extends Fragment {
 
-    private static final String ARG_DAILY = "daily";
+    // The share squares, written as escapes: green, yellow and red
+    private static final String SQUARE_GREEN = "🟩";
+    private static final String SQUARE_YELLOW = "🟨";
+    private static final String SQUARE_RED = "🟥";
+
+    private GameViewModel game;
 
     public SummaryFragment() {
         super(R.layout.fragment_summary);
     }
 
-    public static SummaryFragment newInstance(boolean daily) {
-        SummaryFragment fragment = new SummaryFragment();
-        Bundle args = new Bundle();
-        args.putBoolean(ARG_DAILY, daily);
-        fragment.setArguments(args);
-        return fragment;
-    }
-
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        boolean daily = requireArguments().getBoolean(ARG_DAILY);
-        NumberFormat numbers = NumberFormat.getIntegerInstance();
-        int score = SampleData.scoreBefore(SampleData.ROUND_COUNT + 1);
-        String scoreText = numbers.format(score);
-
+        game = new ViewModelProvider(requireActivity()).get(GameViewModel.class);
         view.findViewById(R.id.close_button).setOnClickListener(v -> requireActivity().finish());
-        TextView eyebrow = view.findViewById(R.id.summary_eyebrow);
-        eyebrow.setText(daily ? getString(R.string.daily_title, SampleData.DAILY_NUMBER) : getString(R.string.mode_free_play));
-
-        TextView scoreView = view.findViewById(R.id.summary_score);
-        scoreView.setText(scoreText);
-        ViewCompat.setAccessibilityHeading(scoreView, true);
-        TextView max = view.findViewById(R.id.summary_max);
-        max.setText(getString(R.string.summary_max, numbers.format(SampleData.MAX_POINTS)));
-
-        // Streak and sharing belong to the daily only
-        view.findViewById(R.id.summary_streak).setVisibility(daily ? View.VISIBLE : View.GONE);
-        TextView streak = view.findViewById(R.id.summary_streak_text);
-        streak.setText(getString(R.string.streak, SampleData.STREAK_DAYS));
 
         RecyclerView list = view.findViewById(R.id.rounds_list);
         list.setLayoutManager(new LinearLayoutManager(requireContext()));
-        list.setAdapter(new RoundAdapter(SampleData.ROUNDS));
         MaterialDividerItemDecoration divider = new MaterialDividerItemDecoration(requireContext(), LinearLayoutManager.VERTICAL);
         divider.setDividerColor(ContextCompat.getColor(requireContext(), R.color.border));
         divider.setLastItemDecorated(false);
         list.addItemDecoration(divider);
 
+        TextView streak = view.findViewById(R.id.summary_streak_text);
+        ProgressRepository.get(requireContext()).streak().observe(getViewLifecycleOwner(), days ->
+                streak.setText(getString(R.string.streak, days)));
+
+        game.summary().observe(getViewLifecycleOwner(), summary -> {
+            if (summary != null) {
+                bind(view, summary, list);
+            }
+        });
+    }
+
+    private void bind(View view, GameViewModel.Summary summary, RecyclerView list) {
+        boolean daily = summary.daily;
+        NumberFormat numbers = NumberFormat.getIntegerInstance();
+        String scoreText = numbers.format(summary.score);
+
+        TextView eyebrow = view.findViewById(R.id.summary_eyebrow);
+        eyebrow.setText(daily ? getString(R.string.daily_title, summary.dayNumber) : getString(R.string.mode_free_play));
+
+        TextView scoreView = view.findViewById(R.id.summary_score);
+        scoreView.setText(scoreText);
+        ViewCompat.setAccessibilityHeading(scoreView, true);
+        TextView max = view.findViewById(R.id.summary_max);
+        max.setText(getString(R.string.summary_max, numbers.format(ScoreCalculator.BASE_POINTS * GameViewModel.ROUND_COUNT)));
+
+        // Streak and sharing belong to the daily only
+        view.findViewById(R.id.summary_streak).setVisibility(daily ? View.VISIBLE : View.GONE);
+        list.setAdapter(new RoundAdapter(summary.rounds, game.catalog()));
+
         view.findViewById(R.id.share_preview).setVisibility(daily ? View.VISIBLE : View.GONE);
         TextView shareLine = view.findViewById(R.id.share_line);
-        shareLine.setText(getString(R.string.share_title, SampleData.DAILY_NUMBER, scoreText));
+        shareLine.setText(getString(R.string.share_title, summary.dayNumber, scoreText));
         ViewGroup squares = view.findViewById(R.id.share_squares);
         StringBuilder squaresDescription = new StringBuilder();
         for (int i = 0; i < squares.getChildCount(); i++) {
-            SampleData.Round round = SampleData.ROUNDS.get(i);
-            ViewCompat.setBackgroundTintList(squares.getChildAt(i),
-                    ContextCompat.getColorStateList(requireContext(), OutcomeStyle.color(round.outcome)));
+            View square = squares.getChildAt(i);
+            if (i >= summary.rounds.size()) {
+                square.setVisibility(View.GONE);
+                continue;
+            }
+            Outcome outcome = summary.rounds.get(i).outcome;
+            ViewCompat.setBackgroundTintList(square, ContextCompat.getColorStateList(requireContext(), OutcomeStyle.color(outcome)));
             if (i > 0) {
                 squaresDescription.append(", ");
             }
-            squaresDescription.append(getString(OutcomeStyle.description(round.outcome)));
+            squaresDescription.append(getString(OutcomeStyle.description(outcome)));
         }
         squares.setContentDescription(squaresDescription);
 
         MaterialButton action = view.findViewById(R.id.summary_action);
         action.setText(daily ? R.string.action_share : R.string.action_play_again);
         action.setIconResource(daily ? R.drawable.ic_share : R.drawable.ic_shuffle);
+        action.setOnClickListener(v -> {
+            if (daily) {
+                share(summary, scoreText);
+            } else {
+                game.playAgain();
+            }
+        });
 
         TextView nextDaily = view.findViewById(R.id.next_daily);
         nextDaily.setVisibility(daily ? View.VISIBLE : View.GONE);
-        nextDaily.setText(getString(R.string.next_daily, SampleData.HOURS_LEFT, SampleData.MINUTES_LEFT));
+        long left = DailySeed.millisUntilMidnight(Calendar.getInstance());
+        nextDaily.setText(getString(R.string.next_daily, (int) TimeUnit.MILLISECONDS.toHours(left),
+                (int) (TimeUnit.MILLISECONDS.toMinutes(left) % 60)));
+    }
+
+    /** Sends "Ondes #142 · 1,760 pts" and a line of colored squares to any app. */
+    private void share(GameViewModel.Summary summary, String scoreText) {
+        String text = getString(R.string.share_text, summary.dayNumber, scoreText) + "\n" + squares(summary.rounds);
+        Intent send = new Intent(Intent.ACTION_SEND).setType("text/plain").putExtra(Intent.EXTRA_TEXT, text);
+        startActivity(Intent.createChooser(send, getString(R.string.share_chooser)));
+    }
+
+    static String squares(List<RoundRecord> rounds) {
+        StringBuilder line = new StringBuilder();
+        for (RoundRecord round : rounds) {
+            switch (round.outcome) {
+                case PERFECT:
+                    line.append(SQUARE_GREEN);
+                    break;
+                case HINT:
+                    line.append(SQUARE_YELLOW);
+                    break;
+                default:
+                    line.append(SQUARE_RED);
+                    break;
+            }
+        }
+        return line.toString();
     }
 }

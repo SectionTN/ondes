@@ -8,13 +8,13 @@ import me.sectiontn.ondes.R;
 import me.sectiontn.ondes.game.Outcome;
 
 /** The color, icon and spoken label of a round outcome, shared by every game screen. */
-final class OutcomeStyle {
+public final class OutcomeStyle {
 
     private OutcomeStyle() {
     }
 
     @ColorRes
-    static int color(Outcome outcome) {
+    public static int color(Outcome outcome) {
         switch (outcome) {
             case PERFECT:
                 return R.color.correct;
@@ -26,7 +26,7 @@ final class OutcomeStyle {
     }
 
     @DrawableRes
-    static int icon(Outcome outcome) {
+    public static int icon(Outcome outcome) {
         switch (outcome) {
             case PERFECT:
                 return R.drawable.ic_check;
@@ -38,7 +38,7 @@ final class OutcomeStyle {
     }
 
     @StringRes
-    static int description(Outcome outcome) {
+    public static int description(Outcome outcome) {
         switch (outcome) {
             case PERFECT:
                 return R.string.outcome_correct;

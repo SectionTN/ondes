@@ -87,15 +87,28 @@
                     android:gravity="center_vertical"
                     android:orientation="horizontal">
 
-                    <TextView
-                        android:id="@+id/station_logo"
+                    <FrameLayout
                         android:layout_width="@dimen/station_logo_size"
-                        android:layout_height="@dimen/station_logo_size"
-                        android:background="@drawable/bg_station_logo"
-                        android:gravity="center"
-                        android:importantForAccessibility="no"
-                        android:textAppearance="@style/TextAppearance.Ondes.Title"
-                        android:textColor="@color/accent" />
+                        android:layout_height="@dimen/station_logo_size">
+
+                        <TextView
+                            android:id="@+id/station_logo"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="@drawable/bg_station_logo"
+                            android:gravity="center"
+                            android:importantForAccessibility="no"
+                            android:textAppearance="@style/TextAppearance.Ondes.Title"
+                            android:textColor="@color/accent" />
+
+                        <!-- The station favicon covers the initials once it loads -->
+                        <ImageView
+                            android:id="@+id/station_favicon"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:importantForAccessibility="no"
+                            android:scaleType="centerCrop" />
+                    </FrameLayout>
 
                     <LinearLayout
                         android:layout_width="0dp"
@@ -146,6 +159,7 @@
                     android:orientation="horizontal">
 
                     <me.sectiontn.ondes.ui.common.EqualizerView
+                        android:id="@+id/station_equalizer"
                         android:layout_width="wrap_content"
                         android:layout_height="@dimen/result_equalizer_height"
                         app:barCount="4" />

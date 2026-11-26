@@ -53,6 +53,7 @@
             </LinearLayout>
 
             <FrameLayout
+                android:id="@+id/timer_frame"
                 android:layout_width="@dimen/timer_ring_size"
                 android:layout_height="@dimen/timer_ring_size"
                 android:layout_marginTop="@dimen/gap_now_playing">
@@ -71,6 +72,27 @@
                     android:layout_gravity="center"
                     android:importantForAccessibility="no" />
 
+                <!-- Shown while the stream connects: the timer only runs once sound plays -->
+                <com.google.android.material.progressindicator.CircularProgressIndicator
+                    android:id="@+id/timer_spinner"
+                    style="@style/Widget.Ondes.TimerRing"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:contentDescription="@string/round_loading"
+                    android:indeterminate="true"
+                    android:visibility="gone" />
+
+                <TextView
+                    android:id="@+id/timer_loading"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:importantForAccessibility="no"
+                    android:text="@string/round_tuning"
+                    android:textAppearance="@style/TextAppearance.Ondes.Caption"
+                    android:visibility="gone" />
+
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -79,6 +101,7 @@
                     android:orientation="vertical">
 
                     <me.sectiontn.ondes.ui.common.EqualizerView
+                        android:id="@+id/timer_equalizer"
                         android:layout_width="wrap_content"
                         android:layout_height="@dimen/timer_equalizer_height"
                         app:barCount="8"
@@ -94,7 +117,34 @@
                 </LinearLayout>
             </FrameLayout>
 
+            <!-- Replaces the ring when no station can be reached -->
+            <LinearLayout
+                android:id="@+id/round_error"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/timer_ring_size"
+                android:layout_marginTop="@dimen/gap_now_playing"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:visibility="gone">
+
+                <TextView
+                    android:id="@+id/round_error_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:textAppearance="@style/TextAppearance.Ondes.Body" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/retry_button"
+                    style="@style/Widget.Ondes.Button.Outlined"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/gap_hints"
+                    android:text="@string/action_retry" />
+            </LinearLayout>
+
             <me.sectiontn.ondes.ui.common.DialStripView
+                android:id="@+id/dial_strip"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/gap_now_playing" />

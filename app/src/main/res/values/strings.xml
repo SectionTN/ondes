@@ -13,6 +13,7 @@
     <string name="daily_title">Daily #%1$d</string>
     <string name="daily_station_count">5 stations</string>
     <string name="time_left">%1$dh %2$dm left</string>
+    <string name="daily_done">Done · %1$s pts</string>
 
     <!-- Explore -->
     <string name="teleport_title">Shake to teleport</string>
@@ -91,4 +92,19 @@
     <string name="action_share">Share</string>
     <string name="action_play_again">Play again</string>
     <string name="next_daily">Next daily in %1$dh %2$dm</string>
+    <string name="share_text">Ondes #%1$d · %2$s pts</string>
+    <string name="share_chooser">Share your daily</string>
+
+    <!-- Loading and errors -->
+    <string name="round_loading">Connecting to the station</string>
+    <string name="round_tuning">Tuning in</string>
+    <string name="action_retry">Retry</string>
+    <string name="error_directory">Can\'t reach the radio directory</string>
+    <string name="error_streams">No station is answering right now</string>
+
+    <!-- Quit dialog -->
+    <string name="quit_title">Quit this game?</string>
+    <string name="quit_message">Your score in this game will be lost.</string>
+    <string name="quit_confirm">Quit</string>
+    <string name="quit_cancel">Keep playing</string>
 </resources>
