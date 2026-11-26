@@ -43,6 +43,8 @@ public class ResultFragment extends Fragment {
     private boolean saved = false;
     // Set by the first tap on Next, so a fast double tap cannot skip a round
     private boolean leaving = false;
+    @Nullable
+    private ValueAnimator countUp;
 
     public ResultFragment() {
         super(R.layout.fragment_result);
@@ -88,6 +90,16 @@ public class ResultFragment extends Fragment {
         save.setOnClickListener(v -> game.setSaved(station, !saved));
     }
 
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        // Next round within 600 ms would otherwise run the count-up on a fragment that is gone, and crash
+        if (countUp != null) {
+            countUp.cancel();
+            countUp = null;
+        }
+    }
+
     private void bindOutcome(View view, GameRound round, boolean animate) {
         boolean right = round.isCorrect();
         int textColor = ContextCompat.getColor(requireContext(), right ? R.color.correct : R.color.wrong_text);
@@ -114,7 +126,7 @@ public class ResultFragment extends Fragment {
         points.setTextColor(textColor);
         if (right && animate) {
             // Counts up from 0, and jumps to the end when animations are off
-            ValueAnimator countUp = ValueAnimator.ofInt(0, round.points).setDuration(COUNT_UP_MS);
+            countUp = ValueAnimator.ofInt(0, round.points).setDuration(COUNT_UP_MS);
             countUp.addUpdateListener(a -> points.setText(getString(R.string.points_signed, (int) a.getAnimatedValue())));
             countUp.start();
         } else {
