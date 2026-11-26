@@ -6,9 +6,13 @@
     android:layout_height="match_parent"
     android:fillViewport="true">
 
+    <!-- Clipping is off so a wrong answer can shake past the edge of its row without being cut -->
     <LinearLayout
+        android:id="@+id/round_content"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:clipChildren="false"
+        android:clipToPadding="false"
         android:orientation="vertical"
         android:paddingHorizontal="@dimen/screen_padding_h"
         android:paddingTop="@dimen/screen_padding_top_game"
@@ -41,6 +45,7 @@
                 android:paddingHorizontal="@dimen/small_pill_padding_h">
 
                 <View
+                    android:id="@+id/live_dot"
                     android:layout_width="@dimen/live_dot_size"
                     android:layout_height="@dimen/live_dot_size"
                     android:background="@drawable/bg_dot" />
@@ -57,7 +62,8 @@
                 android:id="@+id/timer_frame"
                 android:layout_width="@dimen/timer_ring_size"
                 android:layout_height="@dimen/timer_ring_size"
-                android:layout_marginTop="@dimen/gap_now_playing">
+                android:layout_marginTop="@dimen/gap_now_playing"
+                android:clipChildren="false">
 
                 <View
                     android:layout_width="@dimen/timer_ring_indicator_size"

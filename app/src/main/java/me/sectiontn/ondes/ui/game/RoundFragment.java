@@ -1,27 +1,36 @@
 package me.sectiontn.ondes.ui.game;
 
+import android.animation.ObjectAnimator;
+import android.animation.ValueAnimator;
+import android.content.Context;
 import android.os.Bundle;
 import android.util.TypedValue;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.annotation.ColorRes;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.StringRes;
+import androidx.core.content.ContextCompat;
 import androidx.core.view.ViewCompat;
 import androidx.core.widget.TextViewCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.google.android.material.card.MaterialCardView;
 import com.google.android.material.progressindicator.CircularProgressIndicator;
 
 import java.util.Locale;
 
 import me.sectiontn.ondes.R;
+import me.sectiontn.ondes.data.Station;
 import me.sectiontn.ondes.game.GameRound;
 import me.sectiontn.ondes.game.ScoreCalculator;
+import me.sectiontn.ondes.ui.common.DialStripView;
 import me.sectiontn.ondes.ui.common.EqualizerView;
+import me.sectiontn.ondes.ui.common.Motion;
 
 /** One round: the live station, the timer, three hints and four answers. */
 public class RoundFragment extends Fragment {
@@ -33,8 +42,19 @@ public class RoundFragment extends Fragment {
     private static final int MIN_TEXT_SP = 8;
     private static final int COST_TEXT_SP = 13;
     private static final float DISABLED_ALPHA = 0.4f;
+    /** How long the round stays on screen after an answer is picked, before the Result replaces it. */
+    static final long REVEAL_MS = 450;
+    // The picked answer shows green or red this long, then the round fades out for the rest of REVEAL_MS
+    private static final long REVEAL_SHOW_MS = 300;
+    private static final long HINT_COUNT_MS = 300;
+    private static final int WARNING_SECONDS = 5;
 
     private GameViewModel game;
+    private ObjectAnimator liveBlink;
+    @Nullable
+    private ValueAnimator hintCount;
+    // The second on the timer, to bump it once each time it changes near the end
+    private int shownSeconds = -1;
 
     public RoundFragment() {
         super(R.layout.fragment_round);
@@ -47,32 +67,108 @@ public class RoundFragment extends Fragment {
         View topBar = view.findViewById(R.id.top_bar);
         GameTopBar.bind(topBar, game.roundNumber(), GameViewModel.ROUND_COUNT, game.score(), game.outcomes(), true);
         topBar.findViewById(R.id.close_button).setOnClickListener(v -> ((GameActivity) requireActivity()).confirmQuit());
+        if (savedInstanceState == null) {
+            // The round comes in section by section under the top bar, which stays still between screens
+            Motion.riseInChildren(view.findViewById(R.id.round_content), 1);
+        }
 
         CircularProgressIndicator ring = view.findViewById(R.id.timer_ring);
         ring.setMax(ScoreCalculator.ROUND_SECONDS * 1000);
         TextView timer = view.findViewById(R.id.timer_text);
+        shownSeconds = -1;
         game.remainingMs().observe(getViewLifecycleOwner(), remaining -> {
             ring.setProgressCompat((int) (long) remaining, false);
             // Rounded up, so the ring reads 0:20 until a whole second has passed
             int seconds = (int) ((remaining + 999) / 1000);
             timer.setText(getString(R.string.timer, seconds / 60, seconds % 60));
+            if (shownSeconds != -1 && seconds != shownSeconds && seconds > 0 && seconds <= WARNING_SECONDS) {
+                Motion.pulse(timer);
+            }
+            shownSeconds = seconds;
         });
+        liveBlink = Motion.blink(view.findViewById(R.id.live_dot));
 
         ViewCompat.setAccessibilityHeading(view.findViewById(R.id.hints_title), true);
         for (int i = 0; i < HINT_IDS.length; i++) {
             final int hint = i;
-            view.findViewById(HINT_IDS[i]).setOnClickListener(v -> game.revealHint(hint));
+            view.findViewById(HINT_IDS[i]).setOnClickListener(v -> revealHint(view, v, hint));
         }
         for (int i = 0; i < ANSWER_IDS.length; i++) {
             final int option = i;
             View answer = view.findViewById(ANSWER_IDS[i]);
             ((TextView) answer.findViewById(R.id.answer_letter)).setText(ANSWER_LETTERS[i]);
-            answer.setOnClickListener(v -> game.answer(option));
+            answer.setOnClickListener(v -> answer(view, option));
         }
         view.findViewById(R.id.retry_button).setOnClickListener(v -> game.retry());
 
         game.round().observe(getViewLifecycleOwner(), round -> bindRound(view, round));
         game.status().observe(getViewLifecycleOwner(), status -> bindStatus(view, status));
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        // An endless animation has to be stopped by hand, or it keeps the old screen alive
+        liveBlink.cancel();
+    }
+
+    private void revealHint(View view, View tile, int hint) {
+        GameRound round = game.current();
+        if (round == null || round.hintsOpen[hint]) {
+            return;
+        }
+        int maxBefore = ScoreCalculator.maxPoints(round.hintsOpen);
+        game.revealHint(hint);
+        if (!round.hintsOpen[hint]) {
+            return;
+        }
+        // The tile now shows its answer: it turns over, and the points still to win count down by its cost
+        Motion.flipIn(tile);
+        Context context = requireContext();
+        if (hintCount != null) {
+            // A second hint opened right after the first takes over the number
+            hintCount.cancel();
+        }
+        hintCount = Motion.count(view.findViewById(R.id.hints_max), maxBefore, ScoreCalculator.maxPoints(round.hintsOpen),
+                HINT_COUNT_MS, value -> context.getString(R.string.points_signed, value));
+    }
+
+    private void answer(View view, int option) {
+        game.answer(option);
+        GameRound round = game.current();
+        // The points were fixed by the line above: what follows only shows the outcome
+        if (round != null && round.finished && round.guess != null) {
+            revealAnswer(view, round, option);
+        }
+    }
+
+    /** Colors the picked answer green or red, and the right one green, while GameActivity waits REVEAL_MS. */
+    private void revealAnswer(View view, GameRound round, int picked) {
+        for (int i = 0; i < ANSWER_IDS.length && i < round.options.size(); i++) {
+            MaterialCardView answer = view.findViewById(ANSWER_IDS[i]);
+            if (round.options.get(i).code.equals(round.answer.code)) {
+                markAnswer(answer, R.color.correct, R.color.correct_soft);
+                if (i == picked) {
+                    Motion.pulse(answer.findViewById(R.id.answer_letter));
+                }
+            } else if (i == picked) {
+                markAnswer(answer, R.color.wrong, R.color.wrong_soft);
+                Motion.shake(answer, 0);
+            } else {
+                answer.setAlpha(DISABLED_ALPHA);
+            }
+        }
+        // Then the round fades out under the top bar, and the Result rises into the empty space
+        Motion.fadeOutChildren(view.findViewById(R.id.round_content), 1, REVEAL_SHOW_MS);
+    }
+
+    private void markAnswer(MaterialCardView answer, @ColorRes int color, @ColorRes int fill) {
+        Context context = requireContext();
+        answer.setStrokeColor(ContextCompat.getColor(context, color));
+        answer.setCardBackgroundColor(ContextCompat.getColor(context, fill));
+        TextView letter = answer.findViewById(R.id.answer_letter);
+        ViewCompat.setBackgroundTintList(letter, ContextCompat.getColorStateList(context, color));
+        letter.setTextColor(ContextCompat.getColor(context, R.color.on_accent));
     }
 
     private void bindRound(View view, GameRound round) {
@@ -118,6 +214,28 @@ public class RoundFragment extends Fragment {
         EqualizerView equalizer = view.findViewById(R.id.timer_equalizer);
         equalizer.setVisibility(loading ? View.INVISIBLE : View.VISIBLE);
         equalizer.setPlaying(playing);
+
+        // The LIVE dot blinks while there is sound
+        if (playing && Motion.enabled(requireContext())) {
+            if (!liveBlink.isStarted()) {
+                liveBlink.start();
+            }
+        } else {
+            liveBlink.cancel();
+            view.findViewById(R.id.live_dot).setAlpha(1f);
+        }
+
+        // The dial needle searches while the stream connects, then stops on the station
+        DialStripView dial = view.findViewById(R.id.dial_strip);
+        GameRound round = game.current();
+        Station station = round != null ? round.station() : null;
+        if (loading) {
+            dial.scan();
+        } else if (playing && station != null) {
+            dial.tuneTo(station.uuid);
+        } else {
+            dial.stopScan();
+        }
     }
 
     private void bindHint(View tile, int hint, GameRound round) {

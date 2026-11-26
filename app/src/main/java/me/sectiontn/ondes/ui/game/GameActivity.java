@@ -3,6 +3,8 @@ package me.sectiontn.ondes.ui.game;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 
 import androidx.activity.OnBackPressedCallback;
 import androidx.appcompat.app.AppCompatActivity;
@@ -15,6 +17,8 @@ import androidx.lifecycle.ViewModelProvider;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 
 import me.sectiontn.ondes.R;
+import me.sectiontn.ondes.game.GameRound;
+import me.sectiontn.ondes.ui.common.Motion;
 import me.sectiontn.ondes.ui.common.SystemBars;
 
 /** Runs one game of five rounds, without the bottom navigation bar. */
@@ -28,6 +32,7 @@ public class GameActivity extends AppCompatActivity {
     public static final String MODE_DAILY_RESULTS = "daily_results";
 
     private GameViewModel game;
+    private final Handler handler = new Handler(Looper.getMainLooper());
 
     public static Intent newIntent(Context context, String mode) {
         return new Intent(context, GameActivity.class).putExtra(EXTRA_MODE, mode);
@@ -88,7 +93,12 @@ public class GameActivity extends AppCompatActivity {
                 .show();
     }
 
-    // Swaps the screen without a back stack: Back always leaves the game
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        handler.removeCallbacksAndMessages(null);
+    }
+
     private void show(GameViewModel.Screen screen) {
         Fragment next;
         switch (screen) {
@@ -102,9 +112,25 @@ public class GameActivity extends AppCompatActivity {
                 next = new RoundFragment();
                 break;
         }
+        handler.removeCallbacksAndMessages(null);
+        // A picked answer first shows green or red on its button, then the Result opens. The score is already final
+        GameRound round = game.current();
+        Fragment shown = getSupportFragmentManager().findFragmentById(R.id.game_container);
+        boolean reveal = screen == GameViewModel.Screen.RESULT && shown instanceof RoundFragment
+                && round != null && round.guess != null && Motion.enabled(this);
+        if (reveal) {
+            handler.postDelayed(() -> swap(next), RoundFragment.REVEAL_MS);
+        } else {
+            swap(next);
+        }
+    }
+
+    // Swaps the screen without a back stack: Back always leaves the game
+    private void swap(Fragment next) {
+        // The delayed swap can run after the app went to the background, where a plain commit() throws
         getSupportFragmentManager().beginTransaction()
                 .setReorderingAllowed(true)
                 .replace(R.id.game_container, next)
-                .commit();
+                .commitAllowingStateLoss();
     }
 }
