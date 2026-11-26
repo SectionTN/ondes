@@ -6,7 +6,6 @@ import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.RectF;
 import android.os.SystemClock;
-import android.provider.Settings;
 import android.util.AttributeSet;
 import android.view.View;
 
@@ -48,7 +47,7 @@ public class EqualizerView extends View {
     public void setPlaying(boolean playing) {
         if (this.playing != playing) {
             this.playing = playing;
-            animated = playing && animationsEnabled();
+            animated = playing && Motion.enabled(getContext());
             invalidate();
         }
     }
@@ -80,10 +79,5 @@ public class EqualizerView extends View {
         if (animate) {
             postInvalidateOnAnimation();
         }
-    }
-
-    // "Remove animations" in the accessibility settings sets the animator scale to 0
-    private boolean animationsEnabled() {
-        return Settings.Global.getFloat(getContext().getContentResolver(), Settings.Global.ANIMATOR_DURATION_SCALE, 1f) != 0f;
     }
 }
