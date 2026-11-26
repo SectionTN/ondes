@@ -5,9 +5,12 @@
     android:layout_height="match_parent"
     android:fillViewport="true">
 
+    <!-- clipChildren is off down to the circle, so its waves can spread past their own box -->
     <LinearLayout
+        android:id="@+id/result_content"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:clipChildren="false"
         android:orientation="vertical"
         android:paddingHorizontal="@dimen/screen_padding_h"
         android:paddingTop="@dimen/screen_padding_top_game"
@@ -27,18 +30,41 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:clipChildren="false"
             android:gravity="center_horizontal"
             android:orientation="vertical">
 
-            <ImageView
-                android:id="@+id/result_circle"
+            <FrameLayout
                 android:layout_width="@dimen/result_circle_size"
-                android:layout_height="@dimen/result_circle_size"
-                android:background="@drawable/bg_result_circle"
-                android:contentDescription="@string/outcome_correct"
-                android:padding="@dimen/result_icon_padding"
-                android:src="@drawable/ic_check"
-                app:tint="@color/correct" />
+                android:layout_height="@dimen/result_circle_size">
+
+                <!-- Two rings hidden behind the circle: after a right answer they spread out like radio waves -->
+                <View
+                    android:id="@+id/result_wave_1"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:alpha="0"
+                    android:background="@drawable/bg_wave_ring"
+                    android:importantForAccessibility="no" />
+
+                <View
+                    android:id="@+id/result_wave_2"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:alpha="0"
+                    android:background="@drawable/bg_wave_ring"
+                    android:importantForAccessibility="no" />
+
+                <ImageView
+                    android:id="@+id/result_circle"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/bg_result_circle"
+                    android:contentDescription="@string/outcome_correct"
+                    android:padding="@dimen/result_icon_padding"
+                    android:src="@drawable/ic_check"
+                    app:tint="@color/correct" />
+            </FrameLayout>
 
             <TextView
                 android:id="@+id/result_country"

@@ -1,13 +1,12 @@
 package me.sectiontn.ondes.ui.game;
 
-import android.animation.ValueAnimator;
+import android.content.Context;
 import android.graphics.Outline;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewOutlineProvider;
-import android.view.animation.OvershootInterpolator;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -30,21 +29,21 @@ import me.sectiontn.ondes.game.GameRound;
 import me.sectiontn.ondes.game.ScoreCalculator;
 import me.sectiontn.ondes.player.RadioPlayer;
 import me.sectiontn.ondes.ui.common.EqualizerView;
+import me.sectiontn.ondes.ui.common.Motion;
 
 /** After an answer: right or wrong, the points, and the station that was playing. */
 public class ResultFragment extends Fragment {
 
     private static final int MAX_TAGS = 3;
-    private static final long CIRCLE_POP_MS = 220;
-    private static final long COUNT_UP_MS = 600;
-    private static final float CIRCLE_START_SCALE = 0.6f;
+    // The waves start once the outcome has risen into place: while it fades in, Android would cut them at its edges
+    private static final long WAVE_DELAY_MS = 300;
+    private static final long WAVE_GAP_MS = 220;
+    private static final long SHAKE_DELAY_MS = 200;
 
     private GameViewModel game;
     private boolean saved = false;
     // Set by the first tap on Next, so a fast double tap cannot skip a round
     private boolean leaving = false;
-    @Nullable
-    private ValueAnimator countUp;
 
     public ResultFragment() {
         super(R.layout.fragment_result);
@@ -62,7 +61,13 @@ public class ResultFragment extends Fragment {
         GameTopBar.bind(topBar, game.roundNumber(), GameViewModel.ROUND_COUNT, game.score(), game.outcomes(), false);
         topBar.findViewById(R.id.close_button).setOnClickListener(v -> ((GameActivity) requireActivity()).confirmQuit());
 
-        bindOutcome(view, round, savedInstanceState == null);
+        // A screen brought back by Android (savedInstanceState set) shows as it was, without the entrance
+        boolean animate = savedInstanceState == null;
+        if (animate) {
+            GameTopBar.showOutcome(topBar, game.roundNumber(), round.points, game.score(), round.outcome);
+            Motion.riseInChildren(view.findViewById(R.id.result_content), 1);
+        }
+        bindOutcome(view, round, animate);
         Station station = round.station();
         if (station != null) {
             bindStation(view, station, game.catalog().nameOf(round.answer.code));
@@ -90,16 +95,6 @@ public class ResultFragment extends Fragment {
         save.setOnClickListener(v -> game.setSaved(station, !saved));
     }
 
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        // Next round within 600 ms would otherwise run the count-up on a fragment that is gone, and crash
-        if (countUp != null) {
-            countUp.cancel();
-            countUp = null;
-        }
-    }
-
     private void bindOutcome(View view, GameRound round, boolean animate) {
         boolean right = round.isCorrect();
         int textColor = ContextCompat.getColor(requireContext(), right ? R.color.correct : R.color.wrong_text);
@@ -111,10 +106,14 @@ public class ResultFragment extends Fragment {
                 right ? R.color.correct : R.color.wrong));
         circle.setContentDescription(getString(right ? R.string.outcome_correct : R.string.outcome_wrong));
         if (animate) {
-            circle.setScaleX(CIRCLE_START_SCALE);
-            circle.setScaleY(CIRCLE_START_SCALE);
-            circle.animate().scaleX(1f).scaleY(1f).setDuration(CIRCLE_POP_MS)
-                    .setInterpolator(new OvershootInterpolator()).start();
+            Motion.pop(circle, Motion.POP_FROM_SMALL, 0);
+            if (right) {
+                // Two radio waves leave the circle once it has landed, one after the other
+                Motion.wave(view.findViewById(R.id.result_wave_1), WAVE_DELAY_MS);
+                Motion.wave(view.findViewById(R.id.result_wave_2), WAVE_DELAY_MS + WAVE_GAP_MS);
+            } else {
+                Motion.shake(circle, SHAKE_DELAY_MS);
+            }
         }
 
         // The country to find, whatever the player answered
@@ -125,10 +124,9 @@ public class ResultFragment extends Fragment {
         TextView points = view.findViewById(R.id.result_points);
         points.setTextColor(textColor);
         if (right && animate) {
-            // Counts up from 0, and jumps to the end when animations are off
-            countUp = ValueAnimator.ofInt(0, round.points).setDuration(COUNT_UP_MS);
-            countUp.addUpdateListener(a -> points.setText(getString(R.string.points_signed, (int) a.getAnimatedValue())));
-            countUp.start();
+            // The label reads its string from the context: getString() would crash once this screen is gone
+            Context context = requireContext();
+            Motion.count(points, 0, round.points, Motion.COUNT_MS, value -> context.getString(R.string.points_signed, value));
         } else {
             points.setText(right ? getString(R.string.points_signed, round.points) : getString(R.string.points_zero));
         }
