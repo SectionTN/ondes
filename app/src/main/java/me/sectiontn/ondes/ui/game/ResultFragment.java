@@ -204,9 +204,6 @@ public class ResultFragment extends Fragment {
 
     private void bindSave(MaterialButton save, Station station) {
         save.setText(saved ? R.string.action_saved : R.string.action_save);
-        save.setIconResource(saved ? R.drawable.ic_heart_filled : R.drawable.ic_heart);
-        save.setIconTint(ContextCompat.getColorStateList(requireContext(),
-                saved ? R.color.accent : R.color.button_outlined_content));
         save.setContentDescription(getString(saved ? R.string.remove_from_favorites : R.string.save_to_favorites, station.name));
     }
 
