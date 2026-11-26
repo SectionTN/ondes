@@ -127,6 +127,8 @@ public class GameViewModel extends AndroidViewModel {
 
     /** Starts a new game: today's daily, or free play with random countries. */
     public void start(boolean isDaily) {
+        // An Explore station would keep playing under the first round's spinner
+        player.stop();
         started = true;
         daily = isDaily;
         dayNumber = DailySeed.today();
@@ -511,6 +513,8 @@ public class GameViewModel extends AndroidViewModel {
 
     @Override
     protected void onCleared() {
+        // A station list that arrives after the player quit must not start a station
+        requestId++;
         handler.removeCallbacks(tick);
         player.state().removeObserver(playerObserver);
         // Leaving the game stops its station

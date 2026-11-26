@@ -56,6 +56,8 @@ public final class RadioPlayer {
     private Station station;
     // Set when the app went to the background while a station was playing
     private boolean pausedByBackground = false;
+    // Goes up on every play and stop, so a screen can tell that another screen took the player
+    private int generation = 0;
 
     private final Runnable startTimeout = () -> {
         Log.w(TAG, "No sound after " + START_TIMEOUT_MS + " ms: " + describe());
@@ -121,6 +123,7 @@ public final class RadioPlayer {
 
     /** Stops what is playing and starts this station. */
     public void play(Station next) {
+        generation++;
         station = next;
         pausedByBackground = false;
         MediaItem.Builder item = new MediaItem.Builder().setUri(next.streamUrl);
@@ -152,7 +155,13 @@ public final class RadioPlayer {
         }
     }
 
+    /** Changes each time a station starts or the player stops. */
+    public int generation() {
+        return generation;
+    }
+
     public void stop() {
+        generation++;
         handler.removeCallbacks(startTimeout);
         player.stop();
         player.clearMediaItems();

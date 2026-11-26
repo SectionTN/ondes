@@ -110,9 +110,15 @@ public class ExploreViewModel extends AndroidViewModel {
             return;
         }
         teleporting.setValue(true);
+        int generation = player.generation();
         stations.stationsWithTag(genre, new StationRepository.Callback<List<Station>>() {
             @Override
             public void onResult(List<Station> found) {
+                // A game started while the list loaded: it owns the player now
+                if (player.generation() != generation) {
+                    teleporting.setValue(false);
+                    return;
+                }
                 queue.clear();
                 queue.addAll(found);
                 // Radio Browser caches its random order for minutes, so the shuffle happens here
@@ -128,7 +134,9 @@ public class ExploreViewModel extends AndroidViewModel {
             @Override
             public void onError(IOException error) {
                 teleporting.setValue(false);
-                message.setValue(R.string.error_directory);
+                if (player.generation() == generation) {
+                    message.setValue(R.string.error_directory);
+                }
             }
         });
     }
@@ -175,7 +183,13 @@ public class ExploreViewModel extends AndroidViewModel {
     }
 
     private void onPlayerState(RadioPlayer.State state) {
-        if (pending == null || !player.isCurrent(pending)) {
+        if (pending == null) {
+            return;
+        }
+        if (!player.isCurrent(pending)) {
+            // A game took the player before this station started: stop waiting for it
+            pending = null;
+            teleporting.setValue(false);
             return;
         }
         if (state == RadioPlayer.State.PLAYING) {
