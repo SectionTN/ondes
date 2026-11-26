@@ -162,6 +162,18 @@
                     android:layout_marginTop="@dimen/gap_card_inner"
                     android:text="@string/action_play"
                     app:icon="@drawable/ic_play" />
+
+                <!-- Replaces Play once today's daily is done -->
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/results_button"
+                    style="@style/Widget.Ondes.Button.Outlined"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/gap_card_inner"
+                    android:text="@string/action_see_results"
+                    android:visibility="gone"
+                    app:icon="@drawable/ic_arrow_right"
+                    app:iconGravity="textEnd" />
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>
 
