@@ -155,12 +155,18 @@ public class ExploreFragment extends Fragment implements StationAdapter.Listener
         EqualizerView equalizer = view.findViewById(R.id.mini_player_equalizer);
         button.setOnClickListener(v -> explore.togglePlayback());
 
+        // A station from an earlier visit shows at once, only the very first one slides in
+        boolean firstStation = explore.station().getValue() == null;
         explore.station().observe(getViewLifecycleOwner(), station -> {
             if (station == null) {
                 return;
             }
             if (miniPlayer.getVisibility() != View.VISIBLE) {
-                slideUp(miniPlayer);
+                if (firstStation) {
+                    slideUp(miniPlayer);
+                } else {
+                    miniPlayer.setVisibility(View.VISIBLE);
+                }
             }
             name.setText(station.name);
             place.setText(placeOf(station));
