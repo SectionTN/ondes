@@ -1,5 +1,6 @@
 package me.sectiontn.ondes.ui.home;
 
+import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.LayerDrawable;
 import android.os.Bundle;
@@ -53,6 +54,8 @@ public class HomeFragment extends Fragment {
     private int today;
     @Nullable
     private LiveData<DailyResultEntity> todayLive;
+    // True from the tap that opens a game until Home is back, so a double tap opens one game, not two
+    private boolean launching = false;
 
     public HomeFragment() {
         super(R.layout.fragment_home);
@@ -76,7 +79,7 @@ public class HomeFragment extends Fragment {
 
         view.findViewById(R.id.play_button).setOnClickListener(v -> startGame(GameActivity.MODE_DAILY));
         view.findViewById(R.id.results_button).setOnClickListener(v ->
-                startActivity(GameActivity.newResultsIntent(requireContext(), today)));
+                launch(GameActivity.newResultsIntent(requireContext(), today)));
         view.findViewById(R.id.free_play_tile).setOnClickListener(v -> startGame(GameActivity.MODE_FREE_PLAY));
         view.findViewById(R.id.explore_tile).setOnClickListener(v ->
                 ((MainActivity) requireActivity()).selectTab(R.id.nav_explore));
@@ -85,6 +88,7 @@ public class HomeFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
+        launching = false;
         // Past midnight the tab shows the new day's daily
         View view = getView();
         if (view != null && DailySeed.today() != today) {
@@ -174,6 +178,14 @@ public class HomeFragment extends Fragment {
     }
 
     private void startGame(String mode) {
-        startActivity(GameActivity.newIntent(requireContext(), mode));
+        launch(GameActivity.newIntent(requireContext(), mode));
+    }
+
+    private void launch(Intent intent) {
+        if (launching) {
+            return;
+        }
+        launching = true;
+        startActivity(intent);
     }
 }
