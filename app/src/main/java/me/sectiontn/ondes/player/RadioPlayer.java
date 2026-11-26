@@ -172,7 +172,8 @@ public final class RadioPlayer {
 
     /** Called when the last screen of the app leaves the foreground. */
     public void onAppBackground() {
-        if (player.getPlayWhenReady() && station != null) {
+        // A failed stream stays failed, so the screen keeps its Retry button
+        if (player.getPlayWhenReady() && station != null && state.getValue() != State.FAILED) {
             pausedByBackground = true;
             pause();
         }
