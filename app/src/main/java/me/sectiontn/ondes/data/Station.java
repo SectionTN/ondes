@@ -32,7 +32,9 @@ public class Station {
         this.favicon = favicon == null ? "" : favicon;
         this.tags = Collections.unmodifiableList(tags);
         this.countryCode = countryCode == null ? "" : countryCode.toUpperCase(Locale.ROOT);
-        this.state = state == null ? "" : state.trim();
+        String place = state == null ? "" : state.trim();
+        // Some stations write their region in lowercase, "indiana" shows as "Indiana"
+        this.state = place.equals(place.toLowerCase(Locale.ROOT)) ? titleCase(place) : place;
         this.languages = Collections.unmodifiableList(languages);
         this.hls = hls;
     }
