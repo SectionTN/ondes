@@ -41,10 +41,17 @@
                     <FrameLayout
                         android:layout_width="@dimen/teleport_ring_size"
                         android:layout_height="@dimen/teleport_ring_size"
-                        android:background="@drawable/bg_dashed_ring"
                         android:importantForAccessibility="noHideDescendants">
 
+                        <!-- The dashed ring is its own view, so it can turn while a station is being found -->
+                        <View
+                            android:id="@+id/teleport_ring"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="@drawable/bg_dashed_ring" />
+
                         <ImageView
+                            android:id="@+id/teleport_icon"
                             android:layout_width="@dimen/teleport_circle_size"
                             android:layout_height="@dimen/teleport_circle_size"
                             android:layout_gravity="center"

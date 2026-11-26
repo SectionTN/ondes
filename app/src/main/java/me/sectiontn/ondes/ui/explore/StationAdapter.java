@@ -1,12 +1,14 @@
 package me.sectiontn.ondes.ui.explore;
 
 import android.annotation.SuppressLint;
+import android.os.SystemClock;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -19,6 +21,7 @@ import java.util.Set;
 
 import me.sectiontn.ondes.R;
 import me.sectiontn.ondes.data.Station;
+import me.sectiontn.ondes.ui.common.Motion;
 
 /** Rows of the Saved and Recent lists on Explore: country code, name, place and a heart. */
 public class StationAdapter extends RecyclerView.Adapter<StationAdapter.Holder> {
@@ -32,9 +35,15 @@ public class StationAdapter extends RecyclerView.Adapter<StationAdapter.Holder> 
         String placeOf(Station station);
     }
 
+    private static final long BUMP_WINDOW_MS = 500;
+
     private final Listener listener;
     private List<Station> stations = new ArrayList<>();
     private Set<String> favoriteIds = new HashSet<>();
+    // The station whose heart was just tapped to save it, and until when its filled heart bumps
+    @Nullable
+    private String bumpId;
+    private long bumpUntil;
 
     public StationAdapter(Listener listener) {
         this.listener = listener;
@@ -75,7 +84,21 @@ public class StationAdapter extends RecyclerView.Adapter<StationAdapter.Holder> 
         heart.setIconTint(ContextCompat.getColorStateList(heart.getContext(), favorite ? R.color.accent : R.color.text_2));
         int label = favorite ? R.string.remove_from_favorites : R.string.save_to_favorites;
         heart.setContentDescription(heart.getContext().getString(label, station.name));
-        heart.setOnClickListener(v -> listener.onFavorite(station, !favorite));
+        heart.setOnClickListener(v -> {
+            if (!favorite) {
+                // The heart fills a moment later, when the database has saved it: that redraw is the one to bump
+                bumpId = station.uuid;
+                bumpUntil = SystemClock.uptimeMillis() + BUMP_WINDOW_MS;
+            }
+            listener.onFavorite(station, !favorite);
+        });
+        // Rows are redrawn in any order, so a bump left running from another station is stopped first
+        heart.animate().cancel();
+        heart.setScaleX(1f);
+        heart.setScaleY(1f);
+        if (favorite && station.uuid.equals(bumpId) && SystemClock.uptimeMillis() < bumpUntil) {
+            Motion.pulse(heart);
+        }
     }
 
     @Override

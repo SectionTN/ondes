@@ -1,5 +1,6 @@
 package me.sectiontn.ondes.ui.explore;
 
+import android.animation.ObjectAnimator;
 import android.content.Context;
 import android.hardware.Sensor;
 import android.hardware.SensorManager;
@@ -27,6 +28,7 @@ import me.sectiontn.ondes.R;
 import me.sectiontn.ondes.data.Station;
 import me.sectiontn.ondes.player.RadioPlayer;
 import me.sectiontn.ondes.ui.common.EqualizerView;
+import me.sectiontn.ondes.ui.common.Motion;
 import me.sectiontn.ondes.ui.common.ShakeDetector;
 
 /** The Explore tab: shake or tap Teleport to jump to a random live station. */
@@ -41,6 +43,8 @@ public class ExploreFragment extends Fragment implements StationAdapter.Listener
     @Nullable
     private Sensor accelerometer;
     private MaterialButton teleportButton;
+    private View teleportIcon;
+    private ObjectAnimator ringSpin;
     private View miniPlayer;
 
     public ExploreFragment() {
@@ -55,6 +59,8 @@ public class ExploreFragment extends Fragment implements StationAdapter.Listener
 
         teleportButton = view.findViewById(R.id.teleport_button);
         teleportButton.setOnClickListener(v -> explore.teleport());
+        teleportIcon = view.findViewById(R.id.teleport_icon);
+        ringSpin = Motion.spin(view.findViewById(R.id.teleport_ring));
         explore.teleporting().observe(getViewLifecycleOwner(), this::bindTeleporting);
 
         ChipGroup genres = view.findViewById(R.id.genre_chips);
@@ -101,6 +107,8 @@ public class ExploreFragment extends Fragment implements StationAdapter.Listener
     @Override
     public void onDestroyView() {
         super.onDestroyView();
+        // An endless animation has to be stopped by hand, or it keeps the old screen alive
+        ringSpin.cancel();
         // Another tab replaces this one: the sound stops, since only Explore has a button to stop it
         if (!requireActivity().isChangingConfigurations()) {
             explore.leave();
@@ -113,8 +121,14 @@ public class ExploreFragment extends Fragment implements StationAdapter.Listener
             CircularProgressIndicatorSpec spec = new CircularProgressIndicatorSpec(requireContext(), null, 0,
                     com.google.android.material.R.style.Widget_Material3_CircularProgressIndicator_ExtraSmall);
             teleportButton.setIcon(IndeterminateDrawable.createCircularDrawable(requireContext(), spec));
+            // The phone icon rocks once, and the dashed ring turns for as long as the search lasts
+            Motion.wiggle(teleportIcon);
+            if (Motion.enabled(requireContext()) && !ringSpin.isStarted()) {
+                ringSpin.start();
+            }
         } else {
             teleportButton.setIconResource(R.drawable.ic_shuffle);
+            ringSpin.cancel();
         }
     }
 
