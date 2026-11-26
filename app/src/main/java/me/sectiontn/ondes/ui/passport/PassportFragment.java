@@ -22,14 +22,21 @@ import java.util.ArrayList;
 import java.util.List;
 
 import me.sectiontn.ondes.R;
-import me.sectiontn.ondes.sample.SampleData;
+import me.sectiontn.ondes.data.countries.Country;
+import me.sectiontn.ondes.data.countries.CountryCatalog;
+import me.sectiontn.ondes.data.db.StampEntity;
+import me.sectiontn.ondes.data.repo.ProgressRepository;
 
-/** The Passport tab: a stamp for every country guessed right at least once. */
+/** The Passport tab: a stamp for every country guessed right at least once. Works offline. */
 public class PassportFragment extends Fragment {
 
     private static final int GRID_COLUMNS = 4;
 
+    private CountryCatalog catalog;
     private RecyclerView grid;
+    private TextView emptyText;
+    private ChipGroup chips;
+    private List<StampEntity> stamps = new ArrayList<>();
 
     public PassportFragment() {
         super(R.layout.fragment_passport);
@@ -37,50 +44,76 @@ public class PassportFragment extends Fragment {
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        catalog = CountryCatalog.get(requireContext());
         ViewCompat.setAccessibilityHeading(view.findViewById(R.id.passport_title), true);
-        NumberFormat numbers = NumberFormat.getIntegerInstance();
 
-        TextView count = view.findViewById(R.id.stamp_count);
-        count.setText(numbers.format(SampleData.STAMP_COUNT));
         TextView total = view.findViewById(R.id.stamp_total);
-        total.setText(getString(R.string.passport_total, SampleData.TOTAL_COUNTRIES));
-
+        total.setText(getString(R.string.passport_total, catalog.size()));
         LinearProgressIndicator progress = view.findViewById(R.id.stamp_progress);
-        progress.setMax(SampleData.TOTAL_COUNTRIES);
-        progress.setProgress(SampleData.STAMP_COUNT);
+        progress.setMax(catalog.size());
+
+        grid = view.findViewById(R.id.stamp_grid);
+        grid.setLayoutManager(new GridLayoutManager(requireContext(), GRID_COLUMNS));
+        emptyText = view.findViewById(R.id.stamps_empty);
+
+        chips = view.findViewById(R.id.continent_chips);
+        chips.setOnCheckedStateChangeListener((group, checkedIds) -> showStamps());
+
+        ProgressRepository.get(requireContext()).stamps().observe(getViewLifecycleOwner(), saved -> {
+            stamps = saved;
+            bindCounts(view);
+            showStamps();
+        });
+    }
+
+    private void bindCounts(View view) {
+        NumberFormat numbers = NumberFormat.getIntegerInstance();
+        ((TextView) view.findViewById(R.id.stamp_count)).setText(numbers.format(stamps.size()));
+        ((LinearProgressIndicator) view.findViewById(R.id.stamp_progress)).setProgress(stamps.size());
 
         LinearLayout counts = view.findViewById(R.id.continent_counts);
+        counts.removeAllViews();
         LayoutInflater inflater = LayoutInflater.from(requireContext());
         int gap = getResources().getDimensionPixelSize(R.dimen.gap_continent_counts);
-        for (int i = 0; i < SampleData.CONTINENTS.length; i++) {
+        for (int i = 0; i < CountryCatalog.CONTINENTS.length; i++) {
+            String continent = CountryCatalog.CONTINENTS[i];
+            int count = 0;
+            for (StampEntity stamp : stamps) {
+                Country country = catalog.find(stamp.countryCode);
+                if (country != null && continent.equals(country.continent)) {
+                    count++;
+                }
+            }
             View column = inflater.inflate(R.layout.item_continent_count, counts, false);
-            ((TextView) column.findViewById(R.id.continent_count)).setText(numbers.format(SampleData.CONTINENT_COUNTS[i]));
-            ((TextView) column.findViewById(R.id.continent_name)).setText(SampleData.CONTINENTS[i]);
+            ((TextView) column.findViewById(R.id.continent_count)).setText(numbers.format(count));
+            ((TextView) column.findViewById(R.id.continent_name)).setText(continent);
             if (i > 0) {
                 ((LinearLayout.LayoutParams) column.getLayoutParams()).setMarginStart(gap);
             }
             counts.addView(column);
         }
-
-        grid = view.findViewById(R.id.stamp_grid);
-        grid.setLayoutManager(new GridLayoutManager(requireContext(), GRID_COLUMNS));
-
-        ChipGroup chips = view.findViewById(R.id.continent_chips);
-        chips.setOnCheckedStateChangeListener((group, checkedIds) -> showStamps(checkedIds.get(0)));
-        showStamps(chips.getCheckedChipId());
     }
 
-    private void showStamps(@IdRes int chipId) {
-        String continent = continentFor(chipId);
-        List<SampleData.Stamp> shown = new ArrayList<>();
-        for (SampleData.Stamp stamp : SampleData.stamps()) {
-            if (continent == null || continent.equals(stamp.continent)) {
+    private void showStamps() {
+        String continent = continentFor(chips.getCheckedChipId());
+        List<StampEntity> shown = new ArrayList<>();
+        for (StampEntity stamp : stamps) {
+            Country country = catalog.find(stamp.countryCode);
+            if (continent == null || country != null && continent.equals(country.continent)) {
                 shown.add(stamp);
             }
         }
-        // A filtered view ends with locked cells up to the end of its last row, or one full row
-        int locked = continent == null ? 0 : GRID_COLUMNS - shown.size() % GRID_COLUMNS;
-        grid.setAdapter(new StampAdapter(shown, locked));
+        // No stamp yet: one row of locked cells. A filtered view fills its last row with locked cells
+        int locked;
+        if (stamps.isEmpty()) {
+            locked = GRID_COLUMNS;
+        } else if (continent == null) {
+            locked = 0;
+        } else {
+            locked = GRID_COLUMNS - shown.size() % GRID_COLUMNS;
+        }
+        emptyText.setVisibility(stamps.isEmpty() ? View.VISIBLE : View.GONE);
+        grid.setAdapter(new StampAdapter(shown, locked, catalog));
     }
 
     /** The continent a chip filters on, or null for All. */

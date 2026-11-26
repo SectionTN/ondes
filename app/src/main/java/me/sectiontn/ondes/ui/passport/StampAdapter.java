@@ -13,10 +13,14 @@ import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 import me.sectiontn.ondes.R;
-import me.sectiontn.ondes.sample.SampleData;
+import me.sectiontn.ondes.data.countries.CountryCatalog;
+import me.sectiontn.ondes.data.db.StampEntity;
 
 /** Cells of the Passport grid: the stamps first, then any locked placeholders. */
 public class StampAdapter extends RecyclerView.Adapter<StampAdapter.Holder> {
@@ -25,12 +29,15 @@ public class StampAdapter extends RecyclerView.Adapter<StampAdapter.Holder> {
     private static final int[] INKS = {R.color.stamp_1, R.color.stamp_2, R.color.stamp_3, R.color.stamp_4};
     private static final float[] TILTS = {-6, 4, -3, 7, -5, 3, -7, 5, -2, 6, -4, 2};
 
-    private final List<SampleData.Stamp> stamps;
+    private final List<StampEntity> stamps;
     private final int lockedCount;
+    private final CountryCatalog catalog;
+    private final SimpleDateFormat dateFormat = new SimpleDateFormat("d MMM", Locale.ENGLISH);
 
-    public StampAdapter(List<SampleData.Stamp> stamps, int lockedCount) {
+    public StampAdapter(List<StampEntity> stamps, int lockedCount, CountryCatalog catalog) {
         this.stamps = stamps;
         this.lockedCount = lockedCount;
+        this.catalog = catalog;
     }
 
     @NonNull
@@ -43,7 +50,9 @@ public class StampAdapter extends RecyclerView.Adapter<StampAdapter.Holder> {
     @Override
     public void onBindViewHolder(@NonNull Holder holder, int position) {
         if (position < stamps.size()) {
-            bindStamp(holder, stamps.get(position), position);
+            StampEntity stamp = stamps.get(position);
+            bindStamp(holder, stamp.countryCode, catalog.nameOf(stamp.countryCode),
+                    dateFormat.format(new Date(stamp.firstDate)), position);
         } else {
             bindLocked(holder);
         }
@@ -54,7 +63,7 @@ public class StampAdapter extends RecyclerView.Adapter<StampAdapter.Holder> {
         return stamps.size() + lockedCount;
     }
 
-    private static void bindStamp(Holder holder, SampleData.Stamp stamp, int position) {
+    private static void bindStamp(Holder holder, String code, String name, String date, int position) {
         Context context = holder.itemView.getContext();
         Resources res = context.getResources();
         int ink = ContextCompat.getColor(context, INKS[position % INKS.length]);
@@ -70,14 +79,14 @@ public class StampAdapter extends RecyclerView.Adapter<StampAdapter.Holder> {
         innerRing.setStroke(res.getDimensionPixelSize(R.dimen.stroke_thin), ink,
                 res.getDimension(R.dimen.dash_width), res.getDimension(R.dimen.dash_gap));
         holder.code.setBackground(innerRing);
-        holder.code.setText(stamp.countryCode);
+        holder.code.setText(code);
         holder.code.setTextColor(ink);
         holder.code.setVisibility(View.VISIBLE);
         holder.lock.setVisibility(View.GONE);
 
-        holder.name.setText(stamp.name);
+        holder.name.setText(name);
         holder.name.setTextColor(ContextCompat.getColor(context, R.color.text));
-        holder.date.setText(stamp.date);
+        holder.date.setText(date);
         holder.date.setTextColor(ContextCompat.getColor(context, R.color.text_muted));
         holder.date.setImportantForAccessibility(View.IMPORTANT_FOR_ACCESSIBILITY_AUTO);
     }

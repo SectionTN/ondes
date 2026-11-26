@@ -43,6 +43,7 @@
     <string name="stamp_locked">Not yet</string>
     <string name="stamp_locked_date">\?\?\?</string>
     <string name="countries_collected">Countries collected</string>
+    <string name="stamps_empty">Guess a country right to earn your first stamp</string>
 
     <!-- Game -->
     <string name="mode_free_play">Free play</string>

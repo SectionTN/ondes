@@ -133,5 +133,15 @@
             android:layout_marginHorizontal="@dimen/stamp_grid_outset"
             android:layout_marginTop="@dimen/gap_section_tab"
             android:nestedScrollingEnabled="false" />
+
+        <TextView
+            android:id="@+id/stamps_empty"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/gap_section_tab"
+            android:gravity="center"
+            android:text="@string/stamps_empty"
+            android:textAppearance="@style/TextAppearance.Ondes.Caption"
+            android:visibility="gone" />
     </LinearLayout>
 </androidx.core.widget.NestedScrollView>
