@@ -2,13 +2,34 @@
 
 A geography game played by ear, for Android. It plays a radio station that is live somewhere in the world, and you guess the country.
 
-<p>
-  <img src="screenshots/home.png" width="180" alt="The Play tab with today's daily challenge">
-  <img src="screenshots/round.png" width="180" alt="A round with the timer ring, hints and four answers">
-  <img src="screenshots/result.png" width="180" alt="A correct answer with the points and the station">
-  <img src="screenshots/explore.png" width="180" alt="Explore with the mini player">
-  <img src="screenshots/passport.png" width="180" alt="Passport with one stamp">
-</p>
+## Screenshots
+
+<table>
+  <tr>
+    <td align="center" width="33%">
+      <img src="screenshots/home.png" alt="The Play tab with today's daily challenge" width="220" /><br />
+      <sub><strong>Daily challenge</strong><br />The same 5 stations for every player</sub>
+    </td>
+    <td align="center" width="33%">
+      <img src="screenshots/round.png" alt="A round with the timer ring, hints and four answers" width="220" /><br />
+      <sub><strong>Round</strong><br />20 seconds, 3 hints &amp; 4 answers</sub>
+    </td>
+    <td align="center" width="33%">
+      <img src="screenshots/result.png" alt="A correct answer with the points and the station" width="220" /><br />
+      <sub><strong>Result</strong><br />Points &amp; the station you heard</sub>
+    </td>
+  </tr>
+  <tr>
+    <td align="center" width="33%">
+      <img src="screenshots/explore.png" alt="Explore with the mini player" width="220" /><br />
+      <sub><strong>Explore</strong><br />Shake to jump to a live station</sub>
+    </td>
+    <td align="center" width="33%">
+      <img src="screenshots/passport.png" alt="Passport with one stamp" width="220" /><br />
+      <sub><strong>Passport</strong><br />A stamp for every country you find</sub>
+    </td>
+  </tr>
+</table>
 
 ## Features
 
