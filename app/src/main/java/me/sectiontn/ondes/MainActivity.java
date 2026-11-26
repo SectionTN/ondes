@@ -10,6 +10,7 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
@@ -46,7 +47,7 @@ public class MainActivity extends AppCompatActivity {
 
         bottomNav = findViewById(R.id.bottom_nav);
         bottomNav.setOnItemSelectedListener(item -> {
-            showTab(item.getItemId());
+            showTab(item.getItemId(), true);
             return true;
         });
         // Tapping the open tab again keeps it as it is
@@ -55,7 +56,7 @@ public class MainActivity extends AppCompatActivity {
 
         // After a rotation or process death, the FragmentManager restores the open tab itself
         if (savedInstanceState == null) {
-            showTab(R.id.nav_play);
+            showTab(R.id.nav_play, false);
         }
     }
 
@@ -71,7 +72,7 @@ public class MainActivity extends AppCompatActivity {
         bottomNav.setSelectedItemId(itemId);
     }
 
-    private void showTab(@IdRes int itemId) {
+    private void showTab(@IdRes int itemId, boolean animate) {
         backToPlay.setEnabled(itemId != R.id.nav_play);
         Fragment tab;
         if (itemId == R.id.nav_explore) {
@@ -81,9 +82,11 @@ public class MainActivity extends AppCompatActivity {
         } else {
             tab = new HomeFragment();
         }
-        getSupportFragmentManager().beginTransaction()
-                .setReorderingAllowed(true)
-                .replace(R.id.tab_container, tab)
-                .commit();
+        FragmentTransaction swap = getSupportFragmentManager().beginTransaction().setReorderingAllowed(true);
+        if (animate) {
+            // A tapped tab fades in as it rises. The first tab at launch is just there
+            swap.setCustomAnimations(R.animator.tab_enter, R.animator.tab_exit);
+        }
+        swap.replace(R.id.tab_container, tab).commit();
     }
 }

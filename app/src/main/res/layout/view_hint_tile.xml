@@ -13,7 +13,8 @@
     android:minHeight="@dimen/hint_tile_min_height"
     android:orientation="vertical"
     android:paddingHorizontal="@dimen/hint_tile_padding_h"
-    android:paddingVertical="@dimen/hint_tile_padding_v">
+    android:paddingVertical="@dimen/hint_tile_padding_v"
+    android:stateListAnimator="@animator/press_scale">
 
     <LinearLayout
         android:layout_width="match_parent"

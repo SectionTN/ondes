@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- The game opening over Home: it fades in while it rises -->
+<set xmlns:android="http://schemas.android.com/apk/res/android"
+    android:interpolator="@interpolator/enter">
+    <alpha
+        android:duration="200"
+        android:fromAlpha="0"
+        android:toAlpha="1" />
+    <translate
+        android:duration="350"
+        android:fromYDelta="8%p"
+        android:toYDelta="0" />
+</set>

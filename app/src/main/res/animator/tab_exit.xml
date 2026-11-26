@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- A tab going away: a short fade, so the new tab is not kept waiting -->
+<objectAnimator xmlns:android="http://schemas.android.com/apk/res/android"
+    android:duration="90"
+    android:propertyName="alpha"
+    android:valueTo="0"
+    android:valueType="floatType" />
