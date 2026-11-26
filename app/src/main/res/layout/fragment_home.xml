@@ -124,8 +124,9 @@
                         android:textAppearance="@style/TextAppearance.Ondes.Caption" />
                 </LinearLayout>
 
-                <!-- Five dashed slots, one per round. Decorative until the daily is played -->
+                <!-- Five dashed slots, one per round. Hidden from TalkBack until the daily is played -->
                 <LinearLayout
+                    android:id="@+id/daily_slots"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/daily_slot_height"
                     android:layout_marginTop="@dimen/gap_card_inner"

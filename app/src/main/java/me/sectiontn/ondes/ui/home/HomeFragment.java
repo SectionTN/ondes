@@ -125,16 +125,27 @@ public class HomeFragment extends Fragment {
     private void bindDaily(View view, @Nullable DailyResultEntity result) {
         boolean done = result != null;
         NumberFormat numbers = UiFormat.numbers(requireContext());
+        StringBuilder outcomes = new StringBuilder();
         for (int i = 0; i < SLOT_IDS.length; i++) {
             TextView slot = view.findViewById(SLOT_IDS[i]);
             if (done && i < result.squares.length()) {
+                Outcome outcome = outcomeOf(result.squares.charAt(i));
                 slot.setText(null);
-                slot.setBackground(outcomeSquare(outcomeOf(result.squares.charAt(i))));
+                slot.setBackground(outcomeSquare(outcome));
+                if (outcomes.length() > 0) {
+                    outcomes.append(", ");
+                }
+                outcomes.append(getString(OutcomeStyle.description(outcome)));
             } else {
                 slot.setText(numbers.format(i + 1));
                 slot.setBackgroundResource(R.drawable.bg_dashed_rounded);
             }
         }
+        // Once played, TalkBack reads the row as one line: "Correct, Wrong, Correct with a hint..."
+        View slots = view.findViewById(R.id.daily_slots);
+        slots.setContentDescription(done ? outcomes : null);
+        slots.setImportantForAccessibility(done ? View.IMPORTANT_FOR_ACCESSIBILITY_YES
+                : View.IMPORTANT_FOR_ACCESSIBILITY_NO_HIDE_DESCENDANTS);
         view.findViewById(R.id.play_button).setVisibility(done ? View.GONE : View.VISIBLE);
         view.findViewById(R.id.results_button).setVisibility(done ? View.VISIBLE : View.GONE);
         bindTimeLeft();
