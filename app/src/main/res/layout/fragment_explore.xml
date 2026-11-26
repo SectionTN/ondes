@@ -180,6 +180,7 @@
         android:id="@+id/mini_player"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:visibility="gone"
         android:layout_margin="@dimen/mini_player_margin"
         android:background="@drawable/bg_mini_player"
         android:gravity="center_vertical"
@@ -190,6 +191,7 @@
         android:paddingBottom="@dimen/mini_player_padding">
 
         <me.sectiontn.ondes.ui.common.EqualizerView
+            android:id="@+id/mini_player_equalizer"
             android:layout_width="wrap_content"
             android:layout_height="@dimen/mini_player_equalizer_height"
             app:barCount="3" />

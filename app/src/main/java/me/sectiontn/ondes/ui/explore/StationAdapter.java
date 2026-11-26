@@ -11,18 +11,42 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.button.MaterialButton;
 
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import me.sectiontn.ondes.R;
-import me.sectiontn.ondes.sample.SampleData;
+import me.sectiontn.ondes.data.Station;
 
 /** Rows of the Saved and Recent lists on Explore: country code, name, place and a heart. */
 public class StationAdapter extends RecyclerView.Adapter<StationAdapter.Holder> {
 
-    private final List<SampleData.Station> stations;
+    /** What a row does when tapped. */
+    public interface Listener {
+        void onPlay(Station station);
 
-    public StationAdapter(List<SampleData.Station> stations) {
+        void onFavorite(Station station, boolean favorite);
+
+        String placeOf(Station station);
+    }
+
+    private final Listener listener;
+    private List<Station> stations = new ArrayList<>();
+    private Set<String> favoriteIds = new HashSet<>();
+
+    public StationAdapter(Listener listener) {
+        this.listener = listener;
+    }
+
+    public void setStations(List<Station> stations) {
         this.stations = stations;
+        notifyDataSetChanged();
+    }
+
+    public void setFavoriteIds(Set<String> favoriteIds) {
+        this.favoriteIds = favoriteIds;
+        notifyDataSetChanged();
     }
 
     @NonNull
@@ -34,28 +58,25 @@ public class StationAdapter extends RecyclerView.Adapter<StationAdapter.Holder> 
 
     @Override
     public void onBindViewHolder(@NonNull Holder holder, int position) {
-        SampleData.Station station = stations.get(position);
+        Station station = stations.get(position);
+        boolean favorite = favoriteIds.contains(station.uuid);
         holder.code.setText(station.countryCode);
         holder.name.setText(station.name);
-        holder.place.setText(station.place);
-        bindHeart(holder.heart, station);
-        holder.heart.setOnClickListener(v -> {
-            station.favorite = !station.favorite;
-            bindHeart(holder.heart, station);
-        });
+        holder.place.setText(listener.placeOf(station));
+        holder.itemView.setOnClickListener(v -> listener.onPlay(station));
+        holder.itemView.setContentDescription(holder.itemView.getContext().getString(R.string.play_station, station.name));
+
+        MaterialButton heart = holder.heart;
+        heart.setIconResource(favorite ? R.drawable.ic_heart_filled : R.drawable.ic_heart);
+        heart.setIconTint(ContextCompat.getColorStateList(heart.getContext(), favorite ? R.color.accent : R.color.text_2));
+        int label = favorite ? R.string.remove_from_favorites : R.string.save_to_favorites;
+        heart.setContentDescription(heart.getContext().getString(label, station.name));
+        heart.setOnClickListener(v -> listener.onFavorite(station, !favorite));
     }
 
     @Override
     public int getItemCount() {
         return stations.size();
-    }
-
-    private static void bindHeart(MaterialButton heart, SampleData.Station station) {
-        heart.setIconResource(station.favorite ? R.drawable.ic_heart_filled : R.drawable.ic_heart);
-        int color = station.favorite ? R.color.accent : R.color.text_2;
-        heart.setIconTint(ContextCompat.getColorStateList(heart.getContext(), color));
-        int label = station.favorite ? R.string.remove_from_favorites : R.string.save_to_favorites;
-        heart.setContentDescription(heart.getContext().getString(label, station.name));
     }
 
     static class Holder extends RecyclerView.ViewHolder {

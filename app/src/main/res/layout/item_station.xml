@@ -4,6 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginTop="@dimen/gap_list"
+    android:background="?attr/selectableItemBackground"
     android:gravity="center_vertical"
     android:minHeight="@dimen/station_row_min_height"
     android:orientation="horizontal">
