@@ -32,6 +32,7 @@
             android:orientation="vertical">
 
             <LinearLayout
+                android:id="@+id/live_pill"
                 android:layout_width="wrap_content"
                 android:layout_height="@dimen/live_pill_height"
                 android:background="@drawable/bg_pill_accent"

@@ -102,6 +102,7 @@ public class RoundFragment extends Fragment {
         boolean playing = status == GameViewModel.Status.PLAYING;
         boolean loading = status == GameViewModel.Status.LOADING;
 
+        view.findViewById(R.id.live_pill).setVisibility(error ? View.INVISIBLE : View.VISIBLE);
         view.findViewById(R.id.timer_frame).setVisibility(error ? View.GONE : View.VISIBLE);
         view.findViewById(R.id.dial_strip).setVisibility(error ? View.GONE : View.VISIBLE);
         view.findViewById(R.id.round_error).setVisibility(error ? View.VISIBLE : View.GONE);
