@@ -29,6 +29,7 @@ import me.sectiontn.ondes.data.db.DailyResultEntity;
 import me.sectiontn.ondes.data.repo.ProgressRepository;
 import me.sectiontn.ondes.game.DailySeed;
 import me.sectiontn.ondes.game.Outcome;
+import me.sectiontn.ondes.ui.common.Motion;
 import me.sectiontn.ondes.ui.common.UiFormat;
 import me.sectiontn.ondes.ui.game.GameActivity;
 import me.sectiontn.ondes.ui.game.OutcomeStyle;
@@ -38,6 +39,9 @@ public class HomeFragment extends Fragment {
 
     private static final int[] SLOT_IDS = {R.id.slot_1, R.id.slot_2, R.id.slot_3, R.id.slot_4, R.id.slot_5};
     private static final long CLOCK_REFRESH_MS = 30_000;
+    // The squares wait for the game screen to close over Home, then come one after another
+    private static final long SLOTS_DELAY_MS = 250;
+    private static final long SLOT_GAP_MS = 70;
 
     private final Handler handler = new Handler(Looper.getMainLooper());
     private final Runnable refreshClock = new Runnable() {
@@ -56,6 +60,9 @@ public class HomeFragment extends Fragment {
     private LiveData<DailyResultEntity> todayLive;
     // True from the tap that opens a game until Home is back, so a double tap opens one game, not two
     private boolean launching = false;
+    // Whether the daily showed as done the last time it was drawn. Null before the first time
+    @Nullable
+    private Boolean wasDone;
 
     public HomeFragment() {
         super(R.layout.fragment_home);
@@ -149,6 +156,14 @@ public class HomeFragment extends Fragment {
         view.findViewById(R.id.play_button).setVisibility(done ? View.GONE : View.VISIBLE);
         view.findViewById(R.id.results_button).setVisibility(done ? View.VISIBLE : View.GONE);
         bindTimeLeft();
+
+        // Back from a daily just finished: its squares pop in one by one. A daily done earlier is simply shown
+        if (done && Boolean.FALSE.equals(wasDone)) {
+            for (int i = 0; i < SLOT_IDS.length; i++) {
+                Motion.pop(view.findViewById(SLOT_IDS[i]), Motion.POP_FROM_SMALL, SLOTS_DELAY_MS + i * SLOT_GAP_MS);
+            }
+        }
+        wasDone = done;
     }
 
     private void bindTimeLeft() {

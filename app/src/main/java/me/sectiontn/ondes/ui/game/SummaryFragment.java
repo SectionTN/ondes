@@ -29,6 +29,7 @@ import me.sectiontn.ondes.game.DailySeed;
 import me.sectiontn.ondes.game.Outcome;
 import me.sectiontn.ondes.game.RoundRecord;
 import me.sectiontn.ondes.game.ScoreCalculator;
+import me.sectiontn.ondes.ui.common.Motion;
 import me.sectiontn.ondes.ui.common.UiFormat;
 
 /** End of a game: the total score, the five rounds, and Share (daily) or Play again (free play). */
@@ -38,8 +39,13 @@ public class SummaryFragment extends Fragment {
     private static final String SQUARE_GREEN = "🟩";
     private static final String SQUARE_YELLOW = "🟨";
     private static final String SQUARE_RED = "🟥";
+    private static final long SCORE_COUNT_MS = 900;
+    // The squares wait for their box to rise in, then come one after another
+    private static final long SQUARES_DELAY_MS = 350;
+    private static final long SQUARE_GAP_MS = 70;
 
     private GameViewModel game;
+    private boolean entered = false;
 
     public SummaryFragment() {
         super(R.layout.fragment_summary);
@@ -64,8 +70,24 @@ public class SummaryFragment extends Fragment {
         game.summary().observe(getViewLifecycleOwner(), summary -> {
             if (summary != null) {
                 bind(view, summary, list);
+                // Only the first time, and not on a screen Android brought back
+                if (!entered && savedInstanceState == null) {
+                    enter(view, summary);
+                }
+                entered = true;
             }
         });
+    }
+
+    /** The sections rise in, the score counts up, and the share squares pop in one by one. */
+    private void enter(View view, GameViewModel.Summary summary) {
+        Motion.riseInChildren(view.findViewById(R.id.summary_content), 1);
+        NumberFormat numbers = UiFormat.numbers(requireContext());
+        Motion.count(view.findViewById(R.id.summary_score), 0, summary.score, SCORE_COUNT_MS, numbers::format);
+        ViewGroup squares = view.findViewById(R.id.share_squares);
+        for (int i = 0; i < squares.getChildCount(); i++) {
+            Motion.pop(squares.getChildAt(i), Motion.POP_FROM_SMALL, SQUARES_DELAY_MS + i * SQUARE_GAP_MS);
+        }
     }
 
     private void bind(View view, GameViewModel.Summary summary, RecyclerView list) {
