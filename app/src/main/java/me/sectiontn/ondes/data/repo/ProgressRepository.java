@@ -1,6 +1,7 @@
 package me.sectiontn.ondes.data.repo;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.Transformations;
@@ -27,14 +28,17 @@ import me.sectiontn.ondes.game.Streak;
 public final class ProgressRepository {
 
     private static ProgressRepository instance;
+    private static final String KEY_FIRST_DAY = "first_day";
 
     private final AppDatabase database;
+    private final SharedPreferences prefs;
     // Room refuses queries on the main thread, so every write goes through this thread
     private final ExecutorService disk = Executors.newSingleThreadExecutor();
     private final Gson gson = new Gson();
 
     private ProgressRepository(Context context) {
         database = AppDatabase.get(context);
+        prefs = context.getApplicationContext().getSharedPreferences("progress", Context.MODE_PRIVATE);
     }
 
     public static synchronized ProgressRepository get(Context context) {
@@ -54,6 +58,14 @@ public final class ProgressRepository {
         stamp.countryCode = countryCode;
         stamp.firstDate = System.currentTimeMillis();
         disk.execute(() -> database.stamps().add(stamp));
+    }
+
+    /** The player's own daily number for a day: the day this phone first opened the app is #1. */
+    public synchronized int playerNumber(int dayNumber) {
+        if (!prefs.contains(KEY_FIRST_DAY)) {
+            prefs.edit().putInt(KEY_FIRST_DAY, DailySeed.today()).apply();
+        }
+        return DailySeed.playerNumber(dayNumber, prefs.getInt(KEY_FIRST_DAY, dayNumber));
     }
 
     public LiveData<DailyResultEntity> dailyResult(int dayNumber) {

@@ -103,7 +103,7 @@ public class HomeFragment extends Fragment {
         TextView todayLabel = view.findViewById(R.id.today_label);
         todayLabel.setText(UiFormat.date(requireContext(), "EEE d MMM", new Date()));
         TextView title = view.findViewById(R.id.daily_title);
-        title.setText(getString(R.string.daily_title, today));
+        title.setText(getString(R.string.daily_title, ProgressRepository.get(requireContext()).playerNumber(today)));
 
         if (todayLive != null) {
             todayLive.removeObservers(getViewLifecycleOwner());

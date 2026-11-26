@@ -19,13 +19,13 @@ public final class DailySeed {
 
     public static final int ROUND_COUNT = 5;
     private static final long MS_PER_DAY = 24L * 60 * 60 * 1000;
-    // Daily #1 was played on 3 July 2026
+    // Day 1 of the count every phone shares. It seeds the picks and keys the saved results
     private static final long FIRST_DAY_UTC = utcMidnight(2026, 7, 3);
 
     private DailySeed() {
     }
 
-    /** 3 July 2026 is #1, 21 November 2026 is #142. Month is 1 to 12. */
+    /** 3 July 2026 is day 1, 21 November 2026 is day 142. Month is 1 to 12. */
     public static int dayNumber(int year, int month, int day) {
         // Both dates as UTC midnights, so a daylight saving change never makes a day 23 hours long
         return (int) ((utcMidnight(year, month, day) - FIRST_DAY_UTC) / MS_PER_DAY) + 1;
@@ -38,6 +38,14 @@ public final class DailySeed {
 
     public static int today() {
         return dayNumber(Calendar.getInstance());
+    }
+
+    /**
+     * The number the player sees: the day they first opened the app is their Daily #1.
+     * It never goes below 1, even when the phone's clock is set back before that day.
+     */
+    public static int playerNumber(int dayNumber, int firstDay) {
+        return Math.max(1, dayNumber - firstDay + 1);
     }
 
     /** Time left before the next daily starts, at local midnight. */

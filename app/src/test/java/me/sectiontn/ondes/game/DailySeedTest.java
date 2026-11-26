@@ -21,8 +21,20 @@ public class DailySeedTest {
     }
 
     @Test
-    public void designDate_21November2026_isDaily142() {
+    public void dayNumber_21November2026_is142() {
         assertEquals(142, DailySeed.dayNumber(2026, 11, 21));
+    }
+
+    @Test
+    public void playerNumber_startsAtOneOnTheFirstDayAndCountsUp() {
+        assertEquals(1, DailySeed.playerNumber(147, 147));
+        assertEquals(2, DailySeed.playerNumber(148, 147));
+        assertEquals(31, DailySeed.playerNumber(177, 147));
+    }
+
+    @Test
+    public void playerNumber_staysAtOneWhenTheClockGoesBack() {
+        assertEquals(1, DailySeed.playerNumber(146, 147));
     }
 
     @Test

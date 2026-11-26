@@ -55,7 +55,7 @@ Java and XML layouts, one activity per flow, and a ViewModel per screen group:
 | `data/db` | Stores stamps, recent and saved stations and daily results with Room. |
 | `data/countries` | Reads the 195 countries from `assets/countries.json`. |
 
-The daily works without a server. The day number picks the five countries, and a SHA-256 hash of the day and each station ID puts the stations in order. Every phone then plays the same stations.
+The daily works without a server. The day number picks the five countries, and a SHA-256 hash of the day and each station ID puts the stations in order. Every phone then plays the same stations. Each player's Daily #1 is the day they first open the app.
 
 The app allows plain `http` traffic in `network_security_config.xml`. Many stations in Radio Browser only stream over `http`.
 

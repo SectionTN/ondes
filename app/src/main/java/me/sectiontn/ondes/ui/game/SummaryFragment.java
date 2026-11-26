@@ -72,9 +72,10 @@ public class SummaryFragment extends Fragment {
         boolean daily = summary.daily;
         NumberFormat numbers = UiFormat.numbers(requireContext());
         String scoreText = numbers.format(summary.score);
+        int playerNumber = ProgressRepository.get(requireContext()).playerNumber(summary.dayNumber);
 
         TextView eyebrow = view.findViewById(R.id.summary_eyebrow);
-        eyebrow.setText(daily ? getString(R.string.daily_title, summary.dayNumber) : getString(R.string.mode_free_play));
+        eyebrow.setText(daily ? getString(R.string.daily_title, playerNumber) : getString(R.string.mode_free_play));
 
         TextView scoreView = view.findViewById(R.id.summary_score);
         scoreView.setText(scoreText);
@@ -88,7 +89,7 @@ public class SummaryFragment extends Fragment {
 
         view.findViewById(R.id.share_preview).setVisibility(daily ? View.VISIBLE : View.GONE);
         TextView shareLine = view.findViewById(R.id.share_line);
-        shareLine.setText(getString(R.string.share_title, summary.dayNumber, scoreText));
+        shareLine.setText(getString(R.string.share_title, playerNumber, scoreText));
         ViewGroup squares = view.findViewById(R.id.share_squares);
         StringBuilder squaresDescription = new StringBuilder();
         for (int i = 0; i < squares.getChildCount(); i++) {
@@ -124,9 +125,10 @@ public class SummaryFragment extends Fragment {
                 (int) (TimeUnit.MILLISECONDS.toMinutes(left) % 60)));
     }
 
-    /** Sends "Ondes #142 · 1,760 pts" and a line of colored squares to any app. */
+    /** Sends "Ondes #7 · 1,760 pts" and a line of colored squares to any app. */
     private void share(GameViewModel.Summary summary, String scoreText) {
-        String text = getString(R.string.share_text, summary.dayNumber, scoreText) + "\n" + squares(summary.rounds);
+        int playerNumber = ProgressRepository.get(requireContext()).playerNumber(summary.dayNumber);
+        String text = getString(R.string.share_text, playerNumber, scoreText) + "\n" + squares(summary.rounds);
         Intent send = new Intent(Intent.ACTION_SEND).setType("text/plain").putExtra(Intent.EXTRA_TEXT, text);
         startActivity(Intent.createChooser(send, getString(R.string.share_chooser)));
     }
