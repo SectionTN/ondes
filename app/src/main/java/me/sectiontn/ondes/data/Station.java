@@ -76,10 +76,22 @@ public class Station {
 
     /** The tags joined back with commas, as the database stores them. */
     public String tagsText() {
-        return String.join(",", tags);
+        return joinList(tags);
     }
 
     public String languagesText() {
-        return String.join(",", languages);
+        return joinList(languages);
+    }
+
+    // String.join needs Android 8, the app starts at Android 7
+    private static String joinList(List<String> items) {
+        StringBuilder text = new StringBuilder();
+        for (String item : items) {
+            if (text.length() > 0) {
+                text.append(',');
+            }
+            text.append(item);
+        }
+        return text.toString();
     }
 }
