@@ -15,28 +15,6 @@
         <item name="cornerSize">@dimen/radius_button</item>
     </style>
 
-    <style name="ShapeAppearance.Ondes.Hint" parent="">
-        <item name="cornerFamily">rounded</item>
-        <item name="cornerSize">@dimen/radius_hint</item>
-    </style>
-
-    <!-- 64dp station logo on the Result screen -->
-    <style name="ShapeAppearance.Ondes.StationLogo" parent="">
-        <item name="cornerFamily">rounded</item>
-        <item name="cornerSize">@dimen/radius_station_logo</item>
-    </style>
-
-    <!-- 40dp app logo tile on Home -->
-    <style name="ShapeAppearance.Ondes.LogoTile" parent="">
-        <item name="cornerFamily">rounded</item>
-        <item name="cornerSize">@dimen/radius_logo_tile</item>
-    </style>
-
-    <!-- Outcome squares on Summary -->
-    <style name="ShapeAppearance.Ondes.Square" parent="">
-        <item name="cornerFamily">rounded</item>
-        <item name="cornerSize">@dimen/radius_square</item>
-    </style>
 
     <style name="ShapeAppearance.Ondes.Badge" parent="">
         <item name="cornerFamily">rounded</item>

@@ -1,5 +1,6 @@
 package me.sectiontn.ondes.ui.explore;
 
+import android.annotation.SuppressLint;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -39,11 +40,14 @@ public class StationAdapter extends RecyclerView.Adapter<StationAdapter.Holder> 
         this.listener = listener;
     }
 
+    // Recent and Saved are short lists, so rebinding every row costs nothing
+    @SuppressLint("NotifyDataSetChanged")
     public void setStations(List<Station> stations) {
         this.stations = stations;
         notifyDataSetChanged();
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     public void setFavoriteIds(Set<String> favoriteIds) {
         this.favoriteIds = favoriteIds;
         notifyDataSetChanged();

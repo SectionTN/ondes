@@ -36,14 +36,12 @@
     <dimen name="small_pill_padding_h">10dp</dimen>
     <dimen name="small_pill_padding_v">6dp</dimen>
     <dimen name="hint_tile_min_height">56dp</dimen>
-    <dimen name="bottom_nav_height">80dp</dimen>
     <dimen name="bottom_nav_padding_h">12dp</dimen>
     <dimen name="nav_pill_width">64dp</dimen>
     <dimen name="nav_pill_height">32dp</dimen>
 
     <!-- Icons and touch targets -->
-    <dimen name="icon_button_size">44dp</dimen>
-    <!-- (touch_target - icon_button_size) / 2, and its negative as a margin so the 44dp circle sits on the screen padding -->
+    <!-- (48dp touch target - 44dp circle) / 2, and its negative as a margin so the circle sits on the screen padding -->
     <dimen name="icon_button_inset">2dp</dimen>
     <dimen name="icon_button_outset">-2dp</dimen>
     <dimen name="icon_button_icon_size">20dp</dimen>
